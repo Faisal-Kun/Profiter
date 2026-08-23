@@ -1,24 +1,42 @@
-*.log
-.DS_Store
+/vendor/
+node_modules/
+
+# Laravel
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/pail
+
+# Environment
 .env
 .env.backup
 .env.production
-.phpactor.json
-.phpunit.result.cache
+
+# IDE
 /.fleet
 /.idea
 /.nova
 /.phpunit.cache
 /.vscode
 /.zed
-/auth.json
-/node_modules
-/public/build
-/public/hot
-/public/storage
-/storage/*.key
-/storage/pail
-/vendor
+.phpactor.json
+.phpunit.result.cache
+
+# Laravel legacy
+bootstrap/compiled.php
+app/storage/
+
+# Other
 Homestead.json
 Homestead.yaml
+/.vagrant
+auth.json
+
+# OS
+.DS_Store
 Thumbs.db
+
+# NPM
+npm-debug.log
+yarn-error.log

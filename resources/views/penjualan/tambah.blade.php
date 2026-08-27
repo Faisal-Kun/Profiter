@@ -1,64 +1,220 @@
-
 @extends('layouts.app')
 
 @section('content')
 
 <style>
 
+    /* =========================
+       FORM CARD
+    ========================= */
+
     .form-card {
-        border: none;
-        border-radius: 15px;
+        background: #17191f;
+        border: 1px solid #272a33;
+        border-radius: 16px;
+        overflow: hidden;
+        color: #fff;
+    }
+
+    .form-card .card-body {
+        padding: 24px;
     }
 
     .section-title {
-        font-weight: 600;
+        color: #fff;
+        font-weight: 700;
         margin-bottom: 5px;
     }
 
     .section-subtitle {
-        color: #888;
+        color: #858994;
         font-size: 14px;
         margin-bottom: 20px;
     }
 
-    .summary-box {
-        background: #f8f9fa;
+    .form-label {
+        color: #c9ccd4;
+        font-weight: 600;
+        font-size: 13px;
+    }
+
+
+    /* =========================
+       INPUT
+    ========================= */
+
+    .form-control,
+    .form-select {
+        background: #11141b;
+        border: 1px solid #353945;
+        color: #fff;
+        border-radius: 9px;
+        padding: 11px 13px;
+    }
+
+    .form-control::placeholder {
+        color: #626875;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background: #11141b;
+        color: #fff;
+        border-color: #22d3ee;
+        box-shadow: 0 0 0 3px rgba(34, 211, 238, .10);
+    }
+
+    .form-select option {
+        background: #17191f;
+        color: #fff;
+    }
+
+
+    /* =========================
+       INPUT GROUP
+    ========================= */
+
+    .input-group-text {
+        background: #20232b;
+        border-color: #353945;
+        color: #22d3ee;
+        font-weight: 600;
+    }
+
+
+    /* =========================
+       RESULT
+    ========================= */
+
+    .result-box {
+        background: #11141b;
+        border: 1px solid #272a33;
         border-radius: 12px;
         padding: 20px;
     }
 
-    .summary-row {
+    .result-row {
         display: flex;
         justify-content: space-between;
-        padding: 9px 0;
+        padding: 10px 0;
+        color: #b8bdc8;
     }
 
-    .summary-final {
-        border-top: 1px solid #ddd;
+    .result-row strong {
+        color: #fff;
+    }
+
+    .result-final {
+        border-top: 1px solid #353945;
         margin-top: 10px;
         padding-top: 15px;
-        font-size: 20px;
+        font-size: 19px;
         font-weight: 700;
     }
 
-    .profit-box {
-        background: #198754;
-        color: white;
-        border-radius: 14px;
+
+    /* =========================
+       PROFIT
+    ========================= */
+
+    .profit-result {
+        background: linear-gradient(
+            135deg,
+            #0d3038,
+            #12343b
+        );
+
+        border: 1px solid rgba(34, 211, 238, .25);
+        color: #fff;
+        border-radius: 16px;
         padding: 22px;
     }
 
+    .profit-result small {
+        color: #8edee8;
+    }
+
     .profit-number {
+        color: #22d3ee;
         font-size: 28px;
         font-weight: 700;
+    }
+
+    .profit-result p {
+        color: #858994;
+    }
+
+    .profit-result hr {
+        border-color: #36535a;
+        opacity: 1;
+    }
+
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    .btn-warning {
+        background: #22d3ee !important;
+        border-color: #22d3ee !important;
+        color: #061014 !important;
+        font-weight: 600;
+    }
+
+    .btn-warning:hover {
+        background: #67e8f9 !important;
+        border-color: #67e8f9 !important;
+        color: #061014 !important;
+    }
+
+
+    /* =========================
+       SECONDARY
+    ========================= */
+
+    .btn-secondary {
+        background: #20232b;
+        border: 1px solid #353945;
+        color: #c9ccd4;
+    }
+
+    .btn-secondary:hover {
+        background: #292e38;
+        border-color: #454b59;
+        color: #fff;
+    }
+
+
+    /* =========================
+       ERROR
+    ========================= */
+
+    .alert-danger {
+        background: rgba(255, 92, 92, .08);
+        border: 1px solid rgba(255, 92, 92, .25);
+        color: #ff7b7b;
+        border-radius: 10px;
+    }
+
+
+    @media (max-width: 768px) {
+
+        .form-card .card-body {
+            padding: 18px;
+        }
+
+        .profit-number {
+            font-size: 24px;
+        }
+
     }
 
 </style>
 
 
-{{-- ========================================================= --}}
-{{-- HEADER --}}
-{{-- ========================================================= --}}
+{{-- =========================
+     HEADER
+========================= --}}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
 
@@ -68,10 +224,9 @@
             Tambah Penjualan
         </h3>
 
-        <p class="text-muted mb-0">
-            Catat penjualan produk
-        </p>
-
+       <p class="mb-0" style="color: #fff !important;">
+    Tambahkan data penjualan produk
+</p>
     </div>
 
 
@@ -89,41 +244,6 @@
 </div>
 
 
-
-{{-- ========================================================= --}}
-{{-- ERROR VALIDASI --}}
-{{-- ========================================================= --}}
-
-@if ($errors->any())
-
-    <div class="alert alert-danger">
-
-        <strong>
-            Data belum bisa disimpan.
-        </strong>
-
-        <ul class="mb-0 mt-2">
-
-            @foreach ($errors->all() as $error)
-
-                <li>
-                    {{ $error }}
-                </li>
-
-            @endforeach
-
-        </ul>
-
-    </div>
-
-@endif
-
-
-
-{{-- ========================================================= --}}
-{{-- FORM --}}
-{{-- ========================================================= --}}
-
 <form
     action="/penjualan"
     method="POST"
@@ -132,9 +252,32 @@
     @csrf
 
 
-    {{-- ===================================================== --}}
-    {{-- INFORMASI PENJUALAN --}}
-    {{-- ===================================================== --}}
+    {{-- ERROR --}}
+
+    @if ($errors->any())
+
+        <div class="alert alert-danger mb-4">
+
+            <strong>Data belum bisa disimpan:</strong>
+
+            <ul class="mb-0 mt-2">
+
+                @foreach ($errors->all() as $error)
+
+                    <li>{{ $error }}</li>
+
+                @endforeach
+
+            </ul>
+
+        </div>
+
+    @endif
+
+
+    {{-- =========================
+         INFORMASI PENJUALAN
+    ========================= --}}
 
     <div class="card form-card mb-4">
 
@@ -145,7 +288,7 @@
             </h5>
 
             <p class="section-subtitle">
-                Masukkan data penjualan produk
+                Masukkan informasi produk yang terjual
             </p>
 
 
@@ -169,7 +312,6 @@
                     >
 
                 </div>
-
 
 
                 {{-- PRODUK --}}
@@ -202,7 +344,7 @@
                                 value="{{ $produk->id }}"
                                 data-harga="{{ $produk->harga_jual }}"
                                 data-hpp="{{ $produk->hpp }}"
-                                {{ old('produk_id') == $produk->id ? 'selected' : '' }}
+                                data-stok="{{ $produk->jumlah_produksi }}"
                             >
 
                                 {{ $produk->nama }}
@@ -214,7 +356,6 @@
                     </select>
 
                 </div>
-
 
 
                 {{-- JUMLAH TERJUAL --}}
@@ -232,8 +373,8 @@
                             name="jumlah_terjual"
                             id="jumlahTerjual"
                             class="form-control"
+                            placeholder=""
                             min="1"
-                            placeholder="Contoh: 10"
                             value="{{ old('jumlah_terjual') }}"
                             required
                         >
@@ -247,7 +388,6 @@
                 </div>
 
 
-
                 {{-- CATATAN --}}
 
                 <div class="col-12">
@@ -259,8 +399,8 @@
                     <textarea
                         name="catatan"
                         class="form-control"
-                        rows="3"
-                        placeholder="Contoh: Penjualan di toko..."
+                        rows="4"
+                        placeholder=""
                     >{{ old('catatan') }}</textarea>
 
                 </div>
@@ -272,191 +412,95 @@
     </div>
 
 
-
-    {{-- ===================================================== --}}
-    {{-- HASIL PERHITUNGAN --}}
-    {{-- ===================================================== --}}
+    {{-- =========================
+         INFORMASI PRODUK
+    ========================= --}}
 
     <div
-        class="row g-4 mb-4"
-        id="hasilPenjualan"
+        class="card form-card mb-4"
+        id="informasiProduk"
         style="display:none;"
     >
 
+        <div class="card-body">
 
-        {{-- PERHITUNGAN --}}
+            <h5 class="section-title">
+                Informasi Produk
+            </h5>
 
-        <div class="col-lg-7">
+            <p class="section-subtitle">
+                Informasi harga, HPP, dan stok produk
+            </p>
 
-            <div class="card form-card h-100">
 
-                <div class="card-body">
+            <div class="result-box">
 
-                    <h5 class="section-title">
-                        Perhitungan
-                    </h5>
 
-                    <p class="section-subtitle">
-                        Dihitung otomatis berdasarkan produk dan jumlah terjual
-                    </p>
-
-
-                    <div class="summary-box">
-
-
-                        {{-- HARGA JUAL --}}
-
-                        <div class="summary-row">
-
-                            <span>
-                                Harga Jual / Produk
-                            </span>
-
-                            <strong id="hargaJual">
-                                Rp0
-                            </strong>
-
-                        </div>
-
-
-
-                        {{-- HPP --}}
-
-                        <div class="summary-row">
-
-                            <span>
-                                HPP / Produk
-                            </span>
-
-                            <strong id="hppProduk">
-                                Rp0
-                            </strong>
-
-                        </div>
-
-
-
-                        {{-- JUMLAH --}}
-
-                        <div class="summary-row">
-
-                            <span>
-                                Jumlah Terjual
-                            </span>
-
-                            <strong id="hasilJumlah">
-                                0 produk
-                            </strong>
-
-                        </div>
-
-
-
-                        {{-- TOTAL PENJUALAN --}}
-
-                        <div class="summary-row">
-
-                            <span>
-                                Total Penjualan
-                            </span>
-
-                            <strong id="totalPenjualan">
-                                Rp0
-                            </strong>
-
-                        </div>
-
-
-
-                        {{-- TOTAL HPP --}}
-
-                        <div class="summary-row">
-
-                            <span>
-                                Total HPP
-                            </span>
-
-                            <strong id="totalHpp">
-                                Rp0
-                            </strong>
-
-                        </div>
-
-
-
-                        {{-- KEUNTUNGAN --}}
-
-                        <div class="summary-row summary-final">
-
-                            <span>
-                                Keuntungan
-                            </span>
-
-                            <strong
-                                id="keuntungan"
-                                class="text-success"
-                            >
-                                Rp0
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-
-        {{-- ================================================= --}}
-        {{-- BOX KEUNTUNGAN --}}
-        {{-- ================================================= --}}
-
-        <div class="col-lg-5">
-
-            <div class="profit-box h-100">
-
-                <small>
-                    Keuntungan Penjualan
-                </small>
-
-
-                <div
-                    id="profitNumber"
-                    class="profit-number mt-2"
-                >
-                    Rp0
-                </div>
-
-
-                <p class="mt-2 mb-4">
-                    Perkiraan keuntungan dari penjualan ini
-                </p>
-
-
-                <div class="d-flex justify-content-between">
+                <div class="result-row">
 
                     <span>
-                        Omzet
+                        Harga Jual / Produk
                     </span>
 
-                    <strong id="profitOmzet">
+                    <strong id="hargaJual">
                         Rp0
                     </strong>
 
                 </div>
 
 
-                <div class="d-flex justify-content-between mt-2">
+                <div class="result-row">
 
                     <span>
-                        Total HPP
+                        HPP / Produk
                     </span>
 
-                    <strong id="profitHpp">
+                    <strong id="hppProduk">
+                        Rp0
+                    </strong>
+
+                </div>
+
+
+                <div class="result-row">
+
+                    <span>
+                        Stok Tersedia
+                    </span>
+
+                    <strong
+                        id="stokProduk"
+                        class="text-info"
+                    >
+                        0 produk
+                    </strong>
+
+                </div>
+
+
+                <div class="result-row">
+
+                    <span>
+                        Total Penjualan
+                    </span>
+
+                    <strong id="totalPenjualan">
+                        Rp0
+                    </strong>
+
+                </div>
+
+
+                <div class="result-row result-final">
+
+                    <span>
+                        Estimasi Keuntungan
+                    </span>
+
+                    <strong
+                        id="keuntungan"
+                        style="color:#22d3ee;"
+                    >
                         Rp0
                     </strong>
 
@@ -469,10 +513,84 @@
     </div>
 
 
+    {{-- =========================
+         RINGKASAN
+    ========================= --}}
 
-    {{-- ===================================================== --}}
-    {{-- BUTTON --}}
-    {{-- ===================================================== --}}
+    <div
+        class="profit-result mb-4"
+        id="profitBox"
+        style="display:none;"
+    >
+
+        <small>
+            Ringkasan Penjualan
+        </small>
+
+
+        <div
+            class="profit-number mt-2"
+            id="profitNumber"
+        >
+            Rp0
+        </div>
+
+
+        <p class="mt-2 mb-4">
+            Estimasi keuntungan dari transaksi ini
+        </p>
+
+
+        <div class="d-flex justify-content-between">
+
+            <span>
+                Total Penjualan
+            </span>
+
+            <strong id="hasilPenjualan">
+                Rp0
+            </strong>
+
+        </div>
+
+
+        <div class="d-flex justify-content-between mt-2">
+
+            <span>
+                Total HPP
+            </span>
+
+            <strong id="hasilHpp">
+                Rp0
+            </strong>
+
+        </div>
+
+
+        <hr>
+
+
+        <div class="d-flex justify-content-between">
+
+            <strong>
+                Keuntungan
+            </strong>
+
+            <strong
+                id="hasilKeuntungan"
+                style="color:#22d3ee;"
+            >
+                Rp0
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    {{-- =========================
+         BUTTON
+    ========================= --}}
 
     <div class="d-flex justify-content-end gap-2 mb-5">
 
@@ -480,9 +598,7 @@
             href="/penjualan"
             class="btn btn-secondary"
         >
-
             Batal
-
         </a>
 
 
@@ -502,102 +618,71 @@
 </form>
 
 
-
-{{-- ========================================================= --}}
-{{-- JAVASCRIPT --}}
-{{-- ========================================================= --}}
-
 <script>
 
 function rupiah(angka)
 {
-    return new Intl.NumberFormat(
-        'id-ID',
-        {
-            style: 'currency',
-            currency: 'IDR',
-            maximumFractionDigits: 0
-        }
-    ).format(angka);
+
+    return new Intl.NumberFormat('id-ID', {
+
+        style: 'currency',
+
+        currency: 'IDR',
+
+        maximumFractionDigits: 0
+
+    }).format(angka);
+
 }
 
 
+/* =========================
+   HITUNG
+========================= */
 
-function hitungPenjualan()
+function hitung()
 {
+
     const select =
         document.getElementById('produkSelect');
-
-
-    const jumlahInput =
-        document.getElementById('jumlahTerjual');
-
-
-    const hasil =
-        document.getElementById('hasilPenjualan');
-
 
     const option =
         select.options[select.selectedIndex];
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | JIKA PRODUK BELUM DIPILIH
-    |--------------------------------------------------------------------------
-    */
+    if (!option || !option.value) {
 
-    if (!option || !option.value)
-    {
-        hasil.style.display = 'none';
+        document
+            .getElementById('informasiProduk')
+            .style.display = 'none';
+
+        document
+            .getElementById('profitBox')
+            .style.display = 'none';
 
         return;
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | AMBIL HARGA
-    |--------------------------------------------------------------------------
-    */
-
     const harga =
-        parseFloat(
-            option.dataset.harga
-        ) || 0;
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | AMBIL HPP
-    |--------------------------------------------------------------------------
-    */
+        parseFloat(option.dataset.harga) || 0;
 
     const hpp =
-        parseFloat(
-            option.dataset.hpp
-        ) || 0;
+        parseFloat(option.dataset.hpp) || 0;
 
+    const stok =
+        parseInt(option.dataset.stok) || 0;
 
-    /*
-    |--------------------------------------------------------------------------
-    | AMBIL JUMLAH
-    |--------------------------------------------------------------------------
-    */
 
     const jumlah =
-        parseFloat(
-            jumlahInput.value
+        parseInt(
+            document
+                .getElementById('jumlahTerjual')
+                .value
         ) || 0;
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | HITUNG TOTAL
-    |--------------------------------------------------------------------------
-    */
-
-    const totalPenjualan =
+    const total =
         harga * jumlah;
 
 
@@ -606,48 +691,55 @@ function hitungPenjualan()
 
 
     const keuntungan =
-        totalPenjualan - totalHpp;
+        total - totalHpp;
 
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | TAMPILKAN DATA
-    |--------------------------------------------------------------------------
-    */
+    /* =========================
+       INFORMASI PRODUK
+    ========================= */
 
     document
         .getElementById('hargaJual')
-        .innerText =
-        rupiah(harga);
+        .innerText = rupiah(harga);
 
 
     document
         .getElementById('hppProduk')
-        .innerText =
-        rupiah(hpp);
+        .innerText = rupiah(hpp);
 
 
     document
-        .getElementById('hasilJumlah')
+        .getElementById('stokProduk')
         .innerText =
-        jumlah + ' produk';
+        stok + ' produk';
 
 
     document
         .getElementById('totalPenjualan')
         .innerText =
-        rupiah(totalPenjualan);
+        rupiah(total);
 
 
     document
-        .getElementById('totalHpp')
+        .getElementById('keuntungan')
+        .innerText =
+        rupiah(keuntungan);
+
+
+    document
+        .getElementById('hasilPenjualan')
+        .innerText =
+        rupiah(total);
+
+
+    document
+        .getElementById('hasilHpp')
         .innerText =
         rupiah(totalHpp);
 
 
     document
-        .getElementById('keuntungan')
+        .getElementById('hasilKeuntungan')
         .innerText =
         rupiah(keuntungan);
 
@@ -659,69 +751,51 @@ function hitungPenjualan()
 
 
     document
-        .getElementById('profitOmzet')
-        .innerText =
-        rupiah(totalPenjualan);
+        .getElementById('informasiProduk')
+        .style.display = 'block';
 
 
     document
-        .getElementById('profitHpp')
-        .innerText =
-        rupiah(totalHpp);
+        .getElementById('profitBox')
+        .style.display = 'block';
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | TAMPILKAN HASIL
-    |--------------------------------------------------------------------------
-    */
-
-    hasil.style.display = 'flex';
 }
 
 
-
-/*
-|--------------------------------------------------------------------------
-| EVENT PRODUK
-|--------------------------------------------------------------------------
-*/
+/* =========================
+   EVENT PRODUK
+========================= */
 
 document
     .getElementById('produkSelect')
     .addEventListener(
         'change',
-        hitungPenjualan
+        hitung
     );
 
 
-
-/*
-|--------------------------------------------------------------------------
-| EVENT JUMLAH
-|--------------------------------------------------------------------------
-*/
+/* =========================
+   EVENT JUMLAH
+========================= */
 
 document
     .getElementById('jumlahTerjual')
     .addEventListener(
         'input',
-        hitungPenjualan
+        hitung
     );
 
 
-
-/*
-|--------------------------------------------------------------------------
-| HITUNG ULANG JIKA OLD VALUE ADA
-|--------------------------------------------------------------------------
-*/
+/* =========================
+   LOAD
+========================= */
 
 document.addEventListener(
     'DOMContentLoaded',
-    function ()
-    {
-        hitungPenjualan();
+    function() {
+
+        hitung();
+
     }
 );
 

@@ -477,7 +477,7 @@ SUCCESS
                         name="catatan"
                         class="form-control"
                         rows="3"
-                        placeholder="Contoh: Penjualan hari ini..."
+                        placeholder=""
                     >{{ old('catatan', $penjualan->catatan) }}</textarea>
 
                 </div>

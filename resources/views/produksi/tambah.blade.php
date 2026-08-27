@@ -4,52 +4,184 @@
 
 <style>
 
+    /* =========================
+       FORM CARD
+    ========================= */
+
     .form-card {
-        border: none;
-        border-radius: 15px;
+        background: #17191f;
+        border: 1px solid #272a33;
+        border-radius: 16px;
+        overflow: hidden;
+        color: #fff;
+    }
+
+    .form-card .card-body {
+        padding: 24px;
     }
 
     .section-title {
-        font-weight: 600;
+        color: #fff;
+        font-weight: 700;
         margin-bottom: 5px;
     }
 
     .section-subtitle {
-        color: #888;
+        color: #858994;
         font-size: 14px;
         margin-bottom: 20px;
     }
 
     .form-label {
-        font-weight: 500;
+        color: #c9ccd4;
+        font-weight: 600;
+        font-size: 13px;
     }
 
-    .info-box {
-        background: #f8f9fa;
+
+    /* =========================
+       INPUT
+    ========================= */
+
+    .form-control,
+    .form-select {
+        background: #11141b;
+        border: 1px solid #353945;
+        color: #fff;
+        border-radius: 9px;
+        padding: 11px 13px;
+    }
+
+    .form-control::placeholder {
+        color: #626875;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background: #11141b;
+        color: #fff;
+        border-color: #22d3ee;
+        box-shadow: 0 0 0 3px rgba(34, 211, 238, .10);
+    }
+
+    .form-select option {
+        background: #17191f;
+        color: #fff;
+    }
+
+
+    /* =========================
+       INPUT GROUP
+    ========================= */
+
+    .input-group-text {
+        background: #20232b;
+        border-color: #353945;
+        color: #22d3ee;
+        font-weight: 600;
+    }
+
+
+    /* =========================
+       RESULT BOX
+    ========================= */
+
+    .result-box {
+        background: #11141b;
+        border: 1px solid #272a33;
         border-radius: 12px;
         padding: 20px;
     }
 
-    .info-row {
+    .result-row {
         display: flex;
         justify-content: space-between;
-        padding: 9px 0;
+        padding: 10px 0;
+        color: #b8bdc8;
     }
 
-    .info-final {
-        border-top: 1px solid #ddd;
+    .result-row strong {
+        color: #fff;
+    }
+
+    .result-final {
+        border-top: 1px solid #353945;
         margin-top: 10px;
         padding-top: 15px;
-        font-size: 18px;
+        font-size: 19px;
         font-weight: 700;
+    }
+
+    .cyan {
+        color: #22d3ee !important;
+    }
+
+
+    /* =========================
+       BUTTON
+    ========================= */
+
+    .btn-warning {
+        background: #22d3ee !important;
+        border-color: #22d3ee !important;
+        color: #061014 !important;
+        font-weight: 600;
+    }
+
+    .btn-warning:hover {
+        background: #67e8f9 !important;
+        border-color: #67e8f9 !important;
+        color: #061014 !important;
+    }
+
+
+    /* =========================
+       SECONDARY
+    ========================= */
+
+    .btn-secondary {
+        background: #20232b;
+        border: 1px solid #353945;
+        color: #c9ccd4;
+    }
+
+    .btn-secondary:hover {
+        background: #292e38;
+        border-color: #454b59;
+        color: #fff;
+    }
+
+
+    /* =========================
+       INFO BOX
+    ========================= */
+
+    .info-box {
+        background: #11141b;
+        border: 1px solid #272a33;
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 768px) {
+
+        .form-card .card-body {
+            padding: 18px;
+        }
+
     }
 
 </style>
 
 
-{{-- ============================= --}}
-{{-- HEADER --}}
-{{-- ============================= --}}
+{{-- =========================
+     HEADER
+========================= --}}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
 
@@ -58,10 +190,9 @@
         <h3>
             Tambah Produksi
         </h3>
-
-        <p class="text-muted mb-0">
-            Tambahkan data produksi baru
-        </p>
+        <p class="mb-0" style="color: #fff !important;">
+     Tambahkan data produksi baru
+</p>
 
     </div>
 
@@ -80,11 +211,6 @@
 </div>
 
 
-
-{{-- ============================= --}}
-{{-- FORM --}}
-{{-- ============================= --}}
-
 <form
     action="/produksi"
     method="POST"
@@ -93,9 +219,32 @@
     @csrf
 
 
-    {{-- ============================= --}}
-    {{-- INFORMASI PRODUKSI --}}
-    {{-- ============================= --}}
+    {{-- ERROR --}}
+
+    @if ($errors->any())
+
+        <div class="alert alert-danger">
+
+            <strong>Data belum bisa disimpan:</strong>
+
+            <ul class="mb-0 mt-2">
+
+                @foreach ($errors->all() as $error)
+
+                    <li>{{ $error }}</li>
+
+                @endforeach
+
+            </ul>
+
+        </div>
+
+    @endif
+
+
+    {{-- =========================
+         INFORMASI PRODUKSI
+    ========================= --}}
 
     <div class="card form-card mb-4">
 
@@ -132,7 +281,6 @@
                 </div>
 
 
-
                 {{-- PRODUK --}}
 
                 <div class="col-md-6">
@@ -150,8 +298,8 @@
 
                         <option
                             value=""
-                            selected
                             disabled
+                            selected
                         >
                             Pilih Produk
                         </option>
@@ -178,8 +326,7 @@
                 </div>
 
 
-
-                {{-- JUMLAH PRODUKSI --}}
+                {{-- JUMLAH --}}
 
                 <div class="col-md-6">
 
@@ -194,7 +341,7 @@
                             name="jumlah_produksi"
                             id="jumlahProduksi"
                             class="form-control"
-                            placeholder="Contoh: 30"
+                            placeholder=""
                             min="1"
                             value="{{ old('jumlah_produksi') }}"
                             required
@@ -209,7 +356,6 @@
                 </div>
 
 
-
                 {{-- CATATAN --}}
 
                 <div class="col-12">
@@ -222,7 +368,7 @@
                         name="catatan"
                         class="form-control"
                         rows="4"
-                        placeholder="Contoh: Produksi pagi, 30 cup..."
+                        placeholder=""
                     >{{ old('catatan') }}</textarea>
 
                 </div>
@@ -234,15 +380,14 @@
     </div>
 
 
-
-    {{-- ============================= --}}
-    {{-- INFORMASI PRODUK --}}
-    {{-- ============================= --}}
+    {{-- =========================
+         INFORMASI PRODUK
+    ========================= --}}
 
     <div
         class="card form-card mb-4"
         id="informasiProduk"
-        style="display: none;"
+        style="display:none;"
     >
 
         <div class="card-body">
@@ -252,16 +397,14 @@
             </h5>
 
             <p class="section-subtitle">
-                Informasi harga dari produk yang dipilih
+                Informasi harga dan modal produk yang dipilih
             </p>
 
 
-            <div class="info-box">
+            <div class="result-box">
 
 
-                {{-- HARGA JUAL --}}
-
-                <div class="info-row">
+                <div class="result-row">
 
                     <span>
                         Harga Jual / Produk
@@ -274,10 +417,7 @@
                 </div>
 
 
-
-                {{-- HPP --}}
-
-                <div class="info-row">
+                <div class="result-row">
 
                     <span>
                         HPP / Produk
@@ -285,7 +425,7 @@
 
                     <strong
                         id="hppProduk"
-                        class="text-warning"
+                        class="cyan"
                     >
                         Rp0
                     </strong>
@@ -293,10 +433,7 @@
                 </div>
 
 
-
-                {{-- MODAL --}}
-
-                <div class="info-row">
+                <div class="result-row">
 
                     <span>
                         Modal Produksi Sebelumnya
@@ -309,10 +446,7 @@
                 </div>
 
 
-
-                {{-- JUMLAH --}}
-
-                <div class="info-row info-final">
+                <div class="result-row result-final">
 
                     <span>
                         Estimasi Modal Produksi
@@ -320,7 +454,7 @@
 
                     <strong
                         id="estimasiModal"
-                        class="text-warning"
+                        class="cyan"
                     >
                         Rp0
                     </strong>
@@ -334,21 +468,17 @@
     </div>
 
 
-
-    {{-- ============================= --}}
-    {{-- TOMBOL --}}
-    {{-- ============================= --}}
+    {{-- =========================
+         BUTTON
+    ========================= --}}
 
     <div class="d-flex justify-content-end gap-2 mb-5">
-
 
         <a
             href="/produksi"
             class="btn btn-secondary"
         >
-
             Batal
-
         </a>
 
 
@@ -365,38 +495,28 @@
 
     </div>
 
-
 </form>
-
 
 
 <script>
 
-/*
-|--------------------------------------------------------------------------
-| FORMAT RUPIAH
-|--------------------------------------------------------------------------
-*/
-
 function rupiah(angka)
 {
-    return new Intl.NumberFormat(
-        'id-ID',
-        {
-            style: 'currency',
-            currency: 'IDR',
-            maximumFractionDigits: 0
-        }
-    ).format(angka);
+    return new Intl.NumberFormat('id-ID', {
+
+        style: 'currency',
+
+        currency: 'IDR',
+
+        maximumFractionDigits: 0
+
+    }).format(angka);
 }
 
 
-
-/*
-|--------------------------------------------------------------------------
-| UPDATE INFORMASI PRODUK
-|--------------------------------------------------------------------------
-*/
+/* =========================
+   UPDATE PRODUK
+========================= */
 
 function updateProduk()
 {
@@ -408,52 +528,39 @@ function updateProduk()
         select.options[select.selectedIndex];
 
 
-    if (!option || !option.value)
-    {
+    if (!option || !option.value) {
 
         document
             .getElementById('informasiProduk')
             .style.display = 'none';
 
         return;
-
     }
 
 
     const harga =
-        parseFloat(
-            option.dataset.harga
-        ) || 0;
-
+        parseFloat(option.dataset.harga) || 0;
 
     const hpp =
-        parseFloat(
-            option.dataset.hpp
-        ) || 0;
-
+        parseFloat(option.dataset.hpp) || 0;
 
     const modal =
-        parseFloat(
-            option.dataset.modal
-        ) || 0;
+        parseFloat(option.dataset.modal) || 0;
 
 
     document
         .getElementById('hargaJual')
-        .innerText =
-        rupiah(harga);
+        .innerText = rupiah(harga);
 
 
     document
         .getElementById('hppProduk')
-        .innerText =
-        rupiah(hpp);
+        .innerText = rupiah(hpp);
 
 
     document
         .getElementById('modalProduk')
-        .innerText =
-        rupiah(modal);
+        .innerText = rupiah(modal);
 
 
     hitungModal(hpp);
@@ -466,12 +573,9 @@ function updateProduk()
 }
 
 
-
-/*
-|--------------------------------------------------------------------------
-| HITUNG ESTIMASI MODAL
-|--------------------------------------------------------------------------
-*/
+/* =========================
+   HITUNG MODAL
+========================= */
 
 function hitungModal(hpp)
 {
@@ -490,82 +594,52 @@ function hitungModal(hpp)
 
     document
         .getElementById('estimasiModal')
-        .innerText =
-        rupiah(estimasi);
+        .innerText = rupiah(estimasi);
 
 }
 
 
-
-/*
-|--------------------------------------------------------------------------
-| EVENT PRODUK
-|--------------------------------------------------------------------------
-*/
+/* =========================
+   EVENT
+========================= */
 
 document
     .getElementById('produkSelect')
-    .addEventListener(
-        'change',
-        function()
-        {
+    .addEventListener('change', updateProduk);
 
-            updateProduk();
-
-        }
-    );
-
-
-
-/*
-|--------------------------------------------------------------------------
-| EVENT JUMLAH
-|--------------------------------------------------------------------------
-*/
 
 document
     .getElementById('jumlahProduksi')
-    .addEventListener(
-        'input',
-        function()
-        {
+    .addEventListener('input', function() {
 
-            const select =
-                document.getElementById('produkSelect');
+        const select =
+            document.getElementById('produkSelect');
 
-            const option =
-                select.options[select.selectedIndex];
+        const option =
+            select.options[select.selectedIndex];
 
 
-            if (!option || !option.value)
-            {
-                return;
-            }
-
-
-            const hpp =
-                parseFloat(
-                    option.dataset.hpp
-                ) || 0;
-
-
-            hitungModal(hpp);
-
+        if (!option || !option.value) {
+            return;
         }
-    );
 
 
+        const hpp =
+            parseFloat(option.dataset.hpp) || 0;
 
-/*
-|--------------------------------------------------------------------------
-| JALANKAN JIKA ADA OLD VALUE
-|--------------------------------------------------------------------------
-*/
+
+        hitungModal(hpp);
+
+    });
+
+
+/* =========================
+   LOAD
+========================= */
 
 document.addEventListener(
     'DOMContentLoaded',
-    function()
-    {
+    function() {
 
         updateProduk();
 

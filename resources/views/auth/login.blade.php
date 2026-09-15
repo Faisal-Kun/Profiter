@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login - ProfitKu</title>
+    <title>Masuk - ProfitKu</title>
 
     <style>
         * {
@@ -35,26 +35,33 @@
         }
 
         .logo h1 {
-            color: #22d3ee;
+            color: #3b82f6;
             font-size: 32px;
             margin-bottom: 8px;
         }
 
         .logo p {
-            color: #9ca3af;
+            color: #8995a8;
             font-size: 14px;
         }
 
         .login-card {
-            background: #17191f;
-            border: 1px solid #262a33;
-            border-radius: 14px;
+            background: #151b24;
+            border: 1px solid #273342;
+            border-radius: 16px;
             padding: 30px;
         }
 
         .login-card h2 {
-            margin-bottom: 24px;
+            margin-bottom: 8px;
             font-size: 22px;
+        }
+
+        .login-description {
+            color: #8995a8;
+            font-size: 14px;
+            margin-bottom: 24px;
+            line-height: 1.5;
         }
 
         .form-group {
@@ -71,15 +78,21 @@
         input {
             width: 100%;
             padding: 12px 14px;
-            border: 1px solid #30343d;
-            border-radius: 8px;
-            background: #11141b;
+            border: 1px solid #303a4a;
+            border-radius: 9px;
+            background: #111820;
             color: #fff;
             outline: none;
+            transition: 0.2s;
+        }
+
+        input::placeholder {
+            color: #64748b;
         }
 
         input:focus {
-            border-color: #22d3ee;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
         }
 
         .error {
@@ -92,28 +105,35 @@
             width: 100%;
             padding: 12px;
             border: none;
-            border-radius: 8px;
-            background: #22d3ee;
-            color: #111318;
+            border-radius: 9px;
+            background: #3b82f6;
+            color: #fff;
             font-weight: bold;
             cursor: pointer;
             margin-top: 8px;
+            transition: 0.2s;
         }
 
         .login-button:hover {
-            opacity: 0.9;
+            background: #60a5fa;
+            transform: translateY(-1px);
         }
 
         .register-link {
             text-align: center;
             margin-top: 20px;
             font-size: 14px;
-            color: #9ca3af;
+            color: #8995a8;
         }
 
         .register-link a {
-            color: #22d3ee;
+            color: #60a5fa;
             text-decoration: none;
+            font-weight: 600;
+        }
+
+        .register-link a:hover {
+            color: #93c5fd;
         }
     </style>
 </head>
@@ -124,29 +144,33 @@
 
     <div class="logo">
         <h1>ProfitKu</h1>
-        <p>Smart UMKM Management</p>
     </div>
 
     <div class="login-card">
 
-        <h2>Login</h2>
+        <h2>Selamat datang</h2>
+
+        <p class="login-description">
+            Masuk untuk mengelola produk, produksi, dan penjualan usaha kamu.
+        </p>
 
         <form action="{{ route('login') }}" method="POST">
             @csrf
 
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="name">Nama Pengguna</label>
 
                 <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="{{ old('email') }}"
-                    placeholder="Masukkan email"
+                    type="text"
+                    id="name"
+                    name="name"
+                    value="{{ old('name') }}"
+                    placeholder="Masukkan nama pengguna"
                     required
+                    autofocus
                 >
 
-                @error('email')
+                @error('name')
                     <div class="error">{{ $message }}</div>
                 @enderror
             </div>
@@ -168,14 +192,14 @@
             </div>
 
             <button type="submit" class="login-button">
-                Login
+                Masuk
             </button>
 
         </form>
 
         <div class="register-link">
             Belum punya akun?
-            <a href="{{ route('register') }}">Daftar</a>
+            <a href="{{ route('register') }}">Buat akun</a>
         </div>
 
     </div>

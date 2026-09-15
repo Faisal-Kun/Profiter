@@ -1,41 +1,74 @@
+blade
 @extends('layouts.app')
 
 @section('content')
 
 <style>
 
+    :root {
+        --card: #151b24;
+        --card-hover: #1a2230;
+        --border: #273342;
+
+        --primary: #3b82f6;
+        --primary-hover: #60a5fa;
+        --primary-soft: rgba(59,130,246,.10);
+
+        --text: #f5f7fa;
+        --muted: #8995a8;
+        --danger: #ef4444;
+    }
+
+
     /* =========================
-       GLOBAL FORM
+       HEADER
     ========================= */
 
-    .form-card {
-        background: #17191f;
-        border: 1px solid #272a33;
-        border-radius: 16px;
-        overflow: hidden;
-        color: #fff;
-    }
-
-    .form-card .card-body {
-        padding: 24px;
-    }
-
-    .section-title {
-        color: #fff;
+    .edit-title {
+        color: var(--text);
         font-weight: 700;
+        font-size: 28px;
         margin-bottom: 5px;
     }
 
-    .section-subtitle {
-        color: #858994;
+    .edit-subtitle {
+        color: var(--muted);
         font-size: 14px;
+    }
+
+
+    /* =========================
+       CARD
+    ========================= */
+
+    .edit-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        overflow: hidden;
         margin-bottom: 20px;
     }
 
+    .edit-card-body {
+        padding: 28px;
+    }
+
+    .edit-section-title {
+        color: var(--text);
+        font-weight: 700;
+        margin-bottom: 22px;
+    }
+
+
+    /* =========================
+       LABEL
+    ========================= */
+
     .form-label {
-        color: #c9ccd4;
-        font-weight: 600;
+        color: var(--muted);
         font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 8px;
     }
 
 
@@ -45,39 +78,32 @@
 
     .form-control,
     .form-select {
-        background: #11141b;
-        border: 1px solid #353945;
-        color: #fff;
-        border-radius: 9px;
+        background: #1a2230;
+        border: 1px solid #293647;
+        color: var(--text);
+        border-radius: 10px;
         padding: 11px 13px;
-    }
-
-    .form-control::placeholder {
-        color: #626875;
     }
 
     .form-control:focus,
     .form-select:focus {
-        background: #11141b;
-        color: #fff;
-        border-color: #22d3ee;
-        box-shadow: 0 0 0 3px rgba(34, 211, 238, .10);
+        background: #1a2230;
+        border-color: var(--primary);
+        color: var(--text);
+        box-shadow: 0 0 0 .2rem var(--primary-soft);
     }
 
-    /* Input file */
-
-    input[type="file"] {
-        color: #858994;
+    .form-control::placeholder {
+        color: #526176;
     }
 
-    input[type="file"]::file-selector-button {
-        background: #22d3ee;
-        color: #061014;
-        border: none;
-        padding: 9px 14px;
-        margin-right: 12px;
-        font-weight: 600;
-        cursor: pointer;
+    .form-control[type="file"] {
+        padding: 9px 13px;
+    }
+
+    .form-select option {
+        background: #151b24;
+        color: var(--text);
     }
 
 
@@ -86,313 +112,260 @@
     ========================= */
 
     .input-group-text {
-        background: #20232b;
-        border-color: #353945;
-        color: #22d3ee;
-        font-weight: 600;
+        background: #17243a;
+        border: 1px solid #293647;
+        color: #60a5fa;
+        font-weight: 700;
+        border-radius: 10px 0 0 10px;
+    }
+
+    .input-group .form-control {
+        border-radius: 0 10px 10px 0;
     }
 
 
     /* =========================
-       DYNAMIC ROW
+       ITEM CARD
     ========================= */
 
-    .dynamic-row {
-        background: #11141b;
-        border: 1px solid #272a33;
-        border-radius: 12px;
-        padding: 17px;
-        margin-bottom: 10px;
+    .item-card {
+        background: #111720;
+        border: 1px solid #273342;
+        border-radius: 14px;
+        padding: 18px;
+        margin-bottom: 14px;
     }
 
-    .dynamic-row:hover {
-        border-color: rgba(34, 211, 238, .35);
+    .item-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+    }
+
+    .item-title {
+        color: var(--text);
+        font-weight: 700;
+        font-size: 14px;
+        margin: 0;
     }
 
 
     /* =========================
-       BUTTON TAMBAH
+       BUTTON REMOVE
     ========================= */
 
-    .btn-warning {
-        background: #22d3ee !important;
-        border-color: #22d3ee !important;
-        color: #061014 !important;
-        font-weight: 600;
+    .btn-remove {
+        background: rgba(239,68,68,.08);
+        border: 1px solid rgba(239,68,68,.25);
+        color: #f87171;
+        border-radius: 8px;
+        padding: 7px 10px;
+        transition: .2s;
     }
 
-    .btn-warning:hover {
-        background: #67e8f9 !important;
-        border-color: #67e8f9 !important;
-        color: #061014 !important;
+    .btn-remove:hover {
+        background: rgba(239,68,68,.15);
+        color: #fca5a5;
+    }
+
+
+    /* =========================
+       BUTTON ADD
+    ========================= */
+
+    .btn-add {
+        background: transparent;
+        border: 1px dashed #3b82f6;
+        color: #60a5fa;
+        border-radius: 10px;
+        padding: 10px 15px;
+        font-weight: 600;
+        transition: .2s;
+    }
+
+    .btn-add:hover {
+        background: var(--primary-soft);
+        color: #93c5fd;
+    }
+
+
+    /* =========================
+       BUTTON SAVE
+    ========================= */
+
+    .btn-save {
+        background: var(--primary);
+        border: 1px solid var(--primary);
+        color: #fff;
+        font-weight: 700;
+        border-radius: 10px;
+        padding: 10px 16px;
+        transition: .2s;
+    }
+
+    .btn-save:hover {
+        background: var(--primary-hover);
+        border-color: var(--primary-hover);
+        color: #fff;
         transform: translateY(-1px);
     }
 
 
     /* =========================
-       BUTTON SECONDARY
+       BUTTON BACK
     ========================= */
 
-    .btn-secondary {
-        background: #20232b;
-        border: 1px solid #353945;
-        color: #c9ccd4;
-    }
-
-    .btn-secondary:hover {
-        background: #292e38;
-        border-color: #454b59;
-        color: #fff;
-    }
-
-
-    /* =========================
-       BUTTON DELETE
-    ========================= */
-
-    .btn-outline-danger {
-        border-color: #353945;
-        color: #858994;
-    }
-
-    .btn-outline-danger:hover {
-        background: rgba(255, 92, 92, .10);
-        border-color: #ff5c5c;
-        color: #ff5c5c;
-    }
-
-
-    /* =========================
-       TEXT MUTED
-    ========================= */
-
-    .text-muted {
-        color: #858994 !important;
-    }
-
-
-    /* =========================
-       RESULT BOX
-    ========================= */
-
-    .result-box {
-        background: #11141b;
-        border: 1px solid #272a33;
-        border-radius: 12px;
-        padding: 20px;
-    }
-
-    .result-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        color: #b8bdc8;
-    }
-
-    .result-row strong {
-        color: #fff;
-    }
-
-    .result-final {
-        border-top: 1px solid #353945;
-        margin-top: 10px;
-        padding-top: 15px;
-        font-size: 19px;
-        font-weight: 700;
-    }
-
-    #hpp {
-        color: #22d3ee !important;
-    }
-
-
-    /* =========================
-       BIAYA BAHAN
-    ========================= */
-
-    .bahan-total {
-        color: #22d3ee;
+    .btn-back {
+        background: #151b24;
+        border: 1px solid #354154;
+        color: var(--muted);
         font-weight: 600;
+        border-radius: 10px;
+        padding: 10px 16px;
+        transition: .2s;
+    }
+
+    .btn-back:hover {
+        background: #1a2230;
+        border-color: var(--primary);
+        color: var(--primary-hover);
     }
 
 
     /* =========================
-       PROFIT RESULT
+       FILE
     ========================= */
 
-    .profit-result {
-        background:
-            linear-gradient(
-                135deg,
-                #0d3038,
-                #12343b
-            );
-
-        border: 1px solid rgba(34, 211, 238, .25);
-        color: #fff;
-        border-radius: 16px;
-        padding: 22px;
+    input[type="file"] {
+        color: var(--muted);
     }
 
-    .profit-result small {
-        color: #8edee8;
-    }
-
-    .profit-number {
-        color: #22d3ee;
-        font-size: 28px;
-        font-weight: 700;
-    }
-
-    .profit-result p {
-        color: #858994;
-    }
-
-    .profit-result hr {
-        border-color: #36535a;
-        opacity: 1;
-    }
-
-    .profit-result strong {
-        color: #fff;
+    input[type="file"]::file-selector-button {
+        background: #1a2230;
+        border: 1px solid #354154;
+        color: #60a5fa;
+        border-radius: 7px;
+        padding: 7px 12px;
+        margin-right: 10px;
+        cursor: pointer;
     }
 
 
     /* =========================
-       ALERT ERROR
+       ALERT
     ========================= */
 
     .alert-danger {
-        background: rgba(255, 92, 92, .08);
-        border: 1px solid rgba(255, 92, 92, .25);
-        color: #ff7b7b;
+        background: rgba(239,68,68,.08);
+        border: 1px solid rgba(239,68,68,.25);
+        color: #f87171;
         border-radius: 10px;
     }
 
-    .alert-danger strong {
-        color: #ff7b7b;
-    }
-
 
     /* =========================
-       FILE INFO
-    ========================= */
-
-    .form-card small {
-        color: #626875 !important;
-    }
-
-
-    /* =========================
-       RESPONSIVE
+       MOBILE
     ========================= */
 
     @media (max-width: 768px) {
 
-        .form-card .card-body {
-            padding: 18px;
-        }
-
-        .dynamic-row {
-            padding: 14px;
-        }
-
-        .profit-number {
+        .edit-title {
             font-size: 24px;
+        }
+
+        .edit-card-body {
+            padding: 20px;
         }
 
     }
 
 </style>
 
-{{-- HEADER --}}
+
+{{-- =========================
+HEADER
+========================= --}}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
 
+    <div>
 
-<div>
-    <h3>Tambah Produk</h3>
+        <h3 class="edit-title">
+            Tambah Produk
+        </h3>
 
-    <p class="text-muted mb-0">
-        Masukkan informasi produk dan biaya produksinya
-    </p>
-</div>
-
-<a href="/produk" class="btn btn-secondary">
-    <i class="bi bi-arrow-left"></i>
-    Kembali
-</a>
-
-
-</div>
-
-<form action="/produk" method="POST" enctype="multipart/form-data">
-
-
-@csrf
-
-
-{{-- ERROR --}}
-@if ($errors->any())
-    <div class="alert alert-danger">
-
-        <strong>Data belum bisa disimpan:</strong>
-
-        <ul class="mb-0 mt-2">
-
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-
-        </ul>
-
-    </div>
-@endif
-
-
-{{-- GAMBAR --}}
-<div class="card form-card mb-4">
-
-    <div class="card-body">
-
-        <label class="form-label">
-            Gambar Produk
-        </label>
-
-        <input
-            type="file"
-            name="gambar"
-            class="form-control"
-            accept="image/jpeg,image/png,image/webp"
-        >
-
-        <small class="text-muted">
-            Format JPG, JPEG, PNG, atau WEBP. Maksimal 5MB.
-        </small>
-
-    </div>
-
-</div>
-
-
-{{-- INFORMASI PRODUK --}}
-<div class="card form-card mb-4">
-
-    <div class="card-body">
-
-        <h5 class="section-title">
-            Informasi Produk
-        </h5>
-
-        <p class="section-subtitle">
-            Informasi dasar produk yang akan dijual
+        <p class="edit-subtitle mb-0">
+            Masukkan informasi, bahan, dan biaya tambahan produk
         </p>
 
+    </div>
 
-        <div class="row g-3">
+    <a
+        href="/produk"
+        class="btn btn-back"
+    >
+        <i class="bi bi-arrow-left me-1"></i>
+        Kembali
+    </a>
+
+</div>
+
+
+<form
+    action="/produk"
+    method="POST"
+    enctype="multipart/form-data"
+>
+
+    @csrf
+
+
+    {{-- =========================
+    ERROR
+    ========================= --}}
+
+    @if ($errors->any())
+
+        <div class="alert alert-danger mb-4">
+
+            <strong>
+                Data belum bisa disimpan:
+            </strong>
+
+            <ul class="mb-0 mt-2">
+
+                @foreach ($errors->all() as $error)
+
+                    <li>
+                        {{ $error }}
+                    </li>
+
+                @endforeach
+
+            </ul>
+
+        </div>
+
+    @endif
+
+
+    {{-- =========================
+    INFORMASI PRODUK
+    ========================= --}}
+
+    <div class="edit-card">
+
+        <div class="edit-card-body">
+
+            <h5 class="edit-section-title">
+                Informasi Produk
+            </h5>
+
 
             {{-- NAMA --}}
-            <div class="col-md-6">
+
+            <div class="mb-4">
 
                 <label class="form-label">
                     Nama Produk
@@ -402,6 +375,7 @@
                     type="text"
                     name="nama"
                     class="form-control"
+                    value="{{ old('nama') }}"
                     placeholder="Contoh: Ayam Crispy"
                     required
                 >
@@ -410,7 +384,8 @@
 
 
             {{-- KATEGORI --}}
-            <div class="col-md-6">
+
+            <div class="mb-4">
 
                 <label class="form-label">
                     Kategori
@@ -420,12 +395,13 @@
                     type="text"
                     name="kategori"
                     class="form-control"
-                    list="daftarKategori"
-                    placeholder="Pilih atau ketik kategori"
+                    list="kategoriList"
+                    value="{{ old('kategori') }}"
+                    placeholder="Pilih atau ketik kategori..."
                     required
                 >
 
-                <datalist id="daftarKategori">
+                <datalist id="kategoriList">
 
                     <option value="Makanan">
                     <option value="Minuman">
@@ -441,7 +417,8 @@
 
 
             {{-- HARGA JUAL --}}
-            <div class="col-md-6">
+
+            <div class="mb-4">
 
                 <label class="form-label">
                     Harga Jual
@@ -455,9 +432,9 @@
 
                     <input
                         type="number"
-                        id="hargaJual"
                         name="harga_jual"
                         class="form-control"
+                        value="{{ old('harga_jual') }}"
                         placeholder="15000"
                         min="0"
                         required
@@ -467,55 +444,441 @@
 
             </div>
 
+
+            {{-- GAMBAR --}}
+
+            <div>
+
+                <label class="form-label">
+                    Gambar Produk
+                </label>
+
+                <input
+                    type="file"
+                    name="gambar"
+                    class="form-control"
+                    accept=".jpg,.jpeg,.png,.webp"
+                >
+
+                <small class="text-muted">
+                    JPG, JPEG, PNG, atau WEBP. Maksimal 5MB.
+                </small>
+
+            </div>
+
         </div>
 
     </div>
 
-</div>
 
+    {{-- =========================
+    BAHAN
+    ========================= --}}
 
-{{-- BAHAN --}}
-<div class="card form-card mb-4">
+    <div class="edit-card">
 
-    <div class="card-body">
+        <div class="edit-card-body">
 
-        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
 
-            <div>
-
-                <h5 class="section-title">
-                    Bahan yang Digunakan
+                <h5 class="edit-section-title mb-0">
+                    Bahan Produk
                 </h5>
 
-                <p class="section-subtitle mb-0">
-                    Masukkan bahan dan jumlah yang digunakan
-                </p>
+                <button
+                    type="button"
+                    class="btn btn-add"
+                    onclick="tambahBahan()"
+                >
+                    <i class="bi bi-plus-lg me-1"></i>
+                    Tambah Bahan
+                </button>
 
             </div>
 
-            <button
-                type="button"
-                class="btn btn-warning btn-sm"
-                onclick="tambahBahan()"
-            >
 
-                <i class="bi bi-plus-circle"></i>
-                Tambah Bahan
+            <div id="bahan-container">
 
-            </button>
+
+                {{-- BAHAN PERTAMA --}}
+
+                <div class="item-card bahan-item">
+
+                    <div class="item-header">
+
+                        <p class="item-title">
+                            Bahan
+                        </p>
+
+                        <button
+                            type="button"
+                            class="btn btn-remove"
+                            onclick="hapusItem(this)"
+                        >
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+
+                        {{-- NAMA --}}
+
+                        <div class="col-md-4">
+
+                            <label class="form-label">
+                                Nama Bahan
+                            </label>
+
+                            <input
+                                type="text"
+                                name="bahan_nama[]"
+                                class="form-control"
+                                value="{{ old('bahan_nama.0') }}"
+                                placeholder="Contoh: Tepung"
+                                required
+                            >
+
+                        </div>
+
+
+                        {{-- DIGUNAKAN --}}
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+                                Digunakan
+                            </label>
+
+                            <input
+                                type="number"
+                                name="bahan_jumlah[]"
+                                class="form-control"
+                                value="{{ old('bahan_jumlah.0') }}"
+                                placeholder="1"
+                                min="0"
+                                step="1"
+                                required
+                            >
+
+                        </div>
+
+
+                        {{-- SATUAN --}}
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+                                Satuan
+                            </label>
+
+                            <input
+                                type="text"
+                                name="bahan_satuan[]"
+                                class="form-control"
+                                value="{{ old('bahan_satuan.0') }}"
+                                placeholder="Ketik Satuan"
+                                required
+                            >
+
+                        </div>
+
+
+                        {{-- ISI KEMASAN --}}
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+                                Isi Kemasan
+                            </label>
+
+                            <input
+                                type="number"
+                                name="bahan_isi[]"
+                                class="form-control"
+                                value="{{ old('bahan_isi.0') }}"
+                                placeholder="30"
+                                min="0"
+                                step="1"
+                                required
+                            >
+
+                        </div>
+
+
+                        {{-- HARGA --}}
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+                                Harga
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    Rp
+                                </span>
+
+                                <input
+                                    type="number"
+                                    name="bahan_harga[]"
+                                    class="form-control"
+                                    value="{{ old('bahan_harga.0') }}"
+                                    placeholder="5000"
+                                    min="0"
+                                    step="1"
+                                    required
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 
+    </div>
 
-        <div id="daftarBahan">
 
-            {{-- BAHAN PERTAMA --}}
-            <div class="dynamic-row bahan-row">
+    {{-- =========================
+    BIAYA TAMBAHAN
+    ========================= --}}
 
-                <div class="row g-3 align-items-end">
+    <div class="edit-card">
 
-                    {{-- NAMA --}}
-                    <div class="col-lg-3">
+        <div class="edit-card-body">
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                <h5 class="edit-section-title mb-0">
+                    Biaya Tambahan
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn btn-add"
+                    onclick="tambahBiaya()"
+                >
+                    <i class="bi bi-plus-lg me-1"></i>
+                    Tambah Biaya
+                </button>
+
+            </div>
+
+
+            <div id="biaya-container">
+
+
+                {{-- BIAYA PERTAMA --}}
+
+                <div class="item-card biaya-item">
+
+                    <div class="item-header">
+
+                        <p class="item-title">
+                            Biaya Tambahan
+                        </p>
+
+                        <button
+                            type="button"
+                            class="btn btn-remove"
+                            onclick="hapusItem(this)"
+                        >
+                            <i class="bi bi-trash"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+
+                        {{-- NAMA --}}
+
+                        <div class="col-md-5">
+
+                            <label class="form-label">
+                                Nama Biaya
+                            </label>
+
+                            <input
+                                type="text"
+                                name="biaya_nama[]"
+                                class="form-control"
+                                value="{{ old('biaya_nama.0') }}"
+                                placeholder="Contoh: Gas"
+                            >
+
+                        </div>
+
+
+                        {{-- JUMLAH --}}
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+                                Jumlah
+                            </label>
+
+                            <input
+                                type="number"
+                                name="biaya_jumlah[]"
+                                class="form-control"
+                                value="{{ old('biaya_jumlah.0') }}"
+                                placeholder="1"
+                                min="0"
+                                step="1"
+                            >
+
+                        </div>
+
+
+                        {{-- SATUAN --}}
+
+                        <div class="col-md-2">
+
+                            <label class="form-label">
+                                Satuan
+                            </label>
+
+                            <input
+                                type="text"
+                                name="biaya_satuan[]"
+                                class="form-control"
+                                value="{{ old('biaya_satuan.0') }}"
+                                placeholder="Ketik Satuan"
+                            >
+
+                        </div>
+
+
+                        {{-- HARGA --}}
+
+                        <div class="col-md-3">
+
+                            <label class="form-label">
+                                Harga
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text">
+                                    Rp
+                                </span>
+
+                                <input
+                                    type="number"
+                                    name="biaya_harga[]"
+                                    class="form-control"
+                                    value="{{ old('biaya_harga.0') }}"
+                                    placeholder="5000"
+                                    min="0"
+                                    step="1"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- =========================
+    BUTTON
+    ========================= --}}
+
+    <div class="d-flex justify-content-end gap-2 mb-4">
+
+        <a
+            href="/produk"
+            class="btn btn-back"
+        >
+            Batal
+        </a>
+
+        <button
+            type="submit"
+            class="btn btn-save"
+        >
+            <i class="bi bi-check-circle me-1"></i>
+            Simpan Produk
+        </button>
+
+    </div>
+
+
+</form>
+
+
+<script>
+
+
+    /* =========================
+       HAPUS ITEM
+    ========================= */
+
+    function hapusItem(button)
+    {
+        const item = button.closest('.item-card');
+
+        if (item) {
+            item.remove();
+        }
+    }
+
+
+    /* =========================
+       TAMBAH BAHAN
+    ========================= */
+
+    function tambahBahan()
+    {
+        const container =
+            document.getElementById('bahan-container');
+
+        const html = `
+
+            <div class="item-card bahan-item">
+
+                <div class="item-header">
+
+                    <p class="item-title">
+                        Bahan
+                    </p>
+
+                    <button
+                        type="button"
+                        class="btn btn-remove"
+                        onclick="hapusItem(this)"
+                    >
+                        <i class="bi bi-trash"></i>
+                    </button>
+
+                </div>
+
+
+                <div class="row g-3">
+
+
+                    <div class="col-md-4">
 
                         <label class="form-label">
                             Nama Bahan
@@ -532,28 +895,26 @@
                     </div>
 
 
-                    {{-- JUMLAH --}}
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
 
                         <label class="form-label">
-                            Jumlah Digunakan
+                            Digunakan
                         </label>
 
                         <input
                             type="number"
                             name="bahan_jumlah[]"
-                            class="form-control bahan-dipakai"
-                            placeholder="10"
+                            class="form-control"
+                            placeholder="1"
                             min="0"
-                            step="0.01"
+                            step="1"
                             required
                         >
 
                     </div>
 
 
-                    {{-- SATUAN --}}
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
 
                         <label class="form-label">
                             Satuan
@@ -563,30 +924,14 @@
                             type="text"
                             name="bahan_satuan[]"
                             class="form-control"
-                            list="satuanBahan"
-                            placeholder="Ketik satuan"
+                            placeholder="Ketik Satuan"
                             required
                         >
-
-                        <datalist id="satuanBahan">
-
-                            <option value="pcs">
-                            <option value="kg">
-                            <option value="gram">
-                            <option value="liter">
-                            <option value="ml">
-                            <option value="butir">
-                            <option value="bungkus">
-                            <option value="pack">
-                            <option value="botol">
-
-                        </datalist>
 
                     </div>
 
 
-                    {{-- ISI KEMASAN --}}
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
 
                         <label class="form-label">
                             Isi Kemasan
@@ -595,21 +940,20 @@
                         <input
                             type="number"
                             name="bahan_isi[]"
-                            class="form-control bahan-isi"
+                            class="form-control"
                             placeholder="30"
                             min="0"
-                            step="0.01"
+                            step="1"
                             required
                         >
 
                     </div>
 
 
-                    {{-- HARGA KEMASAN --}}
-                    <div class="col-lg-2">
+                    <div class="col-md-2">
 
                         <label class="form-label">
-                            Harga Kemasan
+                            Harga
                         </label>
 
                         <div class="input-group">
@@ -621,9 +965,10 @@
                             <input
                                 type="number"
                                 name="bahan_harga[]"
-                                class="form-control bahan-harga"
+                                class="form-control"
                                 placeholder="5000"
                                 min="0"
+                                step="1"
                                 required
                             >
 
@@ -632,88 +977,53 @@
                     </div>
 
 
-                    {{-- HAPUS --}}
-                    <div class="col-lg-1">
-
-                        <button
-                            type="button"
-                            class="btn btn-outline-danger w-100"
-                            onclick="hapusBahan(this)"
-                        >
-
-                            <i class="bi bi-trash"></i>
-
-                        </button>
-
-                    </div>
-
-                </div>
-
-
-                {{-- HASIL BIAYA BAHAN --}}
-                <div class="text-end mt-3">
-
-                    <span class="text-muted">
-                        Biaya bahan:
-                    </span>
-
-                    <strong class="bahan-total">
-                        Rp0
-                    </strong>
-
                 </div>
 
             </div>
 
-        </div>
+        `;
 
-    </div>
-
-</div>
-
-
-{{-- BIAYA TAMBAHAN --}}
-<div class="card form-card mb-4">
-
-    <div class="card-body">
-
-        <div class="d-flex justify-content-between align-items-center mb-3">
-
-            <div>
-
-                <h5 class="section-title">
-                    Biaya Tambahan
-                </h5>
-
-                <p class="section-subtitle mb-0">
-                    Opsional. Contoh: minyak, gas, kemasan, listrik, dan lainnya.
-                </p>
-
-            </div>
-
-            <button
-                type="button"
-                class="btn btn-warning btn-sm"
-                onclick="tambahBiaya()"
-            >
-
-                <i class="bi bi-plus-circle"></i>
-                Tambah Biaya
-
-            </button>
-
-        </div>
+        container.insertAdjacentHTML(
+            'beforeend',
+            html
+        );
+    }
 
 
-        <div id="daftarBiaya">
+    /* =========================
+       TAMBAH BIAYA
+    ========================= */
 
-            {{-- BIAYA PERTAMA --}}
-            <div class="dynamic-row biaya-row">
+    function tambahBiaya()
+    {
+        const container =
+            document.getElementById('biaya-container');
 
-                <div class="row g-2 align-items-end">
+        const html = `
 
-                    {{-- NAMA --}}
-                    <div class="col-md-4">
+            <div class="item-card biaya-item">
+
+                <div class="item-header">
+
+                    <p class="item-title">
+                        Biaya Tambahan
+                    </p>
+
+                    <button
+                        type="button"
+                        class="btn btn-remove"
+                        onclick="hapusItem(this)"
+                    >
+                        <i class="bi bi-trash"></i>
+                    </button>
+
+                </div>
+
+
+                <div class="row g-3">
+
+
+                    <div class="col-md-5">
 
                         <label class="form-label">
                             Nama Biaya
@@ -722,14 +1032,13 @@
                         <input
                             type="text"
                             name="biaya_nama[]"
-                            class="form-control biaya-nama"
-                            placeholder="Contoh: Minyak Goreng"
+                            class="form-control"
+                            placeholder="Contoh: Gas"
                         >
 
                     </div>
 
 
-                    {{-- JUMLAH --}}
                     <div class="col-md-2">
 
                         <label class="form-label">
@@ -739,16 +1048,15 @@
                         <input
                             type="number"
                             name="biaya_jumlah[]"
-                            class="form-control biaya-jumlah"
-                            placeholder="2"
+                            class="form-control"
+                            placeholder="1"
                             min="0"
-                            step="0.01"
+                            step="1"
                         >
 
                     </div>
 
 
-                    {{-- SATUAN --}}
                     <div class="col-md-2">
 
                         <label class="form-label">
@@ -758,32 +1066,17 @@
                         <input
                             type="text"
                             name="biaya_satuan[]"
-                            class="form-control biaya-satuan"
-                            list="satuanBiaya"
-                            placeholder="Ketik satuan"
+                            class="form-control"
+                            placeholder="Ketik Satuan"
                         >
-
-                        <datalist id="satuanBiaya">
-
-                            <option value="liter">
-                            <option value="kg">
-                            <option value="gram">
-                            <option value="ml">
-                            <option value="pcs">
-                            <option value="tabung">
-                            <option value="kWh">
-                            <option value="lainnya">
-
-                        </datalist>
 
                     </div>
 
 
-                    {{-- HARGA --}}
-                    <div class="col-md-2">
+                    <div class="col-md-3">
 
                         <label class="form-label">
-                            Harga Satuan
+                            Harga
                         </label>
 
                         <div class="input-group">
@@ -795,9 +1088,10 @@
                             <input
                                 type="number"
                                 name="biaya_harga[]"
-                                class="form-control biaya-harga"
-                                placeholder="18000"
+                                class="form-control"
+                                placeholder="5000"
                                 min="0"
+                                step="1"
                             >
 
                         </div>
@@ -805,645 +1099,17 @@
                     </div>
 
 
-                    {{-- HAPUS --}}
-                    <div class="col-md-2">
-
-                        <button
-                            type="button"
-                            class="btn btn-outline-danger w-100"
-                            onclick="hapusBiaya(this)"
-                        >
-
-                            <i class="bi bi-trash"></i>
-                            Hapus
-
-                        </button>
-
-                    </div>
-
                 </div>
 
             </div>
 
-        </div>
-
-    </div>
-
-</div>
-
-
-{{-- HASIL PERHITUNGAN --}}
-<div class="row g-4 mb-4">
-
-    {{-- PERHITUNGAN --}}
-    <div class="col-lg-7">
-
-        <div class="card form-card h-100">
-
-            <div class="card-body">
-
-                <h5 class="section-title">
-                    Perhitungan
-                </h5>
-
-                <p class="section-subtitle">
-                    Nilai dihitung otomatis berdasarkan data yang dimasukkan
-                </p>
-
-
-                <div class="result-box">
-
-                    <div class="result-row">
-
-                        <span>
-                            Total Biaya Bahan
-                        </span>
-
-                        <strong id="totalBahan">
-                            Rp0
-                        </strong>
-
-                    </div>
-
-
-                    <div class="result-row">
-
-                        <span>
-                            Total Biaya Tambahan
-                        </span>
-
-                        <strong id="totalBiaya">
-                            Rp0
-                        </strong>
-
-                    </div>
-
-
-                    <div class="result-row">
-
-                        <span>
-                            Total Modal Produksi
-                        </span>
-
-                        <strong id="totalModal">
-                            Rp0
-                        </strong>
-
-                    </div>
-
-
-                    <div class="result-row result-final">
-
-                        <span>
-                            HPP / Produk
-                        </span>
-
-                        <strong
-                            id="hpp"
-                            class="text-warning"
-                        >
-                            Rp0
-                        </strong>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    {{-- KEUNTUNGAN --}}
-    <div class="col-lg-5">
-
-        <div class="profit-result h-100">
-
-            <small>
-                Perkiraan Keuntungan
-            </small>
-
-
-            <div
-                class="profit-number mt-2"
-                id="laba"
-            >
-                Rp0
-            </div>
-
-
-            <p class="mt-2 mb-4">
-                Keuntungan setiap produk
-            </p>
-
-
-            <div class="d-flex justify-content-between">
-
-                <span>
-                    Harga Jual
-                </span>
-
-                <strong id="hasilHarga">
-                    Rp0
-                </strong>
-
-            </div>
-
-
-            <div class="d-flex justify-content-between mt-2">
-
-                <span>
-                    HPP
-                </span>
-
-                <strong id="hasilHpp">
-                    Rp0
-                </strong>
-
-            </div>
-
-
-            <hr>
-
-
-            <div class="d-flex justify-content-between">
-
-                <strong>
-                    Margin
-                </strong>
-
-                <strong id="margin">
-                    0%
-                </strong>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-
-{{-- BUTTON --}}
-<div class="d-flex justify-content-end gap-2 mb-5">
-
-    <a
-        href="/produk"
-        class="btn btn-secondary"
-    >
-        Batal
-    </a>
-
-
-    <button
-        type="submit"
-        class="btn btn-warning px-4"
-    >
-
-        <i class="bi bi-check-circle"></i>
-
-        Simpan Produk
-
-    </button>
-
-</div>
-
-
-</form>
-
-<script>
-
-function rupiah(angka) {
-
-    return new Intl.NumberFormat('id-ID', {
-
-        style: 'currency',
-
-        currency: 'IDR',
-
-        maximumFractionDigits: 0
-
-    }).format(angka);
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| HITUNG SEMUA
-|--------------------------------------------------------------------------
-*/
-
-function hitung() {
-
-    let totalBahan = 0;
-    let totalBiaya = 0;
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | HITUNG BAHAN
-    |--------------------------------------------------------------------------
-    */
-
-    document
-        .querySelectorAll('.bahan-row')
-        .forEach(function(row) {
-
-            let dipakai =
-                parseFloat(
-                    row.querySelector('.bahan-dipakai')?.value
-                ) || 0;
-
-
-            let isi =
-                parseFloat(
-                    row.querySelector('.bahan-isi')?.value
-                ) || 0;
-
-
-            let harga =
-                parseFloat(
-                    row.querySelector('.bahan-harga')?.value
-                ) || 0;
-
-
-            let biaya = 0;
-
-
-            if (isi > 0) {
-
-                biaya =
-                    (harga / isi) * dipakai;
-
-            }
-
-
-            totalBahan += biaya;
-
-
-            let hasil =
-                row.querySelector('.bahan-total');
-
-
-            if (hasil) {
-
-                hasil.innerText =
-                    rupiah(biaya);
-
-            }
-
-        });
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | HITUNG BIAYA TAMBAHAN
-    |--------------------------------------------------------------------------
-    */
-
-    document
-        .querySelectorAll('.biaya-row')
-        .forEach(function(row) {
-
-            let nama =
-                row.querySelector('.biaya-nama')?.value
-                .trim() || '';
-
-
-            let jumlah =
-                parseFloat(
-                    row.querySelector('.biaya-jumlah')?.value
-                ) || 0;
-
-
-            let harga =
-                parseFloat(
-                    row.querySelector('.biaya-harga')?.value
-                ) || 0;
-
-
-            /*
-            | Kalau nama kosong, biaya dianggap tidak digunakan.
-            */
-
-            if (nama !== '') {
-
-                totalBiaya +=
-                    jumlah * harga;
-
-            }
-
-        });
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | TOTAL MODAL
-    |--------------------------------------------------------------------------
-    */
-
-    let totalModal =
-        totalBahan + totalBiaya;
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | HPP
-    |--------------------------------------------------------------------------
-    |
-    | Jumlah produksi sudah dihapus.
-    |
-    */
-
-    let hpp =
-        totalModal;
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | HARGA JUAL
-    |--------------------------------------------------------------------------
-    */
-
-    let hargaJual =
-        parseFloat(
-            document.getElementById('hargaJual')?.value
-        ) || 0;
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | LABA
-    |--------------------------------------------------------------------------
-    */
-
-    let laba =
-        hargaJual - hpp;
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | MARGIN
-    |--------------------------------------------------------------------------
-    */
-
-    let margin = 0;
-
-
-    if (hargaJual > 0) {
-
-        margin =
-            (laba / hargaJual) * 100;
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | TAMPILKAN
-    |--------------------------------------------------------------------------
-    */
-
-    document.getElementById('totalBahan').innerText =
-        rupiah(totalBahan);
-
-
-    document.getElementById('totalBiaya').innerText =
-        rupiah(totalBiaya);
-
-
-    document.getElementById('totalModal').innerText =
-        rupiah(totalModal);
-
-
-    document.getElementById('hpp').innerText =
-        rupiah(hpp);
-
-
-    document.getElementById('hasilHarga').innerText =
-        rupiah(hargaJual);
-
-
-    document.getElementById('hasilHpp').innerText =
-        rupiah(hpp);
-
-
-    document.getElementById('laba').innerText =
-        rupiah(laba);
-
-
-    document.getElementById('margin').innerText =
-        margin.toFixed(1) + '%';
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| TAMBAH BAHAN
-|--------------------------------------------------------------------------
-*/
-
-function tambahBahan() {
-
-    let container =
-        document.getElementById('daftarBahan');
-
-
-    let pertama =
-        container.querySelector('.bahan-row');
-
-
-    let row =
-        pertama.cloneNode(true);
-
-
-    row.querySelectorAll('input').forEach(function(input) {
-
-        input.value = '';
-
-    });
-
-
-    row.querySelector('.bahan-total').innerText =
-        'Rp0';
-
-
-    container.appendChild(row);
-
-
-    pasangEvent();
-
-    hitung();
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| HAPUS BAHAN
-|--------------------------------------------------------------------------
-*/
-
-function hapusBahan(button) {
-
-    let rows =
-        document.querySelectorAll('.bahan-row');
-
-
-    if (rows.length <= 1) {
-
-        alert(
-            'Minimal harus ada satu bahan.'
+        `;
+
+        container.insertAdjacentHTML(
+            'beforeend',
+            html
         );
-
-        return;
-
     }
-
-
-    button
-        .closest('.bahan-row')
-        .remove();
-
-
-    hitung();
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| TAMBAH BIAYA
-|--------------------------------------------------------------------------
-*/
-
-function tambahBiaya() {
-
-    let container =
-        document.getElementById('daftarBiaya');
-
-
-    let pertama =
-        container.querySelector('.biaya-row');
-
-
-    let row =
-        pertama.cloneNode(true);
-
-
-    row.querySelectorAll('input').forEach(function(input) {
-
-        input.value = '';
-
-    });
-
-
-    container.appendChild(row);
-
-
-    pasangEvent();
-
-    hitung();
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| HAPUS BIAYA
-|--------------------------------------------------------------------------
-*/
-
-function hapusBiaya(button) {
-
-    let rows =
-        document.querySelectorAll('.biaya-row');
-
-
-    if (rows.length <= 1) {
-
-        /*
-        | Kalau tinggal satu,
-        | jangan dihapus.
-        | Cukup kosongkan saja.
-        */
-
-        let row =
-            button.closest('.biaya-row');
-
-
-        row.querySelectorAll('input').forEach(function(input) {
-
-            input.value = '';
-
-        });
-
-
-        hitung();
-
-        return;
-
-    }
-
-
-    button
-        .closest('.biaya-row')
-        .remove();
-
-
-    hitung();
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| EVENT INPUT
-|--------------------------------------------------------------------------
-*/
-
-function pasangEvent() {
-
-    document
-        .querySelectorAll('input')
-        .forEach(function(input) {
-
-            input.removeEventListener(
-                'input',
-                hitung
-            );
-
-            input.addEventListener(
-                'input',
-                hitung
-            );
-
-        });
-
-}
-
-
-/*
-|--------------------------------------------------------------------------
-| JALANKAN
-|--------------------------------------------------------------------------
-*/
-
-document.addEventListener(
-    'DOMContentLoaded',
-    function() {
-
-        pasangEvent();
-
-        hitung();
-
-    }
-);
 
 </script>
 

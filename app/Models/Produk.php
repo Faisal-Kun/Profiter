@@ -11,6 +11,7 @@ use App\Models\Penjualan;
 class Produk extends Model
 {
 protected $fillable = [
+    'user_id',
     'nama',
     'gambar',
     'kategori',

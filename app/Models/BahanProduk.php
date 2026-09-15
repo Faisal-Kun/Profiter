@@ -13,6 +13,7 @@ class BahanProduk extends Model
         'nama',
         'jumlah',
         'satuan',
+        'isi_kemasan',
         'harga_satuan',
         'total',
     ];

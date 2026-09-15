@@ -17,7 +17,8 @@ class ProduksiController extends Controller
 
     public function index()
     {
-        $produksis = Produksi::with('produk')
+        $produksis = Produksi::where('user_id', auth()->id())
+            ->with('produk')
             ->latest()
             ->get();
 
@@ -33,7 +34,9 @@ class ProduksiController extends Controller
 
     public function create()
     {
-        $produks = Produk::orderBy('nama')->get();
+        $produks = Produk::where('user_id', auth()->id())
+            ->orderBy('nama')
+            ->get();
 
         return view('produksi.tambah', compact('produks'));
     }
@@ -66,13 +69,12 @@ class ProduksiController extends Controller
 
             /*
             |--------------------------------------------------------------------------
-            | AMBIL PRODUK
+            | AMBIL PRODUK MILIK USER
             |--------------------------------------------------------------------------
             */
 
-            $produk = Produk::findOrFail(
-                $request->produk_id
-            );
+            $produk = Produk::where('user_id', auth()->id())
+                ->findOrFail($request->produk_id);
 
 
             /*
@@ -82,6 +84,9 @@ class ProduksiController extends Controller
             */
 
             Produksi::create([
+
+                'user_id' =>
+                    auth()->id(),
 
                 'tanggal' =>
                     $request->tanggal,
@@ -128,7 +133,8 @@ class ProduksiController extends Controller
 
     public function show($id)
     {
-        $produksi = Produksi::with('produk')
+        $produksi = Produksi::where('user_id', auth()->id())
+            ->with('produk')
             ->findOrFail($id);
 
         return view(
@@ -146,11 +152,12 @@ class ProduksiController extends Controller
 
     public function edit($id)
     {
-        $produksi =
-            Produksi::findOrFail($id);
+        $produksi = Produksi::where('user_id', auth()->id())
+            ->findOrFail($id);
 
-        $produks =
-            Produk::orderBy('nama')->get();
+        $produks = Produk::where('user_id', auth()->id())
+            ->orderBy('nama')
+            ->get();
 
         return view(
             'produksi.edit',
@@ -173,8 +180,8 @@ class ProduksiController extends Controller
         $id
     ) {
 
-        $produksi =
-            Produksi::findOrFail($id);
+        $produksi = Produksi::where('user_id', auth()->id())
+            ->findOrFail($id);
 
 
         $request->validate([
@@ -203,8 +210,8 @@ class ProduksiController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $produkLama =
-                Produk::findOrFail(
+            $produkLama = Produk::where('user_id', auth()->id())
+                ->findOrFail(
                     $produksi->produk_id
                 );
 
@@ -231,8 +238,8 @@ class ProduksiController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $produkBaru =
-                Produk::findOrFail(
+            $produkBaru = Produk::where('user_id', auth()->id())
+                ->findOrFail(
                     $request->produk_id
                 );
 
@@ -290,8 +297,8 @@ class ProduksiController extends Controller
 
     public function destroy($id)
     {
-        $produksi =
-            Produksi::findOrFail($id);
+        $produksi = Produksi::where('user_id', auth()->id())
+            ->findOrFail($id);
 
 
         DB::transaction(function () use ($produksi) {
@@ -302,8 +309,8 @@ class ProduksiController extends Controller
             |--------------------------------------------------------------------------
             */
 
-            $produk =
-                Produk::findOrFail(
+            $produk = Produk::where('user_id', auth()->id())
+                ->findOrFail(
                     $produksi->produk_id
                 );
 

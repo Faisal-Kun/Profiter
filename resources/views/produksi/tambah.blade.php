@@ -4,69 +4,115 @@
 
 <style>
 
+    :root {
+        --card: #151b24;
+        --card-hover: #1a2230;
+        --border: #273342;
+
+        --primary: #3b82f6;
+        --primary-hover: #60a5fa;
+        --primary-soft: rgba(59,130,246,.10);
+
+        --text: #f5f7fa;
+        --muted: #8995a8;
+
+        --danger: #f87171;
+    }
+
+
     /* =========================
-       FORM CARD
+       HEADER
+    ========================= */
+
+    .page-title {
+        color: var(--text);
+        font-weight: 700;
+        font-size: 28px;
+        margin-bottom: 4px;
+    }
+
+    .page-subtitle {
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+
+    /* =========================
+       CARD
     ========================= */
 
     .form-card {
-        background: #17191f;
-        border: 1px solid #272a33;
+        background: var(--card);
+        border: 1px solid var(--border);
         border-radius: 16px;
         overflow: hidden;
-        color: #fff;
     }
 
-    .form-card .card-body {
-        padding: 24px;
-    }
-
-    .section-title {
-        color: #fff;
-        font-weight: 700;
-        margin-bottom: 5px;
-    }
-
-    .section-subtitle {
-        color: #858994;
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
-
-    .form-label {
-        color: #c9ccd4;
+    .card-section-title {
+        color: var(--text);
         font-weight: 600;
+    }
+
+    .card-section-subtitle {
+        color: var(--muted);
         font-size: 13px;
     }
 
 
     /* =========================
-       INPUT
+       FORM
     ========================= */
 
-    .form-control,
-    .form-select {
-        background: #11141b;
-        border: 1px solid #353945;
-        color: #fff;
-        border-radius: 9px;
-        padding: 11px 13px;
+    .form-label {
+        color: var(--text);
+        font-weight: 500;
+        margin-bottom: 8px;
     }
 
-    .form-control::placeholder {
-        color: #626875;
+    .form-control,
+    .form-select,
+    textarea.form-control {
+
+        background: #111821;
+        border: 1px solid var(--border);
+
+        color: var(--text);
+
+        border-radius: 10px;
+
+        padding: 10px 12px;
+
+        transition: .2s ease;
     }
 
     .form-control:focus,
-    .form-select:focus {
-        background: #11141b;
-        color: #fff;
-        border-color: #22d3ee;
-        box-shadow: 0 0 0 3px rgba(34, 211, 238, .10);
+    .form-select:focus,
+    textarea.form-control:focus {
+
+        background: #111821;
+
+        border-color: var(--primary);
+
+        color: var(--text);
+
+        box-shadow: 0 0 0 3px var(--primary-soft);
+    }
+
+    .form-control::placeholder,
+    textarea.form-control::placeholder {
+        color: #667386;
     }
 
     .form-select option {
-        background: #17191f;
-        color: #fff;
+        background: var(--card);
+        color: var(--text);
+    }
+
+
+    /* DATE */
+
+    input[type="date"] {
+        color-scheme: dark;
     }
 
 
@@ -75,45 +121,14 @@
     ========================= */
 
     .input-group-text {
-        background: #20232b;
-        border-color: #353945;
-        color: #22d3ee;
-        font-weight: 600;
-    }
 
+        background: #111821;
 
-    /* =========================
-       RESULT BOX
-    ========================= */
+        border: 1px solid var(--border);
 
-    .result-box {
-        background: #11141b;
-        border: 1px solid #272a33;
-        border-radius: 12px;
-        padding: 20px;
-    }
+        color: var(--muted);
 
-    .result-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        color: #b8bdc8;
-    }
-
-    .result-row strong {
-        color: #fff;
-    }
-
-    .result-final {
-        border-top: 1px solid #353945;
-        margin-top: 10px;
-        padding-top: 15px;
-        font-size: 19px;
-        font-weight: 700;
-    }
-
-    .cyan {
-        color: #22d3ee !important;
+        font-weight: 500;
     }
 
 
@@ -121,57 +136,136 @@
        BUTTON
     ========================= */
 
-    .btn-warning {
-        background: #22d3ee !important;
-        border-color: #22d3ee !important;
-        color: #061014 !important;
+    .btn-primary-custom {
+
+        background: var(--primary);
+
+        border: 1px solid var(--primary);
+
+        color: #fff;
+
         font-weight: 600;
+
+        border-radius: 10px;
+
+        transition: .2s ease;
     }
 
-    .btn-warning:hover {
-        background: #67e8f9 !important;
-        border-color: #67e8f9 !important;
-        color: #061014 !important;
+    .btn-primary-custom:hover {
+
+        background: var(--primary-hover);
+
+        border-color: var(--primary-hover);
+
+        color: #fff;
+
+        transform: translateY(-1px);
+    }
+
+
+    .btn-secondary-custom {
+
+        background: var(--card);
+
+        border: 1px solid #354154;
+
+        color: var(--muted);
+
+        font-weight: 500;
+
+        border-radius: 10px;
+
+        transition: .2s ease;
+    }
+
+    .btn-secondary-custom:hover {
+
+        background: var(--card-hover);
+
+        border-color: var(--primary);
+
+        color: var(--primary-hover);
     }
 
 
     /* =========================
-       SECONDARY
+       ERROR
     ========================= */
 
-    .btn-secondary {
-        background: #20232b;
-        border: 1px solid #353945;
-        color: #c9ccd4;
-    }
+    .error-alert {
 
-    .btn-secondary:hover {
-        background: #292e38;
-        border-color: #454b59;
-        color: #fff;
+        background: rgba(248,113,113,.08);
+
+        border: 1px solid rgba(248,113,113,.20);
+
+        color: var(--danger);
+
+        border-radius: 12px;
     }
 
 
     /* =========================
-       INFO BOX
+       INFO
     ========================= */
 
     .info-box {
-        background: #11141b;
-        border: 1px solid #272a33;
+
+        background: #111821;
+
+        border: 1px solid var(--border);
+
         border-radius: 12px;
-        padding: 20px;
+
+        padding: 16px;
+    }
+
+    .info-box-icon {
+
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: var(--primary-soft);
+
+        color: var(--primary-hover);
+
+        flex-shrink: 0;
+    }
+
+    .info-box-title {
+
+        color: var(--text);
+
+        font-size: 13px;
+
+        font-weight: 600;
+    }
+
+    .info-box-text {
+
+        color: var(--muted);
+
+        font-size: 12px;
     }
 
 
     /* =========================
-       RESPONSIVE
+       MOBILE
     ========================= */
 
-    @media (max-width: 768px) {
+    @media(max-width:768px) {
 
-        .form-card .card-body {
-            padding: 18px;
+        .page-title {
+            font-size: 24px;
+        }
+
+        .page-subtitle {
+            font-size: 13px;
         }
 
     }
@@ -180,35 +274,67 @@
 
 
 {{-- =========================
-     HEADER
+HEADER
 ========================= --}}
 
 <div class="d-flex justify-content-between align-items-center mb-4">
 
     <div>
 
-        <h3>
+        <h3 class="page-title">
             Tambah Produksi
         </h3>
-        <p class="mb-0" style="color: #fff !important;">
-     Tambahkan data produksi baru
-</p>
+
+        <p class="page-subtitle mb-0">
+            Tambahkan data produksi baru
+        </p>
 
     </div>
 
 
     <a
         href="/produksi"
-        class="btn btn-secondary"
+        class="btn btn-secondary-custom"
     >
 
-        <i class="bi bi-arrow-left"></i>
+        <i class="bi bi-arrow-left me-1"></i>
 
         Kembali
 
     </a>
 
 </div>
+
+
+{{-- =========================
+ERROR
+========================= --}}
+
+@if($errors->any())
+
+    <div class="alert error-alert mb-4">
+
+        <div class="fw-semibold mb-2">
+
+            <i class="bi bi-exclamation-circle me-1"></i>
+
+            Data belum bisa disimpan
+
+        </div>
+
+        <ul class="mb-0 ps-3">
+
+            @foreach($errors->all() as $error)
+
+                <li>{{ $error }}</li>
+
+            @endforeach
+
+        </ul>
+
+    </div>
+
+@endif
 
 
 <form
@@ -219,43 +345,24 @@
     @csrf
 
 
-    {{-- ERROR --}}
-
-    @if ($errors->any())
-
-        <div class="alert alert-danger">
-
-            <strong>Data belum bisa disimpan:</strong>
-
-            <ul class="mb-0 mt-2">
-
-                @foreach ($errors->all() as $error)
-
-                    <li>{{ $error }}</li>
-
-                @endforeach
-
-            </ul>
-
-        </div>
-
-    @endif
-
-
     {{-- =========================
-         INFORMASI PRODUKSI
+    INFORMASI PRODUKSI
     ========================= --}}
 
-    <div class="card form-card mb-4">
+    <div class="form-card mb-4">
 
-        <div class="card-body">
+        <div class="p-4">
 
-            <h5 class="section-title">
+            <h5 class="card-section-title mb-1">
+
                 Informasi Produksi
+
             </h5>
 
-            <p class="section-subtitle">
+            <p class="card-section-subtitle mb-4">
+
                 Masukkan informasi produksi yang dilakukan
+
             </p>
 
 
@@ -267,7 +374,9 @@
                 <div class="col-md-6">
 
                     <label class="form-label">
+
                         Tanggal Produksi
+
                     </label>
 
                     <input
@@ -286,22 +395,21 @@
                 <div class="col-md-6">
 
                     <label class="form-label">
+
                         Produk
+
                     </label>
 
                     <select
                         name="produk_id"
-                        id="produkSelect"
                         class="form-select"
                         required
                     >
 
-                        <option
-                            value=""
-                            disabled
-                            selected
-                        >
+                        <option value="" disabled {{ old('produk_id') ? '' : 'selected' }}>
+
                             Pilih Produk
+
                         </option>
 
 
@@ -309,9 +417,6 @@
 
                             <option
                                 value="{{ $produk->id }}"
-                                data-harga="{{ $produk->harga_jual }}"
-                                data-hpp="{{ $produk->hpp }}"
-                                data-modal="{{ $produk->total_modal }}"
                                 {{ old('produk_id') == $produk->id ? 'selected' : '' }}
                             >
 
@@ -331,7 +436,9 @@
                 <div class="col-md-6">
 
                     <label class="form-label">
+
                         Jumlah Produksi
+
                     </label>
 
                     <div class="input-group">
@@ -339,16 +446,18 @@
                         <input
                             type="number"
                             name="jumlah_produksi"
-                            id="jumlahProduksi"
                             class="form-control"
-                            placeholder=""
                             min="1"
+                            step="1"
                             value="{{ old('jumlah_produksi') }}"
+                            placeholder="Contoh: 20"
                             required
                         >
 
                         <span class="input-group-text">
+
                             produk
+
                         </span>
 
                     </div>
@@ -361,14 +470,16 @@
                 <div class="col-12">
 
                     <label class="form-label">
+
                         Catatan
+
                     </label>
 
                     <textarea
                         name="catatan"
                         class="form-control"
                         rows="4"
-                        placeholder=""
+                        placeholder="Tambahkan catatan jika diperlukan"
                     >{{ old('catatan') }}</textarea>
 
                 </div>
@@ -381,83 +492,39 @@
 
 
     {{-- =========================
-         INFORMASI PRODUK
+    INFO
     ========================= --}}
 
-    <div
-        class="card form-card mb-4"
-        id="informasiProduk"
-        style="display:none;"
-    >
+    <div class="form-card mb-4">
 
-        <div class="card-body">
+        <div class="p-4">
 
-            <h5 class="section-title">
-                Informasi Produk
-            </h5>
+            <div class="info-box">
 
-            <p class="section-subtitle">
-                Informasi harga dan modal produk yang dipilih
-            </p>
+                <div class="d-flex align-items-start gap-3">
 
+                    <div class="info-box-icon">
 
-            <div class="result-box">
+                        <i class="bi bi-info-circle"></i>
 
+                    </div>
 
-                <div class="result-row">
+                    <div>
 
-                    <span>
-                        Harga Jual / Produk
-                    </span>
+                        <div class="info-box-title mb-1">
 
-                    <strong id="hargaJual">
-                        Rp0
-                    </strong>
+                            Pencatatan Produksi
 
-                </div>
+                        </div>
 
+                        <div class="info-box-text">
 
-                <div class="result-row">
+                            Jumlah produksi yang kamu masukkan akan
+                            digunakan untuk menambah stok produk.
 
-                    <span>
-                        HPP / Produk
-                    </span>
+                        </div>
 
-                    <strong
-                        id="hppProduk"
-                        class="cyan"
-                    >
-                        Rp0
-                    </strong>
-
-                </div>
-
-
-                <div class="result-row">
-
-                    <span>
-                        Modal Produksi Sebelumnya
-                    </span>
-
-                    <strong id="modalProduk">
-                        Rp0
-                    </strong>
-
-                </div>
-
-
-                <div class="result-row result-final">
-
-                    <span>
-                        Estimasi Modal Produksi
-                    </span>
-
-                    <strong
-                        id="estimasiModal"
-                        class="cyan"
-                    >
-                        Rp0
-                    </strong>
+                    </div>
 
                 </div>
 
@@ -469,25 +536,27 @@
 
 
     {{-- =========================
-         BUTTON
+    BUTTON
     ========================= --}}
 
     <div class="d-flex justify-content-end gap-2 mb-5">
 
         <a
             href="/produksi"
-            class="btn btn-secondary"
+            class="btn btn-secondary-custom"
         >
+
             Batal
+
         </a>
 
 
         <button
             type="submit"
-            class="btn btn-warning px-4"
+            class="btn btn-primary-custom px-4"
         >
 
-            <i class="bi bi-check-circle"></i>
+            <i class="bi bi-check-circle me-1"></i>
 
             Simpan Produksi
 
@@ -496,156 +565,5 @@
     </div>
 
 </form>
-
-
-<script>
-
-function rupiah(angka)
-{
-    return new Intl.NumberFormat('id-ID', {
-
-        style: 'currency',
-
-        currency: 'IDR',
-
-        maximumFractionDigits: 0
-
-    }).format(angka);
-}
-
-
-/* =========================
-   UPDATE PRODUK
-========================= */
-
-function updateProduk()
-{
-
-    const select =
-        document.getElementById('produkSelect');
-
-    const option =
-        select.options[select.selectedIndex];
-
-
-    if (!option || !option.value) {
-
-        document
-            .getElementById('informasiProduk')
-            .style.display = 'none';
-
-        return;
-    }
-
-
-    const harga =
-        parseFloat(option.dataset.harga) || 0;
-
-    const hpp =
-        parseFloat(option.dataset.hpp) || 0;
-
-    const modal =
-        parseFloat(option.dataset.modal) || 0;
-
-
-    document
-        .getElementById('hargaJual')
-        .innerText = rupiah(harga);
-
-
-    document
-        .getElementById('hppProduk')
-        .innerText = rupiah(hpp);
-
-
-    document
-        .getElementById('modalProduk')
-        .innerText = rupiah(modal);
-
-
-    hitungModal(hpp);
-
-
-    document
-        .getElementById('informasiProduk')
-        .style.display = 'block';
-
-}
-
-
-/* =========================
-   HITUNG MODAL
-========================= */
-
-function hitungModal(hpp)
-{
-
-    const jumlah =
-        parseFloat(
-            document
-                .getElementById('jumlahProduksi')
-                .value
-        ) || 0;
-
-
-    const estimasi =
-        hpp * jumlah;
-
-
-    document
-        .getElementById('estimasiModal')
-        .innerText = rupiah(estimasi);
-
-}
-
-
-/* =========================
-   EVENT
-========================= */
-
-document
-    .getElementById('produkSelect')
-    .addEventListener('change', updateProduk);
-
-
-document
-    .getElementById('jumlahProduksi')
-    .addEventListener('input', function() {
-
-        const select =
-            document.getElementById('produkSelect');
-
-        const option =
-            select.options[select.selectedIndex];
-
-
-        if (!option || !option.value) {
-            return;
-        }
-
-
-        const hpp =
-            parseFloat(option.dataset.hpp) || 0;
-
-
-        hitungModal(hpp);
-
-    });
-
-
-/* =========================
-   LOAD
-========================= */
-
-document.addEventListener(
-    'DOMContentLoaded',
-    function() {
-
-        updateProduk();
-
-    }
-);
-
-</script>
 
 @endsection

@@ -19,11 +19,11 @@ class ProdukController extends Controller
 
     public function index()
     {
-        $produks = Produk::withSum('produksi', 'jumlah_produksi')
-            ->withSum('penjualan', 'jumlah_terjual')
-            ->latest()
-            ->get();
-
+        $produks = Produk::where('user_id', auth()->id())
+    ->withSum('produksi', 'jumlah_produksi')
+    ->withSum('penjualan', 'jumlah_terjual')
+    ->latest()
+    ->get();
         foreach ($produks as $produk) {
 
             $totalProduksi =
@@ -292,6 +292,8 @@ class ProdukController extends Controller
 
             $produk = Produk::create([
 
+            'user_id' => auth()->id(),
+
                 'nama' =>
                     $request->nama,
 
@@ -350,28 +352,15 @@ class ProdukController extends Controller
                     }
 
 
-                    BahanProduk::create([
-
-                        'produk_id' =>
-                            $produk->id,
-
-                        'nama' =>
-                            $nama,
-
-                        'jumlah' =>
-                            $jumlah,
-
-                        'satuan' =>
-                            $request->bahan_satuan[$key]
-                            ?? '',
-
-                        'harga_satuan' =>
-                            $harga,
-
-                        'total' =>
-                            $total,
-
-                    ]);
+                   BahanProduk::create([
+    'produk_id' => $produk->id,
+    'nama' => $nama,
+    'jumlah' => $jumlah,
+    'satuan' => $request->bahan_satuan[$key] ?? '',
+    'isi_kemasan' => $isi,
+    'harga_satuan' => $harga,
+    'total' => $total,
+]);
                 }
             }
 
@@ -465,7 +454,8 @@ class ProdukController extends Controller
 
     public function show($id)
     {
-        $produk = Produk::with([
+        $produk = Produk::where('user_id', auth()->id())
+    ->with([
             'bahan',
             'biayaTambahan'
         ])
@@ -506,11 +496,20 @@ class ProdukController extends Controller
 
     public function edit($id)
     {
-        $produk = Produk::with([
-            'bahan',
-            'biayaTambahan'
-        ])
-            ->findOrFail($id);
+       $produk = Produk::where('user_id', auth()->id())
+    ->with([
+        'bahan',
+        'biayaTambahan'
+    ])
+    ->withSum(
+        'produksi',
+        'jumlah_produksi'
+    )
+    ->withSum(
+        'penjualan',
+        'jumlah_terjual'
+    )
+    ->findOrFail($id);
 
 
         return view(
@@ -526,105 +525,384 @@ class ProdukController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function update(
-        Request $request,
-        $id
-    ) {
+    public function update(Request $request, $id)
+{
+    $produk = Produk::where('user_id', auth()->id())
+        ->findOrFail($id);
 
-        $produk =
-            Produk::findOrFail($id);
+    $request->validate([
 
+        // =========================
+        // PRODUK
+        // =========================
 
-        $request->validate([
+        'nama' => 'required',
+        'kategori' => 'required',
+        'harga_jual' => 'required|numeric|min:0',
 
-            'nama' =>
-                'required',
-
-            'kategori' =>
-                'required',
-
-            'harga_jual' =>
-                'required|numeric|min:0',
-
-            'gambar' =>
-                'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
-
-        ]);
+        'gambar' => [
+            'nullable',
+            'image',
+            'mimes:jpg,jpeg,png,webp',
+            'max:5120'
+        ],
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | DATA UPDATE
-        |--------------------------------------------------------------------------
-        */
+        // =========================
+        // BAHAN
+        // =========================
 
-        $data = [
+        'bahan_id' => 'nullable|array',
 
-            'nama' =>
-                $request->nama,
+        'bahan_nama' => 'required|array|min:1',
+        'bahan_nama.*' => 'required',
 
-            'kategori' =>
-                $request->kategori,
+        'bahan_jumlah' => 'required|array',
+        'bahan_jumlah.*' => 'required|numeric|min:0',
 
-            'harga_jual' =>
-                $request->harga_jual,
+        'bahan_satuan' => 'required|array',
+        'bahan_satuan.*' => 'required',
+
+        'bahan_isi' => 'required|array',
+        'bahan_isi.*' => 'required|numeric|min:0.01',
+
+        'bahan_harga' => 'required|array',
+        'bahan_harga.*' => 'required|numeric|min:0',
+
+
+        // =========================
+        // BIAYA TAMBAHAN
+        // =========================
+
+        'biaya_id' => 'nullable|array',
+
+        'biaya_nama' => 'nullable|array',
+        'biaya_nama.*' => 'nullable',
+
+        'biaya_jumlah' => 'nullable|array',
+        'biaya_jumlah.*' => 'nullable|numeric|min:0',
+
+        'biaya_satuan' => 'nullable|array',
+        'biaya_satuan.*' => 'nullable',
+
+        'biaya_harga' => 'nullable|array',
+        'biaya_harga.*' => 'nullable|numeric|min:0',
+
+    ]);
+
+
+    DB::transaction(function () use ($request, $produk) {
+
+        // =========================
+        // HITUNG TOTAL BAHAN
+        // =========================
+
+        $totalBahan = 0;
+
+        foreach ($request->bahan_nama as $key => $nama) {
+
+            $jumlah = (float) ($request->bahan_jumlah[$key] ?? 0);
+
+            $isi = (float) ($request->bahan_isi[$key] ?? 0);
+
+            $harga = (float) ($request->bahan_harga[$key] ?? 0);
+
+
+            $total = 0;
+
+            if ($isi > 0) {
+
+                $total = ($harga / $isi) * $jumlah;
+
+            }
+
+            $totalBahan += $total;
+        }
+
+
+        // =========================
+        // HITUNG BIAYA TAMBAHAN
+        // =========================
+
+        $totalBiaya = 0;
+
+        if ($request->has('biaya_nama')) {
+
+            foreach ($request->biaya_nama as $key => $nama) {
+
+                // Kalau nama kosong, jangan disimpan
+                if (empty(trim($nama ?? ''))) {
+                    continue;
+                }
+
+
+                $jumlah = (float) ($request->biaya_jumlah[$key] ?? 0);
+
+                $harga = (float) ($request->biaya_harga[$key] ?? 0);
+
+
+                $total = $jumlah * $harga;
+
+                $totalBiaya += $total;
+            }
+        }
+
+
+        // =========================
+        // TOTAL MODAL + HPP
+        // =========================
+
+        $totalModal = $totalBahan + $totalBiaya;
+
+        $hpp = $totalModal;
+
+
+        // =========================
+        // UPDATE PRODUK
+        // =========================
+
+        $dataProduk = [
+
+            'nama' => $request->nama,
+
+            'kategori' => $request->kategori,
+
+            'harga_jual' => $request->harga_jual,
+
+            'total_bahan' => $totalBahan,
+
+            'total_biaya_tambahan' => $totalBiaya,
+
+            'total_modal' => $totalModal,
+
+            'hpp' => $hpp,
 
         ];
 
 
-        /*
-        |--------------------------------------------------------------------------
-        | UPDATE GAMBAR
-        |--------------------------------------------------------------------------
-        */
+        // =========================
+        // UPDATE GAMBAR
+        // =========================
 
         if ($request->hasFile('gambar')) {
 
-            /*
-            | Hapus gambar lama
-            */
-
             if (
                 $produk->gambar &&
-                Storage::disk('public')
-                    ->exists($produk->gambar)
+                Storage::disk('public')->exists($produk->gambar)
             ) {
 
-                Storage::disk('public')
-                    ->delete($produk->gambar);
+                Storage::disk('public')->delete($produk->gambar);
+
             }
 
 
-            /*
-            | Simpan gambar baru
-            */
-
-            $data['gambar'] =
-                $request
-                    ->file('gambar')
-                    ->store(
-                        'produk',
-                        'public'
-                    );
+            $dataProduk['gambar'] =
+                $request->file('gambar')->store('produk', 'public');
         }
 
 
+        $produk->update($dataProduk);
+
+
+        // =========================
+        // SINKRONISASI BAHAN
+        // =========================
+
         /*
-        |--------------------------------------------------------------------------
-        | UPDATE PRODUK
-        |--------------------------------------------------------------------------
+        Bahan lama yang tidak dikirim lagi
+        berarti dihapus.
+
+        Bahan yang punya ID
+        berarti di-update.
+
+        Bahan tanpa ID
+        berarti bahan baru.
         */
 
-        $produk->update($data);
+        $bahanIds = [];
 
 
-        return redirect(
-            '/produk/detail/' . $produk->id
-        )->with(
-            'success',
-            'Produk berhasil diperbarui!'
-        );
-    }
+        foreach ($request->bahan_nama as $key => $nama) {
+
+            $bahanId = $request->bahan_id[$key] ?? null;
+
+            $jumlah = (float) ($request->bahan_jumlah[$key] ?? 0);
+
+            $isi = (float) ($request->bahan_isi[$key] ?? 0);
+
+            $harga = (float) ($request->bahan_harga[$key] ?? 0);
+
+
+            $total = 0;
+
+            if ($isi > 0) {
+
+                $total = ($harga / $isi) * $jumlah;
+
+            }
+
+
+            $dataBahan = [
+
+                'nama' => $nama,
+
+                'jumlah' => $jumlah,
+
+                'satuan' => $request->bahan_satuan[$key] ?? '',
+
+                'isi_kemasan' => $isi,
+
+                'harga_satuan' => $harga,
+
+                'total' => $total,
+
+            ];
+
+
+            if ($bahanId) {
+
+                // UPDATE BAHAN LAMA
+
+                $bahan = BahanProduk::where('produk_id', $produk->id)
+                    ->where('id', $bahanId)
+                    ->first();
+
+
+                if ($bahan) {
+
+                    $bahan->update($dataBahan);
+
+                    $bahanIds[] = $bahan->id;
+
+                }
+
+            } else {
+
+                // TAMBAH BAHAN BARU
+
+                $bahan = BahanProduk::create([
+
+                    'produk_id' => $produk->id,
+
+                    ...$dataBahan,
+
+                ]);
+
+
+                $bahanIds[] = $bahan->id;
+            }
+        }
+
+
+        // Hapus bahan lama yang sudah dihilangkan dari form
+
+        BahanProduk::where('produk_id', $produk->id)
+            ->whereNotIn('id', $bahanIds)
+            ->delete();
+
+
+        // =========================
+        // SINKRONISASI BIAYA TAMBAHAN
+        // =========================
+
+        $biayaIds = [];
+
+
+        if ($request->has('biaya_nama')) {
+
+            foreach ($request->biaya_nama as $key => $nama) {
+
+                if (empty(trim($nama ?? ''))) {
+                    continue;
+                }
+
+
+                $biayaId = $request->biaya_id[$key] ?? null;
+
+                $jumlah = (float) ($request->biaya_jumlah[$key] ?? 0);
+
+                $harga = (float) ($request->biaya_harga[$key] ?? 0);
+
+
+                $total = $jumlah * $harga;
+
+
+                $dataBiaya = [
+
+                    'nama' => $nama,
+
+                    'jumlah' => $jumlah,
+
+                    'satuan' => $request->biaya_satuan[$key] ?? '',
+
+                    'harga_satuan' => $harga,
+
+                    'total' => $total,
+
+                ];
+
+
+                if ($biayaId) {
+
+                    // UPDATE BIAYA LAMA
+
+                    $biaya = BiayaTambahan::where('produk_id', $produk->id)
+                        ->where('id', $biayaId)
+                        ->first();
+
+
+                    if ($biaya) {
+
+                        $biaya->update($dataBiaya);
+
+                        $biayaIds[] = $biaya->id;
+
+                    }
+
+                } else {
+
+                    // TAMBAH BIAYA BARU
+
+                    $biaya = BiayaTambahan::create([
+
+                        'produk_id' => $produk->id,
+
+                        ...$dataBiaya,
+
+                    ]);
+
+
+                    $biayaIds[] = $biaya->id;
+                }
+            }
+        }
+
+
+        // Hapus biaya lama yang sudah dihilangkan dari form
+
+        if (count($biayaIds) > 0) {
+
+            BiayaTambahan::where('produk_id', $produk->id)
+                ->whereNotIn('id', $biayaIds)
+                ->delete();
+
+        } else {
+
+            BiayaTambahan::where('produk_id', $produk->id)
+                ->delete();
+
+        }
+
+    });
+
+
+    return redirect(
+        '/produk/detail/' . $produk->id
+    )->with(
+        'success',
+        'Produk berhasil diperbarui!'
+    );
+}
 
 
     /*
@@ -635,8 +913,8 @@ class ProdukController extends Controller
 
     public function destroy($id)
     {
-        $produk =
-            Produk::findOrFail($id);
+       $produk = Produk::where('user_id', auth()->id())
+    ->findOrFail($id);
 
 
         /*

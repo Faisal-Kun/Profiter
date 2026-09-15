@@ -4,10 +4,6 @@
 
 <style>
 
-    /* =========================
-       COLOR SYSTEM
-    ========================= */
-
     :root {
         --card: #151b24;
         --card-hover: #1a2230;
@@ -33,6 +29,7 @@
         color: var(--text);
         font-weight: 700;
         font-size: 28px;
+        margin-bottom: 4px;
     }
 
     .page-subtitle {
@@ -54,37 +51,54 @@
 
 
     /* =========================
-       PRODUCT ICON
+       PRODUCT
     ========================= */
 
-    .product-icon {
-        width: 80px;
-        height: 80px;
-        border-radius: 18px;
+    .product-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        display: block;
+    }
 
-        background: var(--primary-soft);
-
+    .product-placeholder {
+        width: 100%;
+        height: 300px;
         display: flex;
         align-items: center;
         justify-content: center;
+        background: #111821;
+        color: #455267;
+        font-size: 60px;
+    }
 
-        font-size: 35px;
+    .product-name {
+        color: var(--text);
+        font-weight: 700;
+        font-size: 22px;
+    }
 
-        color: var(--primary);
+    .product-category {
+        color: var(--muted);
+        font-size: 14px;
     }
 
 
     /* =========================
-       TEXT
+       STATUS BADGE
     ========================= */
 
-    .product-title {
-        color: var(--text);
-        font-weight: 700;
-    }
-
-    .transaction-id {
-        color: var(--muted);
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        background: rgba(94,231,160,.09);
+        border: 1px solid rgba(94,231,160,.18);
+        color: var(--success);
+        padding: 7px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
     }
 
 
@@ -92,192 +106,194 @@
        INFO
     ========================= */
 
+    .section-title {
+        color: var(--text);
+        font-weight: 600;
+        font-size: 17px;
+    }
+
     .info-row {
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         gap: 20px;
-
-        padding: 14px 0;
-
+        padding: 15px 0;
         border-bottom: 1px solid var(--border);
-
-        color: var(--text);
     }
 
     .info-row:last-child {
         border-bottom: none;
+        padding-bottom: 0;
     }
 
     .info-label {
         color: var(--muted);
+        font-size: 14px;
     }
 
     .info-value {
         color: var(--text);
+        font-weight: 600;
+        text-align: right;
     }
 
 
     /* =========================
-       TOTAL BOX
+       SUMMARY
     ========================= */
 
-    .total-box {
-        background: var(--primary-soft);
-
+    .summary-box {
+        height: 100%;
+        background: #111821;
         border: 1px solid var(--border);
-
-        border-radius: 14px;
-
-        padding: 22px;
-
-        color: var(--text);
+        border-radius: 12px;
+        padding: 18px;
     }
 
-    .total-box small {
+    .summary-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: var(--primary-soft);
+        color: var(--primary-hover);
+        margin-bottom: 14px;
+    }
+
+    .summary-label {
         color: var(--muted);
+        font-size: 13px;
     }
 
-    .total-value {
-        color: var(--primary);
-
-        font-size: 30px;
-
+    .summary-value {
+        color: var(--text);
+        font-size: 22px;
         font-weight: 700;
+        margin-top: 4px;
     }
 
 
     /* =========================
-       PROFIT BOX
+       PROFIT
     ========================= */
 
     .profit-box {
-        background: var(--card);
-
-        border: 1px solid var(--border);
-
-        color: var(--text);
-
-        border-radius: 16px;
-
-        padding: 25px;
-
+        background: #111821;
+        border: 1px solid rgba(94,231,160,.18);
+        border-radius: 14px;
+        padding: 20px;
         position: relative;
-
         overflow: hidden;
     }
 
     .profit-box::before {
         content: "";
-
         position: absolute;
-
         left: 0;
         top: 0;
         bottom: 0;
-
         width: 4px;
-
-        background: var(--primary);
+        background: var(--success);
     }
 
-    .profit-box small {
+    .profit-label {
         color: var(--muted);
+        font-size: 13px;
     }
 
     .profit-value {
-        color: var(--primary);
-
-        font-size: 30px;
-
+        color: var(--success);
+        font-size: 28px;
         font-weight: 700;
+        margin-top: 5px;
     }
 
-    .profit-box p {
+    .profit-description {
         color: var(--muted);
+        font-size: 13px;
+    }
+
+    .profit-row {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .profit-row strong {
+        color: var(--text);
     }
 
     .profit-box hr {
         border-color: var(--border);
+        opacity: 1;
     }
 
 
     /* =========================
-       BUTTON PRIMARY
+       NOTE
     ========================= */
 
-    .btn-warning {
-        background: var(--primary);
-
-        border: 1px solid var(--primary);
-
-        color: #fff;
-
-        font-weight: 600;
-
-        border-radius: 10px;
-
-        transition: all .2s ease;
+    .note-box {
+        background: #111821;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 16px;
+        color: #c9d0da;
+        font-size: 14px;
+        line-height: 1.6;
     }
 
-    .btn-warning:hover {
-        background: var(--primary-hover);
 
-        border-color: var(--primary-hover);
+    /* =========================
+       BUTTON
+    ========================= */
 
+    .btn-primary-custom {
+        background: var(--primary);
+        border: 1px solid var(--primary);
         color: #fff;
+        font-weight: 600;
+        border-radius: 10px;
+        transition: .2s ease;
+    }
 
+    .btn-primary-custom:hover {
+        background: var(--primary-hover);
+        border-color: var(--primary-hover);
+        color: #fff;
         transform: translateY(-1px);
     }
 
-
-    /* =========================
-       BUTTON SECONDARY
-    ========================= */
-
-    .btn-secondary {
+    .btn-secondary-custom {
         background: var(--card);
-
-        border: 1px solid #353f4d;
-
+        border: 1px solid #354154;
         color: var(--muted);
-
         font-weight: 500;
-
         border-radius: 10px;
-
-        transition: all .2s ease;
+        transition: .2s ease;
     }
 
-    .btn-secondary:hover {
+    .btn-secondary-custom:hover {
         background: var(--card-hover);
-
         border-color: var(--primary);
-
-        color: var(--primary);
+        color: var(--primary-hover);
     }
 
-
-    /* =========================
-       DELETE BUTTON
-    ========================= */
-
-    .btn-outline-danger {
-        border-color: #353f4d;
-
+    .btn-delete {
+        background: transparent;
+        border: 1px solid #354154;
         color: var(--muted);
-
+        font-weight: 500;
         border-radius: 10px;
-
-        transition: all .2s ease;
+        transition: .2s ease;
     }
 
-    .btn-outline-danger:hover {
+    .btn-delete:hover {
         background: rgba(248,113,113,.10);
-
         border-color: var(--danger);
-
         color: var(--danger);
     }
 
@@ -286,12 +302,11 @@
        ALERT
     ========================= */
 
-    .alert-success {
-        background: rgba(94,231,160,.10);
-
-        border: 1px solid rgba(94,231,160,.25);
-
+    .sales-alert {
+        background: rgba(94,231,160,.08);
+        border: 1px solid rgba(94,231,160,.20);
         color: var(--success);
+        border-radius: 12px;
     }
 
 
@@ -299,30 +314,56 @@
        MOBILE
     ========================= */
 
-    @media(max-width: 768px) {
+    @media(max-width:768px) {
 
         .page-title {
             font-size: 24px;
+        }
+
+        .product-image,
+        .product-placeholder {
+            height: 240px;
         }
 
         .info-row {
             padding: 13px 0;
         }
 
-        .product-icon {
-            width: 65px;
-            height: 65px;
-            font-size: 28px;
+        .info-label,
+        .info-value {
+            font-size: 13px;
         }
 
-        .total-value,
         .profit-value {
-            font-size: 26px;
+            font-size: 25px;
         }
 
     }
 
 </style>
+
+
+@php
+
+    $jumlah = $penjualan->jumlah_terjual;
+
+    $hargaJual = $penjualan->harga_jual ?? $penjualan->produk->harga_jual ?? 0;
+
+    $hpp = $penjualan->hpp ?? $penjualan->produk->hpp ?? 0;
+
+    $totalPenjualan = $penjualan->total_penjualan
+        ?? ($hargaJual * $jumlah);
+
+    $totalHpp = $hpp * $jumlah;
+
+    $keuntungan = $penjualan->keuntungan
+        ?? ($totalPenjualan - $totalHpp);
+
+    $margin = $totalPenjualan > 0
+        ? ($keuntungan / $totalPenjualan) * 100
+        : 0;
+
+@endphp
 
 
 {{-- =========================
@@ -333,7 +374,7 @@ HEADER
 
     <div>
 
-        <h3 class="page-title mb-1">
+        <h3 class="page-title">
             Detail Penjualan
         </h3>
 
@@ -346,7 +387,7 @@ HEADER
 
     <a
         href="/penjualan"
-        class="btn btn-secondary"
+        class="btn btn-secondary-custom"
     >
 
         <i class="bi bi-arrow-left me-1"></i>
@@ -358,22 +399,21 @@ HEADER
 </div>
 
 
-
 {{-- =========================
 NOTIFIKASI
 ========================= --}}
 
 @if(session('success'))
 
-    <div class="alert alert-success alert-dismissible fade show">
+    <div class="alert sales-alert alert-dismissible fade show mb-4">
 
-        <i class="bi bi-check-circle me-1"></i>
+        <i class="bi bi-check-circle me-2"></i>
 
         {{ session('success') }}
 
         <button
             type="button"
-            class="btn-close"
+            class="btn-close btn-close-white"
             data-bs-dismiss="alert"
         ></button>
 
@@ -382,59 +422,93 @@ NOTIFIKASI
 @endif
 
 
-
 {{-- =========================
-ISI DETAIL
+MAIN
 ========================= --}}
 
-<div class="row g-4">
+<div class="row g-4 mb-4">
 
 
     {{-- =========================
-    INFORMASI TRANSAKSI
+    PRODUK
+    ========================= --}}
+
+    <div class="col-lg-5">
+
+        <div class="detail-card h-100">
+
+            @if($penjualan->produk?->gambar)
+
+                <img
+                    src="{{ asset('storage/' . $penjualan->produk->gambar) }}"
+                    class="product-image"
+                    alt="{{ $penjualan->produk->nama ?? 'Produk' }}"
+                >
+
+            @else
+
+                <div class="product-placeholder">
+
+                    <i class="bi bi-receipt"></i>
+
+                </div>
+
+            @endif
+
+
+            <div class="p-4">
+
+                <div class="d-flex justify-content-between align-items-start gap-3">
+
+                    <div>
+
+                        <div class="product-name">
+
+                            {{ $penjualan->produk->nama ?? '-' }}
+
+                        </div>
+
+                        <div class="product-category mt-1">
+
+                            {{ $penjualan->produk->kategori ?? '-' }}
+
+                        </div>
+
+                    </div>
+
+
+                    <span class="status-badge">
+
+                        <i class="bi bi-check-circle"></i>
+
+                        Terjual
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- =========================
+    INFORMASI PENJUALAN
     ========================= --}}
 
     <div class="col-lg-7">
 
-        <div class="card detail-card h-100">
+        <div class="detail-card h-100">
 
-            <div class="card-body">
+            <div class="p-4">
 
+                <div class="section-title mb-3">
 
-                <div class="d-flex align-items-center gap-3 mb-4">
-
-
-                    <div class="product-icon">
-
-                        <i class="bi bi-cart-check"></i>
-
-                    </div>
-
-
-                    <div>
-
-                        <h4 class="product-title mb-1">
-
-                            {{ $penjualan->produk->nama ?? 'Produk tidak ditemukan' }}
-
-                        </h4>
-
-
-                        <small class="transaction-id">
-
-                            Transaksi #PJ{{ str_pad(
-                                $penjualan->id,
-                                3,
-                                '0',
-                                STR_PAD_LEFT
-                            ) }}
-
-                        </small>
-
-                    </div>
+                    Informasi Penjualan
 
                 </div>
-
 
 
                 {{-- TANGGAL --}}
@@ -442,19 +516,18 @@ ISI DETAIL
                 <div class="info-row">
 
                     <span class="info-label">
-                        Tanggal
+
+                        Tanggal Penjualan
+
                     </span>
 
-                    <strong class="info-value">
+                    <span class="info-value">
 
-                        {{ \Carbon\Carbon::parse(
-                            $penjualan->tanggal
-                        )->translatedFormat('d F Y') }}
+                        {{ \Carbon\Carbon::parse($penjualan->tanggal)->translatedFormat('d F Y') }}
 
-                    </strong>
+                    </span>
 
                 </div>
-
 
 
                 {{-- PRODUK --}}
@@ -462,17 +535,18 @@ ISI DETAIL
                 <div class="info-row">
 
                     <span class="info-label">
-                        Produk
+
+                        Nama Produk
+
                     </span>
 
-                    <strong class="info-value">
+                    <span class="info-value">
 
                         {{ $penjualan->produk->nama ?? '-' }}
 
-                    </strong>
+                    </span>
 
                 </div>
-
 
 
                 {{-- JUMLAH --}}
@@ -480,24 +554,21 @@ ISI DETAIL
                 <div class="info-row">
 
                     <span class="info-label">
+
                         Jumlah Terjual
+
                     </span>
 
-                    <strong class="info-value">
+                    <span
+                        class="info-value"
+                        style="color:var(--primary-hover);"
+                    >
 
-                        {{ number_format(
-                            $penjualan->jumlah_terjual,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
+                        {{ $jumlah }} produk
 
-                        produk
-
-                    </strong>
+                    </span>
 
                 </div>
-
 
 
                 {{-- HARGA --}}
@@ -505,22 +576,40 @@ ISI DETAIL
                 <div class="info-row">
 
                     <span class="info-label">
-                        Harga / Produk
+
+                        Harga Jual / Produk
+
                     </span>
 
-                    <strong class="info-value">
+                    <span
+                        class="info-value"
+                        style="color:var(--primary-hover);"
+                    >
 
-                        Rp{{ number_format(
-                            $penjualan->harga_jual,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
+                        Rp{{ number_format($hargaJual, 0, ',', '.') }}
 
-                    </strong>
+                    </span>
 
                 </div>
 
+
+                {{-- HPP --}}
+
+                <div class="info-row">
+
+                    <span class="info-label">
+
+                        HPP / Produk
+
+                    </span>
+
+                    <span class="info-value">
+
+                        Rp{{ number_format($hpp, 0, ',', '.') }}
+
+                    </span>
+
+                </div>
 
 
                 {{-- CATATAN --}}
@@ -528,7 +617,9 @@ ISI DETAIL
                 <div class="info-row">
 
                     <span class="info-label">
+
                         Catatan
+
                     </span>
 
                     <span class="info-value">
@@ -539,207 +630,7 @@ ISI DETAIL
 
                 </div>
 
-
             </div>
-
-        </div>
-
-    </div>
-
-
-
-    {{-- =========================
-    RINGKASAN
-    ========================= --}}
-
-    <div class="col-lg-5">
-
-
-        <div class="card detail-card mb-4">
-
-            <div class="card-body">
-
-
-                <h5
-                    class="product-title mb-4"
-                >
-                    Ringkasan
-                </h5>
-
-
-
-                {{-- HARGA JUAL --}}
-
-                <div class="info-row">
-
-                    <span class="info-label">
-                        Harga Jual
-                    </span>
-
-                    <strong>
-
-                        Rp{{ number_format(
-                            $penjualan->harga_jual,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
-
-                    </strong>
-
-                </div>
-
-
-
-                {{-- JUMLAH --}}
-
-                <div class="info-row">
-
-                    <span class="info-label">
-                        Jumlah
-                    </span>
-
-                    <strong>
-
-                        {{ number_format(
-                            $penjualan->jumlah_terjual,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
-
-                    </strong>
-
-                </div>
-
-
-
-                {{-- TOTAL --}}
-
-                <div class="total-box mt-4">
-
-                    <small>
-                        Total Penjualan
-                    </small>
-
-
-                    <div class="total-value mt-2">
-
-                        Rp{{ number_format(
-                            $penjualan->total_penjualan,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
-
-                    </div>
-
-                </div>
-
-
-            </div>
-
-        </div>
-
-
-
-        {{-- =========================
-        KEUNTUNGAN
-        ========================= --}}
-
-        <div class="profit-box">
-
-
-            <small>
-                Perkiraan Keuntungan
-            </small>
-
-
-            <div class="profit-value mt-2">
-
-                Rp{{ number_format(
-                    $penjualan->keuntungan,
-                    0,
-                    ',',
-                    '.'
-                ) }}
-
-            </div>
-
-
-            <p class="mb-4 mt-2">
-
-                Keuntungan dari transaksi ini
-
-            </p>
-
-
-
-            <div class="d-flex justify-content-between">
-
-                <span>
-                    Total Penjualan
-                </span>
-
-                <strong>
-
-                    Rp{{ number_format(
-                        $penjualan->total_penjualan,
-                        0,
-                        ',',
-                        '.'
-                    ) }}
-
-                </strong>
-
-            </div>
-
-
-
-            <div class="d-flex justify-content-between mt-2">
-
-                <span>
-                    Total HPP
-                </span>
-
-                <strong>
-
-                    Rp{{ number_format(
-                        $penjualan->hpp,
-                        0,
-                        ',',
-                        '.'
-                    ) }}
-
-                </strong>
-
-            </div>
-
-
-
-            <hr>
-
-
-
-            <div class="d-flex justify-content-between">
-
-                <strong>
-                    Laba
-                </strong>
-
-                <strong class="text-primary">
-
-                    Rp{{ number_format(
-                        $penjualan->keuntungan,
-                        0,
-                        ',',
-                        '.'
-                    ) }}
-
-                </strong>
-
-            </div>
-
 
         </div>
 
@@ -748,55 +639,386 @@ ISI DETAIL
 </div>
 
 
+{{-- =========================
+RINGKASAN
+========================= --}}
+
+<div class="detail-card mb-4">
+
+    <div class="p-4">
+
+        <div class="section-title mb-4">
+
+            Ringkasan Penjualan
+
+        </div>
+
+
+        <div class="row g-3">
+
+
+            {{-- JUMLAH --}}
+
+            <div class="col-md-4">
+
+                <div class="summary-box">
+
+                    <div class="summary-icon">
+
+                        <i class="bi bi-cart-check"></i>
+
+                    </div>
+
+                    <div class="summary-label">
+
+                        Jumlah Terjual
+
+                    </div>
+
+                    <div class="summary-value">
+
+                        {{ $jumlah }} produk
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {{-- HARGA --}}
+
+            <div class="col-md-4">
+
+                <div class="summary-box">
+
+                    <div class="summary-icon">
+
+                        <i class="bi bi-tag"></i>
+
+                    </div>
+
+                    <div class="summary-label">
+
+                        Harga Jual / Produk
+
+                    </div>
+
+                    <div class="summary-value">
+
+                        Rp{{ number_format($hargaJual, 0, ',', '.') }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {{-- TOTAL --}}
+
+            <div class="col-md-4">
+
+                <div class="summary-box">
+
+                    <div class="summary-icon">
+
+                        <i class="bi bi-cash-stack"></i>
+
+                    </div>
+
+                    <div class="summary-label">
+
+                        Total Penjualan
+
+                    </div>
+
+                    <div class="summary-value">
+
+                        Rp{{ number_format($totalPenjualan, 0, ',', '.') }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{{-- =========================
+HASIL PENJUALAN
+========================= --}}
+
+<div class="row g-4 mb-4">
+
+
+    {{-- DETAIL HASIL --}}
+
+    <div class="col-lg-7">
+
+        <div class="detail-card h-100">
+
+            <div class="p-4">
+
+                <div class="section-title mb-4">
+
+                    Hasil Penjualan
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+
+                        Total Penjualan
+
+                    </span>
+
+                    <span class="info-value">
+
+                        Rp{{ number_format($totalPenjualan, 0, ',', '.') }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+
+                        Total HPP
+
+                    </span>
+
+                    <span class="info-value">
+
+                        Rp{{ number_format($totalHpp, 0, ',', '.') }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+
+                        Keuntungan
+
+                    </span>
+
+                    <span
+                        class="info-value"
+                        style="color:var(--success);"
+                    >
+
+                        Rp{{ number_format($keuntungan, 0, ',', '.') }}
+
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+
+                        Margin
+
+                    </span>
+
+                    <span
+                        class="info-value"
+                        style="color:var(--success);"
+                    >
+
+                        {{ number_format($margin, 1, ',', '.') }}%
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- PROFIT --}}
+
+    <div class="col-lg-5">
+
+        <div class="profit-box h-100">
+
+            <div class="profit-label">
+
+                Keuntungan Penjualan
+
+            </div>
+
+
+            <div class="profit-value">
+
+                Rp{{ number_format($keuntungan, 0, ',', '.') }}
+
+            </div>
+
+
+            <p class="profit-description mt-2 mb-4">
+
+                Keuntungan yang diperoleh dari transaksi
+                penjualan produk ini.
+
+            </p>
+
+
+            <div class="profit-row">
+
+                <span>
+
+                    Penjualan
+
+                </span>
+
+                <strong>
+
+                    Rp{{ number_format($totalPenjualan, 0, ',', '.') }}
+
+                </strong>
+
+            </div>
+
+
+            <div class="profit-row mt-2">
+
+                <span>
+
+                    HPP
+
+                </span>
+
+                <strong>
+
+                    Rp{{ number_format($totalHpp, 0, ',', '.') }}
+
+                </strong>
+
+            </div>
+
+
+            <hr>
+
+
+            <div class="profit-row">
+
+                <strong style="color:var(--text);">
+
+                    Margin
+
+                </strong>
+
+                <strong style="color:var(--success);">
+
+                    {{ number_format($margin, 1, ',', '.') }}%
+
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{{-- =========================
+CATATAN
+========================= --}}
+
+@if($penjualan->catatan)
+
+    <div class="detail-card mb-4">
+
+        <div class="p-4">
+
+            <div class="section-title mb-3">
+
+                Catatan Penjualan
+
+            </div>
+
+            <div class="note-box">
+
+                {{ $penjualan->catatan }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+@endif
+
 
 {{-- =========================
 ACTION
 ========================= --}}
 
-<div class="d-flex justify-content-end gap-2 mt-4 mb-5">
-
-
-    {{-- EDIT --}}
+<div class="d-flex justify-content-end gap-2 mb-5">
 
     <a
-        href="{{ url('/penjualan/edit/' . $penjualan->id) }}"
-        class="btn btn-warning"
+        href="/penjualan/edit/{{ $penjualan->id }}"
+        class="btn btn-primary-custom"
     >
 
         <i class="bi bi-pencil me-1"></i>
 
-        Edit Penjualan
+        Edit
 
     </a>
 
 
-
-    {{-- HAPUS --}}
-
     <form
-        action="{{ url('/penjualan/' . $penjualan->id) }}"
+        action="/penjualan/{{ $penjualan->id }}"
         method="POST"
-        onsubmit="return confirm('Yakin ingin menghapus transaksi ini?')"
+        onsubmit="return confirm('Yakin ingin menghapus data penjualan ini?')"
     >
 
         @csrf
 
         @method('DELETE')
 
-
         <button
             type="submit"
-            class="btn btn-outline-danger"
+            class="btn btn-delete"
         >
 
             <i class="bi bi-trash me-1"></i>
 
-            Hapus
+            Hapus Penjualan
 
         </button>
 
     </form>
 
+
+    <a
+        href="/penjualan"
+        class="btn btn-secondary-custom"
+    >
+
+        Kembali
+
+    </a>
 
 </div>
 

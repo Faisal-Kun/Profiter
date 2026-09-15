@@ -5,52 +5,101 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProduksiController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/', [DashboardController::class, 'index']);
 
-Route::get('/produk', [ProdukController::class, 'index']);
+// ======================================================
+// AUTHENTICATION
+// ======================================================
 
-Route::get('/produk/tambah', [ProdukController::class, 'create']);
+Route::get('/login', [AuthController::class, 'showLogin'])
+    ->name('login');
 
-Route::post('/produk', [ProdukController::class, 'store']);
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/produk/detail/{id}', [ProdukController::class, 'show']);
+Route::get('/register', [AuthController::class, 'showRegister'])
+    ->name('register');
 
-Route::get('/produk/edit/{id}', [ProdukController::class, 'edit']);
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::put('/produk/{id}', [ProdukController::class, 'update']);
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
 
-Route::delete('/produk/{id}', [ProdukController::class, 'destroy']);
-//
 
-Route::get('/penjualan', [PenjualanController::class, 'index'])
-    ->name('penjualan.index');
+// ======================================================
+// HALAMAN YANG WAJIB LOGIN
+// ======================================================
 
-Route::get('/penjualan/tambah', [PenjualanController::class, 'create'])
-    ->name('penjualan.create');
+Route::middleware('auth')->group(function () {
 
-Route::post('/penjualan', [PenjualanController::class, 'store'])
-    ->name('penjualan.store');
+    // ==================================================
+    // DASHBOARD
+    // ==================================================
 
-Route::get('/penjualan/detail/{id}', [PenjualanController::class, 'show'])
-    ->name('penjualan.detail');
+    Route::get('/', [DashboardController::class, 'index']);
 
-Route::get('/penjualan/edit/{id}', [PenjualanController::class, 'edit'])
-    ->name('penjualan.edit');
 
-Route::put('/penjualan/{id}', [PenjualanController::class, 'update'])
-    ->name('penjualan.update');
+    // ==================================================
+    // PRODUK
+    // ==================================================
 
-Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])
-    ->name('penjualan.destroy');
+    Route::get('/produk', [ProdukController::class, 'index']);
 
-Route::get('/produksi', [ProduksiController::class, 'index']);
-Route::get('/produksi/tambah', [ProduksiController::class, 'create']);
-Route::post('/produksi', [ProduksiController::class, 'store']);
+    Route::get('/produk/tambah', [ProdukController::class, 'create']);
 
-Route::get('/produksi/detail/{id}', [ProduksiController::class, 'show']);
+    Route::post('/produk', [ProdukController::class, 'store']);
 
-Route::get('/produksi/edit/{id}', [ProduksiController::class, 'edit']);
-Route::put('/produksi/{id}', [ProduksiController::class, 'update']);
+    Route::get('/produk/detail/{id}', [ProdukController::class, 'show']);
 
-Route::delete('/produksi/{id}', [ProduksiController::class, 'destroy']);
+    Route::get('/produk/edit/{id}', [ProdukController::class, 'edit']);
+
+    Route::put('/produk/{id}', [ProdukController::class, 'update']);
+
+    Route::delete('/produk/{id}', [ProdukController::class, 'destroy']);
+
+
+    // ==================================================
+    // PENJUALAN
+    // ==================================================
+
+    Route::get('/penjualan', [PenjualanController::class, 'index'])
+        ->name('penjualan.index');
+
+    Route::get('/penjualan/tambah', [PenjualanController::class, 'create'])
+        ->name('penjualan.create');
+
+    Route::post('/penjualan', [PenjualanController::class, 'store'])
+        ->name('penjualan.store');
+
+    Route::get('/penjualan/detail/{id}', [PenjualanController::class, 'show'])
+        ->name('penjualan.detail');
+
+    Route::get('/penjualan/edit/{id}', [PenjualanController::class, 'edit'])
+        ->name('penjualan.edit');
+
+    Route::put('/penjualan/{id}', [PenjualanController::class, 'update'])
+        ->name('penjualan.update');
+
+    Route::delete('/penjualan/{id}', [PenjualanController::class, 'destroy'])
+        ->name('penjualan.destroy');
+
+
+    // ==================================================
+    // PRODUKSI
+    // ==================================================
+
+    Route::get('/produksi', [ProduksiController::class, 'index']);
+
+    Route::get('/produksi/tambah', [ProduksiController::class, 'create']);
+
+    Route::post('/produksi', [ProduksiController::class, 'store']);
+
+    Route::get('/produksi/detail/{id}', [ProduksiController::class, 'show']);
+
+    Route::get('/produksi/edit/{id}', [ProduksiController::class, 'edit']);
+
+    Route::put('/produksi/{id}', [ProduksiController::class, 'update']);
+
+    Route::delete('/produksi/{id}', [ProduksiController::class, 'destroy']);
+
+});

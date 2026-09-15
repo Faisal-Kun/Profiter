@@ -4,13 +4,7 @@
 
 <style>
 
-    /* =========================
-       COLOR SYSTEM
-    ========================= */
-
     :root {
-        --bg-main: #0d1117;
-
         --card: #151b24;
         --card-hover: #1a2230;
         --border: #273342;
@@ -44,7 +38,7 @@
 
 
     /* =========================
-       FORM CARD
+       CARD
     ========================= */
 
     .edit-card {
@@ -53,11 +47,6 @@
         border-radius: 16px;
         overflow: hidden;
     }
-
-
-    /* =========================
-       CARD TITLE
-    ========================= */
 
     .card-section-title {
         color: var(--text);
@@ -80,16 +69,17 @@
     textarea.form-control {
 
         background: #111821;
+
         border: 1px solid var(--border);
+
         color: var(--text);
 
         border-radius: 10px;
 
         padding: 10px 12px;
 
-        transition: all .2s ease;
+        transition: .2s ease;
     }
-
 
     .form-control:focus,
     .form-select:focus,
@@ -104,100 +94,19 @@
         box-shadow: 0 0 0 3px var(--primary-soft);
     }
 
-
     .form-control::placeholder,
     textarea.form-control::placeholder {
-
         color: #667386;
     }
 
-
-    /* SELECT */
-
-    .form-select {
-
-        color: var(--text);
-
-    }
-
     .form-select option {
-
-        background: #151b24;
+        background: var(--card);
         color: var(--text);
-
     }
 
-
-    /* DATE INPUT */
 
     input[type="date"] {
-
         color-scheme: dark;
-
-    }
-
-
-    /* =========================
-       BUTTON PRIMARY
-    ========================= */
-
-    .btn-warning {
-
-        background: var(--primary);
-
-        border: 1px solid var(--primary);
-
-        color: #fff;
-
-        font-weight: 600;
-
-        border-radius: 10px;
-
-        transition: all .2s ease;
-    }
-
-
-    .btn-warning:hover {
-
-        background: var(--primary-hover);
-
-        border-color: var(--primary-hover);
-
-        color: #fff;
-
-        transform: translateY(-1px);
-
-    }
-
-
-    /* =========================
-       BUTTON SECONDARY
-    ========================= */
-
-    .btn-secondary {
-
-        background: #151b24;
-
-        border: 1px solid #353f4d;
-
-        color: var(--muted);
-
-        font-weight: 500;
-
-        border-radius: 10px;
-
-        transition: all .2s ease;
-    }
-
-
-    .btn-secondary:hover {
-
-        background: #1a2230;
-
-        border-color: var(--primary);
-
-        color: var(--primary);
-
     }
 
 
@@ -213,25 +122,114 @@
 
         color: var(--muted);
 
+        font-weight: 500;
     }
 
 
     /* =========================
-       RESPONSIVE
+       BUTTON
     ========================= */
 
-    @media(max-width: 768px) {
+    .btn-primary-custom {
+
+        background: var(--primary);
+
+        border: 1px solid var(--primary);
+
+        color: #fff;
+
+        font-weight: 600;
+
+        border-radius: 10px;
+
+        transition: .2s ease;
+    }
+
+    .btn-primary-custom:hover {
+
+        background: var(--primary-hover);
+
+        border-color: var(--primary-hover);
+
+        color: #fff;
+
+        transform: translateY(-1px);
+    }
+
+
+    .btn-secondary-custom {
+
+        background: var(--card);
+
+        border: 1px solid #354154;
+
+        color: var(--muted);
+
+        font-weight: 500;
+
+        border-radius: 10px;
+
+        transition: .2s ease;
+    }
+
+    .btn-secondary-custom:hover {
+
+        background: var(--card-hover);
+
+        border-color: var(--primary);
+
+        color: var(--primary-hover);
+    }
+
+
+    /* =========================
+       INFO BOX
+    ========================= */
+
+    .info-box {
+
+        background: #111821;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        padding: 16px;
+    }
+
+    .info-icon {
+
+        width: 38px;
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: var(--primary-soft);
+
+        color: var(--primary-hover);
+
+        border-radius: 10px;
+
+        flex-shrink: 0;
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width:768px) {
 
         .page-title {
-
             font-size: 24px;
-
         }
 
         .page-subtitle {
-
             font-size: 13px;
-
         }
 
     }
@@ -248,11 +246,15 @@ HEADER
     <div>
 
         <h3 class="page-title">
+
             Edit Produksi
+
         </h3>
 
         <p class="page-subtitle mb-0">
+
             Ubah data produksi
+
         </p>
 
     </div>
@@ -260,7 +262,7 @@ HEADER
 
     <a
         href="/produksi/detail/{{ $produksi->id }}"
-        class="btn btn-secondary"
+        class="btn btn-secondary-custom"
     >
 
         <i class="bi bi-arrow-left me-1"></i>
@@ -272,6 +274,30 @@ HEADER
 </div>
 
 
+{{-- =========================
+ERROR
+========================= --}}
+
+@if($errors->any())
+
+    <div class="alert alert-danger mb-4">
+
+        <strong>Data belum bisa disimpan:</strong>
+
+        <ul class="mb-0 mt-2">
+
+            @foreach($errors->all() as $error)
+
+                <li>{{ $error }}</li>
+
+            @endforeach
+
+        </ul>
+
+    </div>
+
+@endif
+
 
 {{-- =========================
 FORM
@@ -279,13 +305,22 @@ FORM
 
 <div class="edit-card">
 
-    <div class="card-body p-4">
+    <div class="p-4">
 
-        <h5 class="card-section-title mb-4">
+        <h5 class="card-section-title mb-1">
 
             Informasi Produksi
 
         </h5>
+
+        <p
+            class="mb-4"
+            style="color:var(--muted); font-size:13px;"
+        >
+
+            Perbarui informasi produksi yang sudah dicatat.
+
+        </p>
 
 
         <form
@@ -298,139 +333,183 @@ FORM
             @method('PUT')
 
 
-            {{-- =========================
-            TANGGAL
-            ========================= --}}
-
-            <div class="mb-3">
-
-                <label class="form-label">
-
-                    Tanggal Produksi
-
-                </label>
+            <div class="row g-3">
 
 
-                <input
-                    type="date"
-                    name="tanggal"
-                    class="form-control"
-                    value="{{ $produksi->tanggal }}"
-                    required
-                >
+                {{-- TANGGAL --}}
 
-            </div>
+                <div class="col-md-6">
 
+                    <label class="form-label">
 
+                        Tanggal Produksi
 
-            {{-- =========================
-            PRODUK
-            ========================= --}}
+                    </label>
 
-            <div class="mb-3">
-
-                <label class="form-label">
-
-                    Produk
-
-                </label>
-
-
-                <select
-                    name="produk_id"
-                    class="form-select"
-                    required
-                >
-
-                    <option
-                        value=""
-                        disabled
+                    <input
+                        type="date"
+                        name="tanggal"
+                        class="form-control"
+                        value="{{ old('tanggal', $produksi->tanggal) }}"
+                        required
                     >
 
-                        Pilih Produk
-
-                    </option>
+                </div>
 
 
-                    @foreach($produks as $produk)
+                {{-- PRODUK --}}
 
-                        <option
-                            value="{{ $produk->id }}"
-                            {{ $produksi->produk_id == $produk->id ? 'selected' : '' }}
-                        >
+                <div class="col-md-6">
 
-                            {{ $produk->nama }}
+                    <label class="form-label">
+
+                        Produk
+
+                    </label>
+
+                    <select
+                        name="produk_id"
+                        class="form-select"
+                        required
+                    >
+
+                        <option value="" disabled>
+
+                            Pilih Produk
 
                         </option>
 
-                    @endforeach
 
-                </select>
+                        @foreach($produks as $produk)
+
+                            <option
+                                value="{{ $produk->id }}"
+                                {{ old('produk_id', $produksi->produk_id) == $produk->id ? 'selected' : '' }}
+                            >
+
+                                {{ $produk->nama }}
+
+                            </option>
+
+                        @endforeach
+
+                    </select>
+
+                </div>
+
+
+                {{-- JUMLAH --}}
+
+                <div class="col-md-6">
+
+                    <label class="form-label">
+
+                        Jumlah Produksi
+
+                    </label>
+
+                    <div class="input-group">
+
+                        <input
+                            type="number"
+                            name="jumlah_produksi"
+                            class="form-control"
+                            min="1"
+                            step="1"
+                            value="{{ old('jumlah_produksi', $produksi->jumlah_produksi) }}"
+                            required
+                        >
+
+                        <span class="input-group-text">
+
+                            produk
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                {{-- CATATAN --}}
+
+                <div class="col-12">
+
+                    <label class="form-label">
+
+                        Catatan
+
+                    </label>
+
+                    <textarea
+                        name="catatan"
+                        class="form-control"
+                        rows="4"
+                        placeholder="Tambahkan catatan jika diperlukan"
+                    >{{ old('catatan', $produksi->catatan) }}</textarea>
+
+                </div>
 
             </div>
-
 
 
             {{-- =========================
-            JUMLAH
+            INFO
             ========================= --}}
 
-            <div class="mb-3">
+            <div class="info-box mt-4">
 
-                <label class="form-label">
+                <div class="d-flex align-items-start gap-3">
 
-                    Jumlah Produksi
+                    <div class="info-icon">
 
-                </label>
+                        <i class="bi bi-info-circle"></i>
 
+                    </div>
 
-                <input
-                    type="number"
-                    name="jumlah_produksi"
-                    class="form-control"
-                    min="1"
-                    value="{{ $produksi->jumlah_produksi }}"
-                    required
-                >
+                    <div>
+
+                        <div
+                            style="
+                                color:var(--text);
+                                font-size:13px;
+                                font-weight:600;
+                            "
+                        >
+
+                            Perubahan Jumlah Produksi
+
+                        </div>
+
+                        <div
+                            style="
+                                color:var(--muted);
+                                font-size:12px;
+                                margin-top:3px;
+                            "
+                        >
+
+                            Pastikan jumlah produksi sesuai dengan
+                            data produksi sebenarnya.
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </div>
-
-
-
-            {{-- =========================
-            CATATAN
-            ========================= --}}
-
-            <div class="mb-4">
-
-                <label class="form-label">
-
-                    Catatan
-
-                </label>
-
-
-                <textarea
-                    name="catatan"
-                    class="form-control"
-                    rows="4"
-                    placeholder="Tambahkan catatan jika diperlukan"
-                >{{ $produksi->catatan }}</textarea>
-
-            </div>
-
 
 
             {{-- =========================
             BUTTON
             ========================= --}}
 
-            <div class="d-flex justify-content-end gap-2">
-
+            <div class="d-flex justify-content-end gap-2 mt-4">
 
                 <a
                     href="/produksi/detail/{{ $produksi->id }}"
-                    class="btn btn-secondary"
+                    class="btn btn-secondary-custom"
                 >
 
                     Batal
@@ -440,7 +519,7 @@ FORM
 
                 <button
                     type="submit"
-                    class="btn btn-warning"
+                    class="btn btn-primary-custom px-4"
                 >
 
                     <i class="bi bi-save me-1"></i>
@@ -449,9 +528,7 @@ FORM
 
                 </button>
 
-
             </div>
-
 
         </form>
 

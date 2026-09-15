@@ -3,28 +3,30 @@
 @section('content')
 
 <style>
-
-    /* =========================
-       COLOR SYSTEM
-    ========================= */
-
     :root {
-        --bg-main: #0d1117;
-        --card: #17191f;
-        --card-hover: #1d2028;
-        --border: #272a33;
+        --card: #151b24;
+        --card-hover: #1a2230;
+        --border: #273342;
 
-        --primary: #22d3ee;
-        --primary-hover: #67e8f9;
-        --primary-soft: rgba(34,211,238,.10);
+        --primary: #3b82f6;
+        --primary-hover: #60a5fa;
+        --primary-soft: rgba(59,130,246,.10);
 
-        --text: #ffffff;
-        --muted: #858994;
+        --text: #f5f7fa;
+        --muted: #8995a8;
 
         --success: #5ee7a0;
-        --danger: #ff5c5c;
+        --danger: #f87171;
     }
 
+    /* =========================
+       PAGE
+    ========================= */
+
+    .sales-form-page {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
 
     /* =========================
        HEADER
@@ -32,15 +34,15 @@
 
     .page-title {
         color: var(--text);
+        font-size: 28px;
         font-weight: 700;
-        margin-bottom: 5px;
+        margin-bottom: 6px;
     }
 
     .page-subtitle {
         color: var(--muted);
         font-size: 14px;
     }
-
 
     /* =========================
        CARD
@@ -49,20 +51,18 @@
     .form-card {
         background: var(--card);
         border: 1px solid var(--border);
-        border-radius: 16px;
+        border-radius: 18px;
         overflow: hidden;
-        box-shadow: none !important;
     }
 
-
-    /* =========================
-       SECTION
-    ========================= */
+    .form-card .card-body {
+        padding: 24px;
+    }
 
     .section-title {
         color: var(--text);
-        font-weight: 600;
-        margin-bottom: 5px;
+        font-weight: 700;
+        margin-bottom: 6px;
     }
 
     .section-subtitle {
@@ -71,17 +71,15 @@
         margin-bottom: 20px;
     }
 
-
     /* =========================
        LABEL
     ========================= */
 
     .form-label {
-        color: #b8bdc8;
-        font-size: 14px;
-        font-weight: 500;
+        color: #b8c1ce;
+        font-size: 13px;
+        font-weight: 600;
     }
-
 
     /* =========================
        INPUT
@@ -89,47 +87,47 @@
 
     .form-control,
     .form-select {
-        background: #12151b;
-        border: 1px solid #353945;
+        background: #111822;
+        border: 1px solid #354154;
         color: #fff;
         border-radius: 10px;
+        padding: 11px 13px;
     }
 
     .form-control:focus,
     .form-select:focus {
-        background: #12151b;
-        border-color: var(--primary);
+        background: #111822;
         color: #fff;
-        box-shadow: 0 0 0 .2rem rgba(34,211,238,.10);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(59,130,246,.10);
     }
 
     .form-control::placeholder {
-        color: #626875;
+        color: #657286;
     }
 
     .form-select option {
-        background: #17191f;
+        background: #151b24;
         color: #fff;
     }
-
 
     /* =========================
        INPUT GROUP
     ========================= */
 
     .input-group-text {
-        background: #22252d;
-        border: 1px solid #353945;
-        color: #b8bdc8;
+        background: #1a2230;
+        border: 1px solid #354154;
+        color: #8995a8;
+        font-weight: 600;
     }
-
 
     /* =========================
        SUMMARY
     ========================= */
 
     .summary-box {
-        background: #12151b;
+        background: #111822;
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 20px;
@@ -137,14 +135,13 @@
     }
 
     .summary-box small {
-        color: var(--muted) !important;
+        color: var(--muted);
     }
 
     .summary-box h5 {
-        color: #fff;
+        color: var(--text);
         font-weight: 700;
     }
-
 
     /* =========================
        TOTAL
@@ -152,9 +149,9 @@
 
     .total-box {
         background: var(--primary-soft);
-        border: 1px solid rgba(34,211,238,.20);
+        border: 1px solid rgba(59,130,246,.20);
         border-radius: 14px;
-        padding: 22px;
+        padding: 20px;
         height: 100%;
     }
 
@@ -168,23 +165,22 @@
         font-weight: 700;
     }
 
-
     /* =========================
-       LABA
+       PROFIT
     ========================= */
 
     .profit-card {
         background: var(--card);
         border: 1px solid var(--border);
-        border-radius: 16px;
+        border-radius: 18px;
     }
 
     .profit-row {
-        color: #b8bdc8;
+        color: var(--muted);
     }
 
     .profit-row strong {
-        color: #fff;
+        color: var(--text);
     }
 
     .profit-value {
@@ -193,59 +189,60 @@
 
     .profit-card hr {
         border-color: var(--border);
+        opacity: 1;
     }
-
 
     /* =========================
        BUTTON
     ========================= */
 
-    .btn-edit {
+    .btn-save {
         background: var(--primary);
         border: 1px solid var(--primary);
-        color: #061014;
+        color: #fff;
         font-weight: 600;
         border-radius: 10px;
+        transition: all .2s ease;
     }
 
-    .btn-edit:hover {
+    .btn-save:hover {
         background: var(--primary-hover);
         border-color: var(--primary-hover);
-        color: #061014;
+        color: #fff;
         transform: translateY(-1px);
     }
 
     .btn-back {
         background: var(--card);
-        border: 1px solid #353945;
-        color: #b8bdc8;
+        border: 1px solid #354154;
+        color: var(--muted);
         font-weight: 500;
         border-radius: 10px;
     }
 
     .btn-back:hover {
-        background: #22252d;
+        background: var(--card-hover);
         border-color: var(--primary);
         color: var(--primary);
     }
-
 
     /* =========================
        ALERT
     ========================= */
 
     .alert-danger {
-        background: rgba(255,92,92,.08);
-        border: 1px solid rgba(255,92,92,.25);
+        background: rgba(248,113,113,.08);
+        border: 1px solid rgba(248,113,113,.25);
         color: #ff8585;
+        border-radius: 10px;
     }
 
     .alert-success {
         background: rgba(94,231,160,.08);
         border: 1px solid rgba(94,231,160,.25);
         color: var(--success);
+        border-radius: 10px;
     }
-
 
     /* =========================
        RESPONSIVE
@@ -257,228 +254,227 @@
             font-size: 24px;
         }
 
+        .form-card .card-body {
+            padding: 18px;
+        }
+
         .total-value {
             font-size: 26px;
         }
-
     }
-
 </style>
 
 
-{{-- =========================
-HEADER
-========================= --}}
+<div class="sales-form-page">
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+    {{-- =========================
+         HEADER
+    ========================= --}}
 
-    <div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <h3 class="page-title">
-            Edit Penjualan
-        </h3>
+        <div>
 
-        <p class="page-subtitle mb-0">
-            Ubah informasi transaksi penjualan
-        </p>
+            <h3 class="page-title">
+                Edit Penjualan
+            </h3>
 
-    </div>
+            <p class="page-subtitle mb-0">
+                Ubah informasi transaksi penjualan
+            </p>
 
+        </div>
 
-    <a
-        href="/penjualan/detail/{{ $penjualan->id }}"
-        class="btn btn-back"
-    >
-
-        <i class="bi bi-arrow-left me-1"></i>
-
-        Kembali
-
-    </a>
-
-</div>
-
-
-{{-- =========================
-ERROR VALIDASI
-========================= --}}
-
-@if ($errors->any())
-
-    <div class="alert alert-danger mb-4">
-
-        <strong>
-            Data belum bisa disimpan.
-        </strong>
-
-        <ul class="mb-0 mt-2">
-
-            @foreach ($errors->all() as $error)
-
-                <li>
-                    {{ $error }}
-                </li>
-
-            @endforeach
-
-        </ul>
+        <a
+            href="/penjualan/detail/{{ $penjualan->id }}"
+            class="btn btn-back"
+        >
+            <i class="bi bi-arrow-left me-1"></i>
+            Kembali
+        </a>
 
     </div>
-
-@endif
-
-
-{{-- =========================
-SUCCESS
-========================= --}}
-
-@if(session('success'))
-
-    <div class="alert alert-success mb-4">
-
-        <i class="bi bi-check-circle me-1"></i>
-
-        {{ session('success') }}
-
-    </div>
-
-@endif
-
-
-<form
-    action="/penjualan/{{ $penjualan->id }}"
-    method="POST"
->
-
-    @csrf
-
-    @method('PUT')
 
 
     {{-- =========================
-    INFORMASI
+         ERROR
     ========================= --}}
 
-    <div class="card form-card mb-4">
+    @if ($errors->any())
 
-        <div class="card-body p-4">
+        <div class="alert alert-danger mb-4">
 
-            <h5 class="section-title">
-                Informasi Penjualan
-            </h5>
+            <strong>
+                Data belum bisa disimpan.
+            </strong>
 
-            <p class="section-subtitle">
-                Perbarui informasi transaksi
-            </p>
+            <ul class="mb-0 mt-2">
 
+                @foreach ($errors->all() as $error)
 
-            <div class="row g-3">
+                    <li>
+                        {{ $error }}
+                    </li>
 
+                @endforeach
 
-                {{-- TANGGAL --}}
+            </ul>
 
-                <div class="col-md-6">
+        </div>
 
-                    <label class="form-label">
-                        Tanggal
-                    </label>
-
-                    <input
-                        type="date"
-                        name="tanggal"
-                        class="form-control"
-                        value="{{ old('tanggal', $penjualan->tanggal) }}"
-                        required
-                    >
-
-                </div>
+    @endif
 
 
-                {{-- PRODUK --}}
+    {{-- =========================
+         SUCCESS
+    ========================= --}}
 
-                <div class="col-md-6">
+    @if(session('success'))
 
-                    <label class="form-label">
-                        Produk
-                    </label>
+        <div class="alert alert-success mb-4">
 
-                    <select
-                        name="produk_id"
-                        id="produk"
-                        class="form-select"
-                        onchange="hitung()"
-                        required
-                    >
+            <i class="bi bi-check-circle me-1"></i>
 
-                        <option value="" disabled>
-                            Pilih Produk
-                        </option>
+            {{ session('success') }}
+
+        </div>
+
+    @endif
 
 
-                        @foreach($produks as $produk)
+    <form
+        action="/penjualan/{{ $penjualan->id }}"
+        method="POST"
+    >
 
-                            <option
-                                value="{{ $produk->id }}"
-                                data-harga="{{ $produk->harga_jual }}"
-                                data-hpp="{{ $produk->hpp }}"
-                                {{ old('produk_id', $penjualan->produk_id) == $produk->id ? 'selected' : '' }}
-                            >
-
-                                {{ $produk->nama }}
-
-                            </option>
-
-                        @endforeach
-
-                    </select>
-
-                </div>
+        @csrf
+        @method('PUT')
 
 
-                {{-- JUMLAH --}}
+        {{-- =========================
+             INFORMASI
+        ========================= --}}
 
-                <div class="col-md-6">
+        <div class="card form-card mb-4">
 
-                    <label class="form-label">
-                        Jumlah Terjual
-                    </label>
+            <div class="card-body">
 
-                    <div class="input-group">
+                <h5 class="section-title">
+                    Informasi Penjualan
+                </h5>
+
+                <p class="section-subtitle">
+                    Perbarui informasi transaksi
+                </p>
+
+
+                <div class="row g-3">
+
+                    {{-- TANGGAL --}}
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Tanggal
+                        </label>
 
                         <input
-                            type="number"
-                            name="jumlah_terjual"
-                            id="jumlah"
+                            type="date"
+                            name="tanggal"
                             class="form-control"
-                            value="{{ old('jumlah_terjual', $penjualan->jumlah_terjual) }}"
-                            min="1"
-                            oninput="hitung()"
+                            value="{{ old('tanggal', $penjualan->tanggal) }}"
                             required
                         >
 
-                        <span class="input-group-text">
-                            produk
-                        </span>
+                    </div>
+
+
+                    {{-- PRODUK --}}
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Produk
+                        </label>
+
+                        <select
+                            name="produk_id"
+                            id="produk"
+                            class="form-select"
+                            onchange="hitung()"
+                            required
+                        >
+
+                            <option
+                                value=""
+                                disabled
+                            >
+                                Pilih Produk
+                            </option>
+
+                            @foreach($produks as $produk)
+
+                                <option
+                                    value="{{ $produk->id }}"
+                                    data-harga="{{ $produk->harga_jual }}"
+                                    data-hpp="{{ $produk->hpp }}"
+                                    {{ old('produk_id', $penjualan->produk_id) == $produk->id ? 'selected' : '' }}
+                                >
+                                    {{ $produk->nama }}
+                                </option>
+
+                            @endforeach
+
+                        </select>
 
                     </div>
 
-                </div>
+
+                    {{-- JUMLAH --}}
+
+                    <div class="col-md-6">
+
+                        <label class="form-label">
+                            Jumlah Terjual
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="number"
+                                name="jumlah_terjual"
+                                id="jumlah"
+                                class="form-control"
+                                value="{{ old('jumlah_terjual', $penjualan->jumlah_terjual) }}"
+                                min="1"
+                                oninput="hitung()"
+                                required
+                            >
+
+                            <span class="input-group-text">
+                                produk
+                            </span>
+
+                        </div>
+
+                    </div>
 
 
-                {{-- CATATAN --}}
+                    {{-- CATATAN --}}
 
-                <div class="col-12">
+                    <div class="col-12">
 
-                    <label class="form-label">
-                        Catatan
-                    </label>
+                        <label class="form-label">
+                            Catatan
+                        </label>
 
-                    <textarea
-                        name="catatan"
-                        class="form-control"
-                        rows="3"
-                        placeholder=""
-                    >{{ old('catatan', $penjualan->catatan) }}</textarea>
+                        <textarea
+                            name="catatan"
+                            class="form-control"
+                            rows="3"
+                        >{{ old('catatan', $penjualan->catatan) }}</textarea>
+
+                    </div>
 
                 </div>
 
@@ -486,88 +482,87 @@ SUCCESS
 
         </div>
 
-    </div>
+
+        {{-- =========================
+             PERHITUNGAN
+        ========================= --}}
+
+        <div class="card form-card mb-4">
+
+            <div class="card-body">
+
+                <h5 class="section-title">
+                    Perhitungan
+                </h5>
+
+                <p class="section-subtitle">
+                    Nilai akan berubah otomatis berdasarkan produk dan jumlah
+                </p>
 
 
-    {{-- =========================
-    HASIL PERHITUNGAN
-    ========================= --}}
+                <div class="row g-3">
 
-    <div class="card form-card mb-4">
+                    {{-- HARGA --}}
 
-        <div class="card-body p-4">
+                    <div class="col-md-4">
 
-            <h5 class="section-title">
-                Perhitungan
-            </h5>
+                        <div class="summary-box">
 
-            <p class="section-subtitle">
-                Nilai akan berubah otomatis berdasarkan produk dan jumlah
-            </p>
+                            <small>
+                                Harga / Produk
+                            </small>
 
+                            <h5
+                                id="harga"
+                                class="mt-2 mb-0"
+                            >
+                                Rp0
+                            </h5>
 
-            <div class="row g-3">
-
-
-                {{-- HARGA --}}
-
-                <div class="col-md-4">
-
-                    <div class="summary-box">
-
-                        <small>
-                            Harga / Produk
-                        </small>
-
-                        <h5
-                            id="harga"
-                            class="mt-2 mb-0"
-                        >
-                            Rp0
-                        </h5>
-
-                    </div>
-
-                </div>
-
-
-                {{-- HPP --}}
-
-                <div class="col-md-4">
-
-                    <div class="summary-box">
-
-                        <small>
-                            HPP / Produk
-                        </small>
-
-                        <h5
-                            id="hpp"
-                            class="mt-2 mb-0"
-                        >
-                            Rp0
-                        </h5>
+                        </div>
 
                     </div>
 
-                </div>
+
+                    {{-- HPP --}}
+
+                    <div class="col-md-4">
+
+                        <div class="summary-box">
+
+                            <small>
+                                HPP / Produk
+                            </small>
+
+                            <h5
+                                id="hpp"
+                                class="mt-2 mb-0"
+                            >
+                                Rp0
+                            </h5>
+
+                        </div>
+
+                    </div>
 
 
-                {{-- TOTAL --}}
+                    {{-- TOTAL --}}
 
-                <div class="col-md-4">
+                    <div class="col-md-4">
 
-                    <div class="total-box">
+                        <div class="total-box">
 
-                        <small>
-                            Total Penjualan
-                        </small>
+                            <small>
+                                Total Penjualan
+                            </small>
 
-                        <div
-                            id="total"
-                            class="total-value mt-2"
-                        >
-                            Rp0
+                            <div
+                                id="total"
+                                class="total-value mt-2"
+                            >
+                                Rp0
+                            </div>
+
                         </div>
 
                     </div>
@@ -578,97 +573,90 @@ SUCCESS
 
         </div>
 
-    </div>
+
+        {{-- =========================
+             LABA
+        ========================= --}}
+
+        <div class="card profit-card mb-4">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between profit-row">
+
+                    <span>
+                        Total HPP
+                    </span>
+
+                    <strong id="modal">
+                        Rp0
+                    </strong>
+
+                </div>
 
 
-    {{-- =========================
-    LABA
-    ========================= --}}
+                <div class="d-flex justify-content-between mt-3 profit-row">
 
-    <div class="card profit-card mb-4">
+                    <span>
+                        Total Penjualan
+                    </span>
 
-        <div class="card-body p-4">
+                    <strong id="hasilPenjualan">
+                        Rp0
+                    </strong>
 
-            <div class="d-flex justify-content-between profit-row">
-
-                <span>
-                    Total HPP
-                </span>
-
-                <strong id="modal">
-                    Rp0
-                </strong>
-
-            </div>
+                </div>
 
 
-            <div class="d-flex justify-content-between mt-3 profit-row">
-
-                <span>
-                    Total Penjualan
-                </span>
-
-                <strong id="hasilPenjualan">
-                    Rp0
-                </strong>
-
-            </div>
+                <hr>
 
 
-            <hr>
+                <div class="d-flex justify-content-between">
 
+                    <strong>
+                        Perkiraan Laba
+                    </strong>
 
-            <div class="d-flex justify-content-between">
+                    <strong
+                        id="laba"
+                        class="profit-value"
+                    >
+                        Rp0
+                    </strong>
 
-                <strong>
-                    Perkiraan Laba
-                </strong>
-
-                <strong
-                    id="laba"
-                    class="profit-value"
-                >
-                    Rp0
-                </strong>
+                </div>
 
             </div>
 
         </div>
 
-    </div>
 
+        {{-- =========================
+             BUTTON
+        ========================= --}}
 
-    {{-- =========================
-    BUTTON
-    ========================= --}}
+        <div class="d-flex justify-content-end gap-2 mb-5">
 
-    <div class="d-flex justify-content-end gap-2 mb-5">
+            <a
+                href="/penjualan/detail/{{ $penjualan->id }}"
+                class="btn btn-back"
+            >
+                Batal
+            </a>
 
-        <a
-            href="/penjualan/detail/{{ $penjualan->id }}"
-            class="btn btn-back"
-        >
+            <button
+                type="submit"
+                class="btn btn-save px-4"
+            >
+                <i class="bi bi-check-circle me-1"></i>
+                Simpan Perubahan
+            </button>
 
-            Batal
+        </div>
 
-        </a>
+    </form>
 
-
-        <button
-            type="submit"
-            class="btn btn-edit px-4"
-        >
-
-            <i class="bi bi-check-circle me-1"></i>
-
-            Simpan Perubahan
-
-        </button>
-
-    </div>
-
-
-</form>
+</div>
 
 
 <script>
@@ -688,14 +676,11 @@ function rupiah(angka)
 
 function hitung()
 {
-
     const select =
         document.getElementById('produk');
 
-
     const option =
         select.options[select.selectedIndex];
-
 
     if (!option || !option.value) {
         return;
@@ -703,16 +688,10 @@ function hitung()
 
 
     const harga =
-        parseFloat(
-            option.dataset.harga
-        ) || 0;
-
+        parseFloat(option.dataset.harga) || 0;
 
     const hpp =
-        parseFloat(
-            option.dataset.hpp
-        ) || 0;
-
+        parseFloat(option.dataset.hpp) || 0;
 
     const jumlah =
         parseFloat(
@@ -723,47 +702,43 @@ function hitung()
     const total =
         harga * jumlah;
 
-
     const modal =
         hpp * jumlah;
-
 
     const laba =
         total - modal;
 
 
-    document.getElementById('harga').innerText =
-        rupiah(harga);
+    document
+        .getElementById('harga')
+        .innerText = rupiah(harga);
 
+    document
+        .getElementById('hpp')
+        .innerText = rupiah(hpp);
 
-    document.getElementById('hpp').innerText =
-        rupiah(hpp);
+    document
+        .getElementById('total')
+        .innerText = rupiah(total);
 
+    document
+        .getElementById('modal')
+        .innerText = rupiah(modal);
 
-    document.getElementById('total').innerText =
-        rupiah(total);
+    document
+        .getElementById('hasilPenjualan')
+        .innerText = rupiah(total);
 
-
-    document.getElementById('modal').innerText =
-        rupiah(modal);
-
-
-    document.getElementById('hasilPenjualan').innerText =
-        rupiah(total);
-
-
-    document.getElementById('laba').innerText =
-        rupiah(laba);
-
+    document
+        .getElementById('laba')
+        .innerText = rupiah(laba);
 }
 
 
 document.addEventListener(
     'DOMContentLoaded',
     function () {
-
         hitung();
-
     }
 );
 

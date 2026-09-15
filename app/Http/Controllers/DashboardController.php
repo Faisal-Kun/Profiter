@@ -12,11 +12,22 @@ class DashboardController extends Controller
     {
         /*
         |--------------------------------------------------------------------------
+        | USER LOGIN
+        |--------------------------------------------------------------------------
+        */
+
+        $userId = auth()->id();
+
+
+        /*
+        |--------------------------------------------------------------------------
         | PRODUK
         |--------------------------------------------------------------------------
         */
 
-        $produks = Produk::latest()->get();
+        $produks = Produk::where('user_id', $userId)
+            ->latest()
+            ->get();
 
 
         /*
@@ -25,7 +36,8 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $totalProduk = Produk::count();
+        $totalProduk = Produk::where('user_id', $userId)
+            ->count();
 
 
         /*
@@ -34,7 +46,8 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $pendapatan = Penjualan::sum('total_penjualan');
+        $pendapatan = Penjualan::where('user_id', $userId)
+            ->sum('total_penjualan');
 
 
         /*
@@ -43,7 +56,8 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $keuntungan = Penjualan::sum('keuntungan');
+        $keuntungan = Penjualan::where('user_id', $userId)
+            ->sum('keuntungan');
 
 
         /*
@@ -52,7 +66,8 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $terjual = Penjualan::sum('jumlah_terjual');
+        $terjual = Penjualan::where('user_id', $userId)
+            ->sum('jumlah_terjual');
 
 
         /*
@@ -61,56 +76,118 @@ class DashboardController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $modal = Produk::sum(
-            DB::raw('stok * hpp')
-        );
+        $modal = Produk::where('user_id', $userId)
+            ->sum(DB::raw('stok * hpp'));
 
 
         /*
         |--------------------------------------------------------------------------
         | GRAFIK PENJUALAN
         |--------------------------------------------------------------------------
+        |
+        | Grafik sekarang berdasarkan:
+        |
+        | Tanggal + Produk + Jumlah Terjual
+        |
+        | Contoh:
+        |
+        | 10 Sep | Ayam Crispy | 5
+        | 10 Sep | Es Teh      | 3
+        | 11 Sep | Ayam Crispy | 7
+        |
+        |--------------------------------------------------------------------------
         */
 
-        $chart = Penjualan::select(
-            DB::raw('YEAR(tanggal) as tahun'),
-            DB::raw('MONTH(tanggal) as bulan'),
-            DB::raw('SUM(total_penjualan) as total')
-        )
-        ->groupBy(
-            DB::raw('YEAR(tanggal)'),
-            DB::raw('MONTH(tanggal)')
-        )
-        ->orderBy('tahun')
-        ->orderBy('bulan')
-        ->get();
+        $penjualanGrafik = Penjualan::where('user_id', $userId)
+            ->with('produk')
+            ->orderBy('tanggal')
+            ->get();
 
 
-        $labels = [];
+        /*
+        |--------------------------------------------------------------------------
+        | LABEL TANGGAL
+        |--------------------------------------------------------------------------
+        */
 
-        $data = [];
+        $labels = $penjualanGrafik
+            ->map(function ($penjualan) {
 
+                return \Carbon\Carbon::parse(
+                    $penjualan->tanggal
+                )->format('d M');
 
-        foreach ($chart as $item) {
-
-            $namaBulan = date(
-                'M',
-                mktime(
-                    0,
-                    0,
-                    0,
-                    $item->bulan,
-                    1
-                )
-            );
-
-
-            $labels[] =
-                $namaBulan . ' ' . $item->tahun;
+            })
+            ->unique()
+            ->values()
+            ->toArray();
 
 
-            $data[] =
-                $item->total;
+        /*
+        |--------------------------------------------------------------------------
+        | PRODUK YANG ADA DI PENJUALAN
+        |--------------------------------------------------------------------------
+        */
+
+        $namaProduk = $penjualanGrafik
+            ->filter(function ($penjualan) {
+
+                return $penjualan->produk !== null;
+
+            })
+            ->map(function ($penjualan) {
+
+                return $penjualan->produk->nama;
+
+            })
+            ->unique()
+            ->values();
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | DATA GRAFIK PER PRODUK
+        |--------------------------------------------------------------------------
+        */
+
+        $dataGrafik = [];
+
+
+        foreach ($namaProduk as $nama) {
+
+            $dataGrafik[$nama] = [];
+
+
+            foreach ($labels as $label) {
+
+                $jumlahTerjual = $penjualanGrafik
+                    ->filter(function ($penjualan) use (
+                        $nama,
+                        $label
+                    ) {
+
+                        if (!$penjualan->produk) {
+                            return false;
+                        }
+
+
+                        $tanggal = \Carbon\Carbon::parse(
+                            $penjualan->tanggal
+                        )->format('d M');
+
+
+                        return
+                            $penjualan->produk->nama === $nama
+                            &&
+                            $tanggal === $label;
+
+                    })
+                    ->sum('jumlah_terjual');
+
+
+                $dataGrafik[$nama][] =
+                    $jumlahTerjual;
+            }
         }
 
 
@@ -128,7 +205,7 @@ class DashboardController extends Controller
             'terjual',
             'modal',
             'labels',
-            'data'
+            'dataGrafik'
         ));
     }
 }

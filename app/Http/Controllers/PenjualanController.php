@@ -9,423 +9,182 @@ use Illuminate\Support\Facades\DB;
 
 class PenjualanController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | DAFTAR PENJUALAN
-    |--------------------------------------------------------------------------
-    */
-
     public function index()
     {
-        $penjualans =
-            Penjualan::with('produk')
-                ->latest()
-                ->get();
+        $penjualans = Penjualan::where('user_id', auth()->id())
+            ->with('produk')
+            ->latest()
+            ->get();
 
-        return view(
-            'penjualan.index',
-            compact('penjualans')
-        );
+        return view('penjualan.index', compact('penjualans'));
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | FORM TAMBAH
-    |--------------------------------------------------------------------------
-    */
 
     public function create()
     {
-        $produks =
-            Produk::orderBy('nama')->get();
+        $produks = Produk::where('user_id', auth()->id())
+            ->orderBy('nama')
+            ->get();
 
-        return view(
-            'penjualan.tambah',
-            compact('produks')
-        );
+        return view('penjualan.tambah', compact('produks'));
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'produk_id' => 'required|exists:produks,id',
+            'jumlah_terjual' => 'required|numeric|min:1',
+            'catatan' => 'nullable|string',
+        ]);
 
-    /*
-    |--------------------------------------------------------------------------
-    | SIMPAN PENJUALAN
-    |--------------------------------------------------------------------------
-    */
+        $produk = Produk::where('user_id', auth()->id())
+            ->findOrFail($request->produk_id);
 
-   public function store(Request $request)
-{
-    $request->validate([
-        'tanggal' => 'required|date',
-        'produk_id' => 'required|exists:produks,id',
-        'jumlah_terjual' => 'required|numeric|min:1',
-        'catatan' => 'nullable|string',
-    ]);
+        $jumlah = (int) $request->jumlah_terjual;
 
-    $produk = Produk::findOrFail($request->produk_id);
+        if ($jumlah > $produk->stok) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'jumlah_terjual' =>
+                        'Stok tidak mencukupi. Stok tersedia: ' . $produk->stok
+                ]);
+        }
 
-    $jumlah = (int) $request->jumlah_terjual;
+        $hargaJual = $produk->harga_jual;
+        $hppProduk = $produk->hpp ?? 0;
 
-    /*
-    |--------------------------------------------------------------------------
-    | CEK STOK TERLEBIH DAHULU
-    |--------------------------------------------------------------------------
-    */
+        $totalPenjualan = $hargaJual * $jumlah;
+        $totalHpp = $hppProduk * $jumlah;
+        $keuntungan = $totalPenjualan - $totalHpp;
 
-    if ($jumlah > $produk->stok) {
+        Penjualan::create([
+            'user_id' => auth()->id(),
+            'tanggal' => $request->tanggal,
+            'produk_id' => $produk->id,
+            'jumlah_terjual' => $jumlah,
+            'harga_jual' => $hargaJual,
+            'total_penjualan' => $totalPenjualan,
+            'hpp' => $totalHpp,
+            'keuntungan' => $keuntungan,
+            'catatan' => $request->catatan,
+        ]);
 
-        return back()
-            ->withInput()
-            ->withErrors([
-                'jumlah_terjual' =>
-                    'Stok tidak mencukupi. Stok tersedia: '
-                    . $produk->stok
-            ]);
+        $produk->decrement('stok', $jumlah);
+
+        return redirect('/penjualan')
+            ->with('success', 'Penjualan berhasil ditambahkan!');
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | HITUNG PENJUALAN
-    |--------------------------------------------------------------------------
-    */
-
-    $hargaJual = $produk->harga_jual;
-
-    $hppProduk = $produk->hpp ?? 0;
-
-    $totalPenjualan =
-        $hargaJual * $jumlah;
-
-    $totalHpp =
-        $hppProduk * $jumlah;
-
-    $keuntungan =
-        $totalPenjualan - $totalHpp;
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | SIMPAN PENJUALAN
-    |--------------------------------------------------------------------------
-    */
-
-    Penjualan::create([
-
-        'tanggal' =>
-            $request->tanggal,
-
-        'produk_id' =>
-            $produk->id,
-
-        'jumlah_terjual' =>
-            $jumlah,
-
-        'harga_jual' =>
-            $hargaJual,
-
-        'total_penjualan' =>
-            $totalPenjualan,
-
-        'hpp' =>
-            $totalHpp,
-
-        'keuntungan' =>
-            $keuntungan,
-
-        'catatan' =>
-            $request->catatan,
-
-    ]);
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | KURANGI STOK
-    |--------------------------------------------------------------------------
-    */
-
-    $produk->decrement(
-        'stok',
-        $jumlah
-    );
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | REDIRECT
-    |--------------------------------------------------------------------------
-    */
-
-    return redirect('/penjualan')
-        ->with(
-            'success',
-            'Penjualan berhasil ditambahkan!'
-        );
-}    /*
-    |--------------------------------------------------------------------------
-    | DETAIL
-    |--------------------------------------------------------------------------
-    */
 
     public function show($id)
     {
-        $penjualan =
-            Penjualan::with('produk')
-                ->findOrFail($id);
+        $penjualan = Penjualan::where('user_id', auth()->id())
+            ->with('produk')
+            ->findOrFail($id);
 
-
-        return view(
-            'penjualan.detail',
-            compact('penjualan')
-        );
+        return view('penjualan.detail', compact('penjualan'));
     }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | FORM EDIT
-    |--------------------------------------------------------------------------
-    */
 
     public function edit($id)
     {
-        $penjualan =
-            Penjualan::findOrFail($id);
+        $penjualan = Penjualan::where('user_id', auth()->id())
+            ->findOrFail($id);
 
-
-        $produks =
-            Produk::orderBy('nama')->get();
-
+        $produks = Produk::where('user_id', auth()->id())
+            ->orderBy('nama')
+            ->get();
 
         return view(
             'penjualan.edit',
-            compact(
-                'penjualan',
-                'produks'
-            )
+            compact('penjualan', 'produks')
         );
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE
-    |--------------------------------------------------------------------------
-    */
-
-    public function update(
-        Request $request,
-        $id
-    ) {
-
-        $penjualan =
-            Penjualan::findOrFail($id);
-
+    public function update(Request $request, $id)
+    {
+        $penjualan = Penjualan::where('user_id', auth()->id())
+            ->findOrFail($id);
 
         $request->validate([
-            'tanggal' =>
-                'required|date',
-
-            'produk_id' =>
-                'required|exists:produks,id',
-
-            'jumlah_terjual' =>
-                'required|numeric|min:1',
-
-            'catatan' =>
-                'nullable|string',
+            'tanggal' => 'required|date',
+            'produk_id' => 'required|exists:produks,id',
+            'jumlah_terjual' => 'required|numeric|min:1',
+            'catatan' => 'nullable|string',
         ]);
 
+        DB::transaction(function () use ($request, $penjualan) {
 
-        DB::transaction(function () use (
-            $request,
-            $penjualan
-        ) {
-
-            /*
-            |--------------------------------------------------------------------------
-            | KEMBALIKAN STOK PENJUALAN LAMA
-            |--------------------------------------------------------------------------
-            */
-
-            $produkLama =
-                Produk::lockForUpdate()
-                    ->findOrFail(
-                        $penjualan->produk_id
-                    );
-
+            $produkLama = Produk::where('user_id', auth()->id())
+                ->lockForUpdate()
+                ->findOrFail($penjualan->produk_id);
 
             $produkLama->increment(
                 'stok',
                 $penjualan->jumlah_terjual
             );
 
+            $produkBaru = Produk::where('user_id', auth()->id())
+                ->lockForUpdate()
+                ->findOrFail($request->produk_id);
 
-            /*
-            |--------------------------------------------------------------------------
-            | PRODUK BARU
-            |--------------------------------------------------------------------------
-            */
-
-            $produkBaru =
-                Produk::lockForUpdate()
-                    ->findOrFail(
-                        $request->produk_id
-                    );
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | CEK STOK
-            |--------------------------------------------------------------------------
-            */
-
-            if (
-                $request->jumlah_terjual
-                > $produkBaru->stok
-            ) {
-
+            if ($request->jumlah_terjual > $produkBaru->stok) {
                 throw new \Exception(
-                    'Stok tidak mencukupi. Stok tersedia: '
-                    . $produkBaru->stok
+                    'Stok tidak mencukupi. Stok tersedia: ' .
+                    $produkBaru->stok
                 );
-
             }
 
+            $jumlah = $request->jumlah_terjual;
+            $hargaJual = $produkBaru->harga_jual;
+            $hppProduk = $produkBaru->hpp ?? 0;
 
-            /*
-            |--------------------------------------------------------------------------
-            | DATA PENJUALAN
-            |--------------------------------------------------------------------------
-            */
-
-            $jumlah =
-                $request->jumlah_terjual;
-
-
-            $hargaJual =
-                $produkBaru->harga_jual;
-
-
-            $hppProduk =
-                $produkBaru->hpp ?? 0;
-
-
-            $totalPenjualan =
-                $hargaJual * $jumlah;
-
-
-            $totalHpp =
-                $hppProduk * $jumlah;
-
-
-            $keuntungan =
-                $totalPenjualan - $totalHpp;
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | UPDATE PENJUALAN
-            |--------------------------------------------------------------------------
-            */
+            $totalPenjualan = $hargaJual * $jumlah;
+            $totalHpp = $hppProduk * $jumlah;
+            $keuntungan = $totalPenjualan - $totalHpp;
 
             $penjualan->update([
-
-                'tanggal' =>
-                    $request->tanggal,
-
-                'produk_id' =>
-                    $request->produk_id,
-
-                'jumlah_terjual' =>
-                    $jumlah,
-
-                'harga_jual' =>
-                    $hargaJual,
-
-                'total_penjualan' =>
-                    $totalPenjualan,
-
-                'hpp' =>
-                    $totalHpp,
-
-                'keuntungan' =>
-                    $keuntungan,
-
-                'catatan' =>
-                    $request->catatan,
-
+                'tanggal' => $request->tanggal,
+                'produk_id' => $request->produk_id,
+                'jumlah_terjual' => $jumlah,
+                'harga_jual' => $hargaJual,
+                'total_penjualan' => $totalPenjualan,
+                'hpp' => $totalHpp,
+                'keuntungan' => $keuntungan,
+                'catatan' => $request->catatan,
             ]);
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | KURANGI STOK BARU
-            |--------------------------------------------------------------------------
-            */
 
             $produkBaru->decrement(
                 'stok',
                 $jumlah
             );
-
         });
 
-
         return redirect(
-            '/penjualan/detail/' .
-            $penjualan->id
+            '/penjualan/detail/' . $penjualan->id
         )->with(
             'success',
             'Penjualan berhasil diperbarui dan stok disesuaikan!'
         );
     }
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | HAPUS
-    |--------------------------------------------------------------------------
-    */
-
     public function destroy($id)
     {
-        $penjualan =
-            Penjualan::findOrFail($id);
-
+        $penjualan = Penjualan::where('user_id', auth()->id())
+            ->findOrFail($id);
 
         DB::transaction(function () use ($penjualan) {
 
-            /*
-            |--------------------------------------------------------------------------
-            | KEMBALIKAN STOK
-            |--------------------------------------------------------------------------
-            */
-
-            $produk =
-                Produk::lockForUpdate()
-                    ->findOrFail(
-                        $penjualan->produk_id
-                    );
-
+            $produk = Produk::where('user_id', auth()->id())
+                ->lockForUpdate()
+                ->findOrFail($penjualan->produk_id);
 
             $produk->increment(
                 'stok',
                 $penjualan->jumlah_terjual
             );
 
-
-            /*
-            |--------------------------------------------------------------------------
-            | HAPUS PENJUALAN
-            |--------------------------------------------------------------------------
-            */
-
             $penjualan->delete();
-
         });
-
 
         return redirect('/penjualan')
             ->with(

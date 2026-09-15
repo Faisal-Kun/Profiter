@@ -4,10 +4,6 @@
 
 <style>
 
-    /* =========================
-       COLOR SYSTEM
-    ========================= */
-
     :root {
         --card: #151b24;
         --card-hover: #1a2230;
@@ -22,7 +18,6 @@
 
         --success: #5ee7a0;
         --danger: #f87171;
-        --warning: #fbbf24;
     }
 
 
@@ -34,7 +29,7 @@
         color: var(--text);
         font-weight: 700;
         font-size: 28px;
-        margin-bottom: 5px;
+        margin-bottom: 4px;
     }
 
     .page-subtitle {
@@ -56,29 +51,84 @@
 
 
     /* =========================
-       PRODUCT IMAGE
+       PRODUCT
     ========================= */
 
-    .product-detail-image {
+    .product-image {
+
         width: 100%;
-        height: 380px;
+
+        height: 300px;
+
         object-fit: cover;
-        border-radius: 16px 16px 0 0;
+
+        display: block;
+    }
+
+
+    .product-placeholder {
+
+        width: 100%;
+
+        height: 300px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        background: #111821;
+
+        color: #455267;
+
+        font-size: 60px;
+    }
+
+
+    .product-name {
+
+        color: var(--text);
+
+        font-weight: 700;
+
+        font-size: 22px;
+    }
+
+
+    .product-category {
+
+        color: var(--muted);
+
+        font-size: 14px;
     }
 
 
     /* =========================
-       PRODUCT NAME
+       STATUS BADGE
     ========================= */
 
-    .product-name-title {
-        color: var(--text);
-        font-weight: 700;
-    }
+    .status-badge {
 
-    .product-category {
-        color: var(--muted);
-        font-size: 14px;
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 7px;
+
+        background: rgba(94,231,160,.09);
+
+        border: 1px solid rgba(94,231,160,.18);
+
+        color: var(--success);
+
+        padding: 7px 12px;
+
+        border-radius: 20px;
+
+        font-size: 12px;
+
+        font-weight: 600;
     }
 
 
@@ -86,30 +136,51 @@
        INFO
     ========================= */
 
+    .section-title {
+
+        color: var(--text);
+
+        font-weight: 600;
+
+        font-size: 17px;
+    }
+
+
     .info-row {
+
         display: flex;
+
         justify-content: space-between;
+
         align-items: center;
+
+        gap: 20px;
 
         padding: 15px 0;
 
         border-bottom: 1px solid var(--border);
-
-        gap: 20px;
     }
 
     .info-row:last-child {
+
         border-bottom: none;
+
+        padding-bottom: 0;
     }
 
     .info-label {
+
         color: var(--muted);
+
         font-size: 14px;
     }
 
     .info-value {
+
         color: var(--text);
+
         font-weight: 600;
+
         text-align: right;
     }
 
@@ -119,36 +190,55 @@
     ========================= */
 
     .summary-box {
-        background: #1a2230;
-        border: 1px solid #293647;
-        border-radius: 12px;
-        padding: 18px;
+
         height: 100%;
+
+        background: #111821;
+
+        border: 1px solid var(--border);
+
+        border-radius: 12px;
+
+        padding: 18px;
+    }
+
+    .summary-icon {
+
+        width: 38px;
+
+        height: 38px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        border-radius: 10px;
+
+        background: var(--primary-soft);
+
+        color: var(--primary-hover);
+
+        margin-bottom: 14px;
     }
 
     .summary-label {
+
         color: var(--muted);
+
         font-size: 13px;
     }
 
     .summary-value {
+
         color: var(--text);
+
         font-size: 22px;
+
         font-weight: 700;
-        margin-top: 5px;
-    }
 
-
-    /* =========================
-       STATUS
-    ========================= */
-
-    .progress {
-        background: #1a2230;
-    }
-
-    .progress-bar {
-        background: var(--primary) !important;
+        margin-top: 4px;
     }
 
 
@@ -157,23 +247,30 @@
     ========================= */
 
     .profit-box {
-        background: var(--card);
-        border: 1px solid var(--border);
-        color: var(--text);
-        border-radius: 16px;
-        padding: 25px;
+
+        background: #111821;
+
+        border: 1px solid rgba(94,231,160,.18);
+
+        border-radius: 14px;
+
+        padding: 20px;
 
         position: relative;
+
         overflow: hidden;
     }
 
     .profit-box::before {
+
         content: "";
 
         position: absolute;
 
         left: 0;
+
         top: 0;
+
         bottom: 0;
 
         width: 4px;
@@ -182,52 +279,75 @@
     }
 
     .profit-label {
+
         color: var(--muted);
+
         font-size: 13px;
     }
 
     .profit-value {
+
         color: var(--success);
-        font-size: 30px;
+
+        font-size: 28px;
+
         font-weight: 700;
+
+        margin-top: 5px;
     }
 
     .profit-description {
+
         color: var(--muted);
+
+        font-size: 13px;
+    }
+
+
+    .profit-row {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        color: var(--muted);
+
         font-size: 14px;
     }
 
-    .profit-row {
-        color: var(--muted);
-    }
-
     .profit-row strong {
+
         color: var(--text);
     }
 
+
     .profit-box hr {
+
         border-color: var(--border);
+
+        opacity: 1;
     }
 
 
     /* =========================
-       BADGE
+       NOTE
     ========================= */
 
-    .production-badge {
-        display: inline-block;
+    .note-box {
 
-        background: rgba(94,231,160,.10);
-        border: 1px solid rgba(94,231,160,.20);
+        background: #111821;
 
-        color: var(--success);
+        border: 1px solid var(--border);
 
-        padding: 6px 11px;
+        border-radius: 12px;
 
-        border-radius: 20px;
+        padding: 16px;
 
-        font-size: 12px;
-        font-weight: 600;
+        color: #c9d0da;
+
+        font-size: 14px;
+
+        line-height: 1.6;
     }
 
 
@@ -235,46 +355,79 @@
        BUTTON
     ========================= */
 
-    .btn-edit {
+    .btn-primary-custom {
+
         background: var(--primary);
+
         border: 1px solid var(--primary);
+
         color: #fff;
-        font-weight: 700;
+
+        font-weight: 600;
+
         border-radius: 10px;
+
+        transition: .2s ease;
     }
 
-    .btn-edit:hover {
+    .btn-primary-custom:hover {
+
         background: var(--primary-hover);
+
         border-color: var(--primary-hover);
+
         color: #fff;
+
         transform: translateY(-1px);
     }
 
 
-    .btn-back {
+    .btn-secondary-custom {
+
         background: var(--card);
+
         border: 1px solid #354154;
+
         color: var(--muted);
-        font-weight: 600;
+
+        font-weight: 500;
+
         border-radius: 10px;
+
+        transition: .2s ease;
     }
 
-    .btn-back:hover {
+    .btn-secondary-custom:hover {
+
         background: var(--card-hover);
+
         border-color: var(--primary);
+
         color: var(--primary-hover);
     }
 
 
     .btn-delete {
-        border-color: #354154;
+
+        background: transparent;
+
+        border: 1px solid #354154;
+
         color: var(--muted);
+
+        font-weight: 500;
+
         border-radius: 10px;
+
+        transition: .2s ease;
     }
 
     .btn-delete:hover {
+
         background: rgba(248,113,113,.10);
+
         border-color: var(--danger);
+
         color: var(--danger);
     }
 
@@ -284,9 +437,13 @@
     ========================= */
 
     .production-alert {
+
         background: rgba(94,231,160,.08);
+
         border: 1px solid rgba(94,231,160,.20);
+
         color: var(--success);
+
         border-radius: 12px;
     }
 
@@ -295,14 +452,15 @@
        MOBILE
     ========================= */
 
-    @media (max-width: 768px) {
+    @media(max-width:768px) {
 
         .page-title {
             font-size: 24px;
         }
 
-        .product-detail-image {
-            height: 280px;
+        .product-image,
+        .product-placeholder {
+            height: 240px;
         }
 
         .info-row {
@@ -315,12 +473,33 @@
         }
 
         .profit-value {
-            font-size: 26px;
+            font-size: 25px;
         }
 
     }
 
 </style>
+
+
+@php
+
+    $jumlah = $produksi->jumlah_produksi;
+
+    $hargaJual = $produksi->produk->harga_jual ?? 0;
+
+    $hpp = $produksi->produk->hpp ?? 0;
+
+    $modal = $hpp * $jumlah;
+
+    $penjualan = $hargaJual * $jumlah;
+
+    $keuntungan = $penjualan - $modal;
+
+    $margin = $penjualan > 0
+        ? ($keuntungan / $penjualan) * 100
+        : 0;
+
+@endphp
 
 
 {{-- =========================
@@ -332,11 +511,15 @@ HEADER
     <div>
 
         <h3 class="page-title">
+
             Detail Produksi
+
         </h3>
 
         <p class="page-subtitle mb-0">
-            Informasi lengkap produksi
+
+            Informasi lengkap aktivitas produksi
+
         </p>
 
     </div>
@@ -344,7 +527,7 @@ HEADER
 
     <a
         href="/produksi"
-        class="btn btn-back"
+        class="btn btn-secondary-custom"
     >
 
         <i class="bi bi-arrow-left me-1"></i>
@@ -354,7 +537,6 @@ HEADER
     </a>
 
 </div>
-
 
 
 {{-- =========================
@@ -380,9 +562,8 @@ NOTIFIKASI
 @endif
 
 
-
 {{-- =========================
-INFORMASI UTAMA
+MAIN
 ========================= --}}
 
 <div class="row g-4 mb-4">
@@ -396,39 +577,55 @@ INFORMASI UTAMA
 
         <div class="detail-card h-100">
 
-            <img
-                src="{{ $produksi->produk?->gambar
-                    ? asset('storage/' . $produksi->produk->gambar)
-                    : 'https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=800'
-                }}"
-                class="product-detail-image"
-                alt="{{ $produksi->produk?->nama ?? 'Produk' }}"
-            >
+            @if($produksi->produk?->gambar)
+
+                <img
+                    src="{{ asset('storage/' . $produksi->produk->gambar) }}"
+                    class="product-image"
+                    alt="{{ $produksi->produk->nama ?? 'Produk' }}"
+                >
+
+            @else
+
+                <div class="product-placeholder">
+
+                    <i class="bi bi-box-seam"></i>
+
+                </div>
+
+            @endif
 
 
             <div class="p-4">
 
-                <h4 class="product-name-title mb-1">
+                <div class="d-flex justify-content-between align-items-start gap-3">
 
-                    {{ $produksi->produk->nama ?? '-' }}
+                    <div>
 
-                </h4>
+                        <div class="product-name">
+
+                            {{ $produksi->produk->nama ?? '-' }}
+
+                        </div>
+
+                        <div class="product-category mt-1">
+
+                            {{ $produksi->produk->kategori ?? '-' }}
+
+                        </div>
+
+                    </div>
 
 
-                <p class="product-category mb-3">
+                    <span class="status-badge">
 
-                    {{ $produksi->produk->kategori ?? '-' }}
+                        <i class="bi bi-check-circle"></i>
 
-                </p>
+                        Tercatat
 
+                    </span>
 
-                <span class="production-badge">
-
-                    <i class="bi bi-check-circle me-1"></i>
-
-                    Produksi Tercatat
-
-                </span>
+                </div>
 
             </div>
 
@@ -437,9 +634,8 @@ INFORMASI UTAMA
     </div>
 
 
-
     {{-- =========================
-    DETAIL PRODUKSI
+    INFORMASI PRODUKSI
     ========================= --}}
 
     <div class="col-lg-7">
@@ -448,11 +644,11 @@ INFORMASI UTAMA
 
             <div class="p-4">
 
-                <h5 class="product-name-title mb-3">
+                <div class="section-title mb-3">
 
                     Informasi Produksi
 
-                </h5>
+                </div>
 
 
                 {{-- TANGGAL --}}
@@ -460,14 +656,14 @@ INFORMASI UTAMA
                 <div class="info-row">
 
                     <span class="info-label">
+
                         Tanggal Produksi
+
                     </span>
 
                     <span class="info-value">
 
-                        {{ \Carbon\Carbon::parse(
-                            $produksi->tanggal
-                        )->translatedFormat('d F Y') }}
+                        {{ \Carbon\Carbon::parse($produksi->tanggal)->translatedFormat('d F Y') }}
 
                     </span>
 
@@ -479,7 +675,9 @@ INFORMASI UTAMA
                 <div class="info-row">
 
                     <span class="info-label">
+
                         Nama Produk
+
                     </span>
 
                     <span class="info-value">
@@ -496,12 +694,17 @@ INFORMASI UTAMA
                 <div class="info-row">
 
                     <span class="info-label">
+
                         Jumlah Produksi
+
                     </span>
 
-                    <span class="info-value">
+                    <span
+                        class="info-value"
+                        style="color:var(--primary-hover);"
+                    >
 
-                        {{ $produksi->jumlah_produksi }} produk
+                        {{ $jumlah }} produk
 
                     </span>
 
@@ -513,20 +716,36 @@ INFORMASI UTAMA
                 <div class="info-row">
 
                     <span class="info-label">
-                        Harga Jual
+
+                        Harga Jual / Produk
+
                     </span>
 
                     <span
                         class="info-value"
-                        style="color:#60a5fa;"
+                        style="color:var(--primary-hover);"
                     >
 
-                        Rp{{ number_format(
-                            $produksi->produk->harga_jual ?? 0,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
+                        Rp{{ number_format($hargaJual, 0, ',', '.') }}
+
+                    </span>
+
+                </div>
+
+
+                {{-- HPP --}}
+
+                <div class="info-row">
+
+                    <span class="info-label">
+
+                        HPP / Produk
+
+                    </span>
+
+                    <span class="info-value">
+
+                        Rp{{ number_format($hpp, 0, ',', '.') }}
 
                     </span>
 
@@ -538,7 +757,9 @@ INFORMASI UTAMA
                 <div class="info-row">
 
                     <span class="info-label">
+
                         Catatan
+
                     </span>
 
                     <span class="info-value">
@@ -558,23 +779,51 @@ INFORMASI UTAMA
 </div>
 
 
-
 {{-- =========================
-RINGKASAN PRODUK
+RINGKASAN
 ========================= --}}
 
 <div class="detail-card mb-4">
 
     <div class="p-4">
 
-        <h5 class="product-name-title mb-4">
+        <div class="section-title mb-4">
 
             Ringkasan Produksi
 
-        </h5>
+        </div>
 
 
         <div class="row g-3">
+
+
+            {{-- JUMLAH --}}
+
+            <div class="col-md-4">
+
+                <div class="summary-box">
+
+                    <div class="summary-icon">
+
+                        <i class="bi bi-box-seam"></i>
+
+                    </div>
+
+                    <div class="summary-label">
+
+                        Jumlah Produksi
+
+                    </div>
+
+                    <div class="summary-value">
+
+                        {{ $jumlah }} produk
+
+                    </div>
+
+                </div>
+
+            </div>
 
 
             {{-- HPP --}}
@@ -583,18 +832,21 @@ RINGKASAN PRODUK
 
                 <div class="summary-box">
 
+                    <div class="summary-icon">
+
+                        <i class="bi bi-calculator"></i>
+
+                    </div>
+
                     <div class="summary-label">
+
                         HPP / Produk
+
                     </div>
 
                     <div class="summary-value">
 
-                        Rp{{ number_format(
-                            $produksi->produk->hpp ?? 0,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
+                        Rp{{ number_format($hpp, 0, ',', '.') }}
 
                     </div>
 
@@ -609,52 +861,27 @@ RINGKASAN PRODUK
 
                 <div class="summary-box">
 
+                    <div class="summary-icon">
+
+                        <i class="bi bi-wallet2"></i>
+
+                    </div>
+
                     <div class="summary-label">
+
                         Modal Produksi
+
                     </div>
 
                     <div class="summary-value">
 
-                        Rp{{ number_format(
-                            ($produksi->produk->hpp ?? 0)
-                            * $produksi->jumlah_produksi,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
+                        Rp{{ number_format($modal, 0, ',', '.') }}
 
                     </div>
 
                 </div>
 
             </div>
-
-
-            {{-- HARGA JUAL --}}
-
-            <div class="col-md-4">
-
-                <div class="summary-box">
-
-                    <div class="summary-label">
-                        Harga Jual / Produk
-                    </div>
-
-                    <div class="summary-value">
-
-                        Rp{{ number_format(
-                            $produksi->produk->harga_jual ?? 0,
-                            0,
-                            ',',
-                            '.'
-                        ) }}
-
-                    </div>
-
-                </div>
-
-            </div>
-
 
         </div>
 
@@ -663,12 +890,11 @@ RINGKASAN PRODUK
 </div>
 
 
-
 {{-- =========================
-STATUS PRODUKSI
+KEUNTUNGAN
 ========================= --}}
 
-<div class="row g-4 mb-5">
+<div class="row g-4 mb-4">
 
 
     <div class="col-lg-7">
@@ -677,67 +903,83 @@ STATUS PRODUKSI
 
             <div class="p-4">
 
-                <h5 class="product-name-title mb-4">
+                <div class="section-title mb-4">
 
-                    Status Produksi
-
-                </h5>
-
-
-                <div class="d-flex justify-content-between mb-2">
-
-                    <span class="page-subtitle">
-                        Jumlah Produksi
-                    </span>
-
-                    <strong style="color:var(--text);">
-
-                        {{ $produksi->jumlah_produksi }}
-
-                    </strong>
+                    Perkiraan Hasil Produksi
 
                 </div>
 
 
-                <div
-                    class="progress mb-4"
-                    style="height:10px;"
-                >
+                <div class="info-row">
 
-                    <div
-                        class="progress-bar"
-                        style="width:100%;"
-                    ></div>
+                    <span class="info-label">
+
+                        Potensi Penjualan
+
+                    </span>
+
+                    <span class="info-value">
+
+                        Rp{{ number_format($penjualan, 0, ',', '.') }}
+
+                    </span>
 
                 </div>
 
 
-                <div class="d-flex justify-content-between">
+                <div class="info-row">
 
-                    <span class="page-subtitle">
-                        Produk
+                    <span class="info-label">
+
+                        Modal Produksi
+
                     </span>
 
-                    <strong style="color:var(--text);">
+                    <span class="info-value">
 
-                        {{ $produksi->produk->nama ?? '-' }}
+                        Rp{{ number_format($modal, 0, ',', '.') }}
 
-                    </strong>
+                    </span>
 
                 </div>
 
 
-                <div class="d-flex justify-content-between mt-2">
+                <div class="info-row">
 
-                    <span class="page-subtitle">
-                        Jumlah
+                    <span class="info-label">
+
+                        Perkiraan Keuntungan
+
                     </span>
 
-                    <strong style="color:var(--success);">
+                    <span
+                        class="info-value"
+                        style="color:var(--success);"
+                    >
 
-                        {{ $produksi->jumlah_produksi }} produk
+                        Rp{{ number_format($keuntungan, 0, ',', '.') }}
 
-                    </strong>
+                    </span>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <span class="info-label">
+
+                        Margin
+
+                    </span>
+
+                    <span
+                        class="info-value"
+                        style="color:var(--success);"
+                    >
+
+                        {{ number_format($margin, 1, ',', '.') }}%
+
+                    </span>
 
                 </div>
 
@@ -748,101 +990,63 @@ STATUS PRODUKSI
     </div>
 
 
-
-    {{-- =========================
-    PERKIRAAN KEUNTUNGAN
-    ========================= --}}
+    {{-- PROFIT --}}
 
     <div class="col-lg-5">
-
-        @php
-
-            $jumlah = $produksi->jumlah_produksi;
-
-            $hargaJual =
-                $produksi->produk->harga_jual ?? 0;
-
-            $hpp =
-                $produksi->produk->hpp ?? 0;
-
-            $penjualan =
-                $hargaJual * $jumlah;
-
-            $modal =
-                $hpp * $jumlah;
-
-            $keuntungan =
-                $penjualan - $modal;
-
-            $margin =
-                $penjualan > 0
-                    ? ($keuntungan / $penjualan) * 100
-                    : 0;
-
-        @endphp
-
 
         <div class="profit-box h-100">
 
             <div class="profit-label">
+
                 Perkiraan Keuntungan
-            </div>
-
-
-            <div class="profit-value mt-2">
-
-                Rp{{ number_format(
-                    $keuntungan,
-                    0,
-                    ',',
-                    '.'
-                ) }}
 
             </div>
 
 
-            <p class="profit-description mb-4 mt-2">
+            <div class="profit-value">
 
-                Perkiraan keuntungan berdasarkan
-                jumlah produksi.
+                Rp{{ number_format($keuntungan, 0, ',', '.') }}
+
+            </div>
+
+
+            <p class="profit-description mt-2 mb-4">
+
+                Perkiraan keuntungan apabila seluruh
+                hasil produksi terjual dengan harga jual
+                produk saat ini.
 
             </p>
 
 
-            <div class="d-flex justify-content-between profit-row">
+            <div class="profit-row">
 
                 <span>
+
                     Penjualan
+
                 </span>
 
                 <strong>
 
-                    Rp{{ number_format(
-                        $penjualan,
-                        0,
-                        ',',
-                        '.'
-                    ) }}
+                    Rp{{ number_format($penjualan, 0, ',', '.') }}
 
                 </strong>
 
             </div>
 
 
-            <div class="d-flex justify-content-between mt-2 profit-row">
+            <div class="profit-row mt-2">
 
                 <span>
+
                     Modal
+
                 </span>
 
                 <strong>
 
-                    Rp{{ number_format(
-                        $modal,
-                        0,
-                        ',',
-                        '.'
-                    ) }}
+                    Rp{{ number_format($modal, 0, ',', '.') }}
 
                 </strong>
 
@@ -852,20 +1056,17 @@ STATUS PRODUKSI
             <hr>
 
 
-            <div class="d-flex justify-content-between">
+            <div class="profit-row">
 
-                <strong>
+                <strong style="color:var(--text);">
+
                     Margin
+
                 </strong>
 
                 <strong style="color:var(--success);">
 
-                    {{ number_format(
-                        $margin,
-                        1,
-                        ',',
-                        '.'
-                    ) }}%
+                    {{ number_format($margin, 1, ',', '.') }}%
 
                 </strong>
 
@@ -877,6 +1078,34 @@ STATUS PRODUKSI
 
 </div>
 
+
+{{-- =========================
+CATATAN
+========================= --}}
+
+@if($produksi->catatan)
+
+    <div class="detail-card mb-4">
+
+        <div class="p-4">
+
+            <div class="section-title mb-3">
+
+                Catatan Produksi
+
+            </div>
+
+            <div class="note-box">
+
+                {{ $produksi->catatan }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+@endif
 
 
 {{-- =========================
@@ -887,7 +1116,7 @@ ACTION
 
     <a
         href="/produksi/edit/{{ $produksi->id }}"
-        class="btn btn-edit"
+        class="btn btn-primary-custom"
     >
 
         <i class="bi bi-pencil me-1"></i>
@@ -923,7 +1152,7 @@ ACTION
 
     <a
         href="/produksi"
-        class="btn btn-back"
+        class="btn btn-secondary-custom"
     >
 
         Kembali
@@ -931,6 +1160,5 @@ ACTION
     </a>
 
 </div>
-
 
 @endsection

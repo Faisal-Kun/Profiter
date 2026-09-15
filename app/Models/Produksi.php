@@ -8,6 +8,7 @@ use App\Models\Produk;
 class Produksi extends Model
 {
     protected $fillable = [
+        'user_id',
         'tanggal',
         'produk_id',
         'jumlah_produksi',

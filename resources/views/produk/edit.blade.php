@@ -595,15 +595,14 @@ HEADER
                                     Isi Kemasan
                                 </label>
 
-                                <input
-                                    type="number"
-                                    name="bahan_isi[]"
-                                    class="form-control"
-                                    value="{{ old('bahan_isi.' . $loop->index, rtrim(rtrim($bahan->isi_kemasan, '0'), '.')) }}"
-                                    min="0"
-                                    step="1"
-                                    required
-                                >
+<input
+    type="number"
+    name="bahan_isi[]"
+    class="form-control"
+    min="1"
+    value="{{ $bahan->isi_kemasan }}"
+    placeholder="Opsional"
+>
 
                             </div>
 
@@ -977,14 +976,14 @@ HEADER
                             Isi Kemasan
                         </label>
 
-                        <input
-                            type="number"
-                            name="bahan_isi[]"
-                            class="form-control"
-                            min="0"
-                            step="1"
-                            required
-                        >
+<input
+    type="number"
+    name="bahan_isi[]"
+    class="form-control"
+    min="1"
+    value="{{ $bahan->isi_kemasan }}"
+    placeholder="Opsional"
+>
 
                     </div>
 

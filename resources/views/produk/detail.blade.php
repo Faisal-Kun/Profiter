@@ -1,4 +1,3 @@
-```blade
 @extends('layouts.app')
 
 @section('content')
@@ -21,6 +20,10 @@
         margin: auto;
     }
 
+    /* =========================
+       HEADER
+    ========================= */
+
     .detail-header {
         display: flex;
         justify-content: space-between;
@@ -38,16 +41,20 @@
     .back-btn {
         width: 42px;
         height: 42px;
+
         display: flex;
         align-items: center;
         justify-content: center;
+
         border-radius: 10px;
+
         background: var(--bg-card);
         border: 1px solid var(--border);
+
         color: var(--text);
         text-decoration: none;
+
         transition: .2s;
-        font-size: 20px;
     }
 
     .back-btn:hover {
@@ -70,9 +77,12 @@
         border: none;
         border-radius: 9px;
         padding: 10px 16px;
+
         font-weight: 600;
         text-decoration: none;
+
         cursor: pointer;
+
         display: inline-flex;
         align-items: center;
         gap: 7px;
@@ -98,9 +108,14 @@
         background: #381c21;
     }
 
+    /* =========================
+       MAIN GRID
+    ========================= */
+
     .main-grid {
         display: grid;
         grid-template-columns: 350px 1fr;
+
         gap: 20px;
         margin-bottom: 20px;
     }
@@ -108,32 +123,47 @@
     .detail-card {
         background: var(--bg-card);
         border: 1px solid var(--border);
+
         border-radius: 14px;
         padding: 22px;
     }
 
+    /* =========================
+       PRODUCT
+    ========================= */
+
     .product-image {
         width: 100%;
         height: 300px;
+
         border-radius: 12px;
+
         object-fit: cover;
+
         background: var(--bg-soft);
+
         display: block;
     }
 
     .no-image {
         height: 300px;
+
         border-radius: 12px;
+
         background: var(--bg-soft);
+
         display: flex;
         align-items: center;
         justify-content: center;
+
         color: var(--muted);
     }
 
     .product-name {
         color: var(--text);
+
         font-size: 24px;
+
         margin: 18px 0 6px;
     }
 
@@ -142,9 +172,15 @@
         margin: 0;
     }
 
+    /* =========================
+       INFORMATION
+    ========================= */
+
     .section-title {
         color: var(--text);
+
         font-size: 18px;
+
         margin: 0 0 18px;
     }
 
@@ -156,8 +192,11 @@
     .info-row {
         display: flex;
         justify-content: space-between;
+
         gap: 20px;
+
         padding: 13px 0;
+
         border-bottom: 1px solid var(--border);
     }
 
@@ -176,7 +215,9 @@
 
     .info-value {
         color: var(--text);
+
         font-weight: 600;
+
         text-align: right;
     }
 
@@ -188,50 +229,76 @@
         color: var(--success);
     }
 
+    /* =========================
+       STATS
+    ========================= */
+
     .stats-grid {
         display: grid;
+
         grid-template-columns: repeat(4, 1fr);
+
         gap: 15px;
+
         margin-bottom: 20px;
     }
 
     .stat-card {
         background: var(--bg-card);
+
         border: 1px solid var(--border);
+
         border-radius: 12px;
+
         padding: 18px;
     }
 
     .stat-label {
         color: var(--muted);
+
         font-size: 13px;
+
         margin-bottom: 8px;
     }
 
     .stat-value {
         color: var(--text);
+
         font-size: 22px;
+
         font-weight: 700;
     }
 
     .stat-sub {
         color: var(--muted);
+
         font-size: 12px;
+
         margin-top: 5px;
     }
 
+    /* =========================
+       SECTION
+    ========================= */
+
     .section-card {
         background: var(--bg-card);
+
         border: 1px solid var(--border);
+
         border-radius: 14px;
+
         padding: 22px;
+
         margin-bottom: 20px;
     }
 
     .section-header {
         display: flex;
+
         justify-content: space-between;
         align-items: center;
+
         margin-bottom: 18px;
     }
 
@@ -239,35 +306,44 @@
         margin: 0;
     }
 
+    /* =========================
+       TABLE
+    ========================= */
+
     .table-wrapper {
         overflow-x: auto;
     }
 
     .detail-table {
         width: 100%;
+
         border-collapse: collapse;
     }
 
     .detail-table th {
         color: var(--muted);
+
         font-size: 13px;
+
         font-weight: 600;
+
         text-align: left;
+
         padding: 12px;
+
         border-bottom: 1px solid var(--border);
+
         white-space: nowrap;
     }
 
     .detail-table td {
-        color: #cbd5e1;
-        padding: 14px 12px;
-        border-bottom: 1px solid var(--border);
-        white-space: nowrap;
-    }
-
-    .detail-table td:first-child {
         color: var(--text);
-        font-weight: 500;
+
+        padding: 14px 12px;
+
+        border-bottom: 1px solid var(--border);
+
+        white-space: nowrap;
     }
 
     .detail-table tr:last-child td {
@@ -278,62 +354,77 @@
         text-align: right;
     }
 
-    .total-row td {
-        font-weight: 700;
-        background: var(--bg-soft);
-        color: var(--text);
-    }
-
-    .total-row td:last-child {
-        color: var(--primary-hover);
-    }
-
     .empty {
         padding: 25px;
+
         text-align: center;
+
         color: var(--muted);
     }
 
+    /* =========================
+       PROFIT
+    ========================= */
+
     .profit-box {
-        background: linear-gradient(135deg, #17243a, #151b24);
+        background: linear-gradient(
+            135deg,
+            #17243a,
+            #151b24
+        );
+
         border: 1px solid #29436a;
+
         border-radius: 14px;
+
         padding: 22px;
     }
 
     .profit-title {
         color: var(--muted);
+
         margin-bottom: 8px;
     }
 
     .profit-main {
         color: var(--success);
+
         font-size: 30px;
+
         font-weight: 800;
+
         margin-bottom: 18px;
     }
 
     .profit-details {
         display: grid;
+
         grid-template-columns: repeat(3, 1fr);
+
         gap: 15px;
     }
 
     .profit-detail {
         background: rgba(0, 0, 0, .15);
+
         border-radius: 10px;
+
         padding: 14px;
     }
 
     .profit-detail span {
         display: block;
+
         color: var(--muted);
+
         font-size: 13px;
+
         margin-bottom: 5px;
     }
 
     .profit-detail strong {
         color: var(--text);
+
         font-size: 17px;
     }
 
@@ -341,7 +432,12 @@
         margin: 0;
     }
 
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
     @media (max-width: 900px) {
+
         .main-grid {
             grid-template-columns: 1fr;
         }
@@ -352,8 +448,10 @@
     }
 
     @media (max-width: 600px) {
+
         .detail-header {
             align-items: flex-start;
+
             flex-direction: column;
         }
 
@@ -363,6 +461,7 @@
 
         .header-actions .btn {
             flex: 1;
+
             justify-content: center;
         }
 
@@ -381,9 +480,13 @@
     }
 </style>
 
+
 <div class="detail-wrapper">
 
-    {{-- HEADER --}}
+    {{-- =========================
+         HEADER
+    ========================= --}}
+
     <div class="detail-header">
 
         <div class="detail-header-left">
@@ -398,11 +501,16 @@
 
         </div>
 
+
         <div class="header-actions">
 
-            <a href="{{ url('/produk/edit/'.$produk->id) }}" class="btn btn-edit">
+            <a
+                href="{{ url('/produk/edit/'.$produk->id) }}"
+                class="btn btn-edit"
+            >
                 ✏️ Edit
             </a>
+
 
             <form
                 action="{{ url('/produk/'.$produk->id) }}"
@@ -410,12 +518,17 @@
                 class="delete-form"
                 onsubmit="return confirm('Yakin ingin menghapus produk ini?')"
             >
+
                 @csrf
                 @method('DELETE')
 
-                <button type="submit" class="btn btn-delete">
+                <button
+                    type="submit"
+                    class="btn btn-delete"
+                >
                     🗑️ Hapus
                 </button>
+
             </form>
 
         </div>
@@ -423,10 +536,15 @@
     </div>
 
 
-    {{-- INFORMASI UTAMA --}}
+    {{-- =========================
+         INFORMASI UTAMA
+    ========================= --}}
+
     <div class="main-grid">
 
+
         {{-- PRODUK --}}
+
         <div class="detail-card">
 
             @if($produk->gambar)
@@ -445,9 +563,11 @@
 
             @endif
 
+
             <h2 class="product-name">
                 {{ $produk->nama }}
             </h2>
+
 
             <p class="product-category">
                 {{ $produk->kategori }}
@@ -456,65 +576,113 @@
         </div>
 
 
-        {{-- INFORMASI --}}
+
+        {{-- INFORMASI PRODUK --}}
+
         <div class="detail-card">
 
             <h2 class="section-title">
                 Informasi Produk
             </h2>
 
+
             <div class="info-list">
 
+
                 <div class="info-row">
-                    <span class="info-label">Harga Jual</span>
+
+                    <span class="info-label">
+                        Harga Jual
+                    </span>
 
                     <span class="info-value price">
                         Rp {{ number_format($produk->harga_jual, 0, ',', '.') }}
                     </span>
+
                 </div>
 
+
+
                 <div class="info-row">
-                    <span class="info-label">HPP / Unit</span>
+
+                    <span class="info-label">
+                        HPP / Unit
+                    </span>
 
                     <span class="info-value">
                         Rp {{ number_format($produk->hpp, 0, ',', '.') }}
                     </span>
+
                 </div>
 
+
+
                 <div class="info-row">
-                    <span class="info-label">Total Komponen</span>
+
+                    <span class="info-label">
+                        Total Komponen
+                    </span>
 
                     <span class="info-value">
                         Rp {{ number_format($produk->total_bahan, 0, ',', '.') }}
                     </span>
+
                 </div>
 
+
+
                 <div class="info-row">
-                    <span class="info-label">Biaya Tambahan</span>
+
+                    <span class="info-label">
+                        Biaya Tambahan
+                    </span>
 
                     <span class="info-value">
                         Rp {{ number_format($produk->total_biaya_tambahan, 0, ',', '.') }}
                     </span>
+
                 </div>
 
+
+
                 <div class="info-row">
-                    <span class="info-label">Total Modal</span>
+
+                    <span class="info-label">
+                        Total Modal
+                    </span>
 
                     <span class="info-value">
                         Rp {{ number_format($produk->total_modal, 0, ',', '.') }}
                     </span>
+
                 </div>
 
+
+
                 <div class="info-row">
-                    <span class="info-label">Margin / Unit</span>
+
+                    <span class="info-label">
+                        Margin / Unit
+                    </span>
 
                     <span class="info-value profit">
-                        Rp {{ number_format($produk->harga_jual - $produk->hpp, 0, ',', '.') }}
+                        Rp {{ number_format(
+                            $produk->harga_jual - $produk->hpp,
+                            0,
+                            ',',
+                            '.'
+                        ) }}
                     </span>
+
                 </div>
 
+
+
                 <div class="info-row">
-                    <span class="info-label">Margin %</span>
+
+                    <span class="info-label">
+                        Margin %
+                    </span>
 
                     <span class="info-value profit">
 
@@ -524,9 +692,10 @@
                                 : 0;
                         @endphp
 
-                        {{ number_format($margin, 0, ',', '.') }}%
+                        {{ number_format($margin, 1, ',', '.') }}%
 
                     </span>
+
                 </div>
 
             </div>
@@ -536,8 +705,13 @@
     </div>
 
 
-    {{-- STATISTIK --}}
+
+    {{-- =========================
+         STATISTIK
+    ========================= --}}
+
     <div class="stats-grid">
+
 
         <div class="stat-card">
 
@@ -546,7 +720,14 @@
             </div>
 
             <div class="stat-value">
-                {{ number_format($produk->produksi_sum_jumlah_produksi ?? 0, 0, ',', '.') }}
+
+                {{ number_format(
+                    $produk->produksi_sum_jumlah_produksi ?? 0,
+                    0,
+                    ',',
+                    '.'
+                ) }}
+
             </div>
 
             <div class="stat-sub">
@@ -556,6 +737,7 @@
         </div>
 
 
+
         <div class="stat-card">
 
             <div class="stat-label">
@@ -563,7 +745,14 @@
             </div>
 
             <div class="stat-value">
-                {{ number_format($produk->penjualan_sum_jumlah_terjual ?? 0, 0, ',', '.') }}
+
+                {{ number_format(
+                    $produk->penjualan_sum_jumlah_terjual ?? 0,
+                    0,
+                    ',',
+                    '.'
+                ) }}
+
             </div>
 
             <div class="stat-sub">
@@ -573,6 +762,7 @@
         </div>
 
 
+
         <div class="stat-card">
 
             <div class="stat-label">
@@ -580,7 +770,14 @@
             </div>
 
             <div class="stat-value">
-                {{ number_format($produk->stok, 0, ',', '.') }}
+
+                {{ number_format(
+                    $produk->stok,
+                    0,
+                    ',',
+                    '.'
+                ) }}
+
             </div>
 
             <div class="stat-sub">
@@ -588,6 +785,7 @@
             </div>
 
         </div>
+
 
 
         <div class="stat-card">
@@ -616,76 +814,127 @@
     </div>
 
 
-    {{-- KOMPONEN PRODUK --}}
+
+    {{-- =========================
+         KOMPONEN PRODUK
+    ========================= --}}
+
     <div class="section-card">
+
 
         <div class="section-header">
 
             <h2 class="section-title">
-                📦 Rincian Komponen Produk
+                Rincian Komponen Produk
             </h2>
 
         </div>
 
+
         @if($produk->bahan->count())
+
 
             <div class="table-wrapper">
 
                 <table class="detail-table">
 
+
                     <thead>
+
                         <tr>
-                            <th>Komponen</th>
-                            <th>Digunakan</th>
-                            <th>Isi Kemasan</th>
-                            <th>Harga</th>
-                            <th class="number">Biaya</th>
+
+                            <th>
+                                Komponen
+                            </th>
+
+                            <th>
+                                Jumlah
+                            </th>
+
+                            <th>
+                                Satuan
+                            </th>
+
+                            <th>
+                                Isi Kemasan
+                            </th>
+
+                            <th>
+                                Harga
+                            </th>
+
                         </tr>
+
                     </thead>
 
+
+
                     <tbody>
+
 
                         @foreach($produk->bahan as $bahan)
 
                             <tr>
 
+
                                 <td>
                                     {{ $bahan->nama }}
                                 </td>
 
+
                                 <td>
-                                    {{ number_format($bahan->jumlah, 0, ',', '.') }}
+                                    {{ number_format(
+                                        $bahan->jumlah,
+                                        0,
+                                        ',',
+                                        '.'
+                                    ) }}
+                                </td>
+
+
+                                <td>
                                     {{ $bahan->satuan }}
                                 </td>
 
-                                <td>
-                                    {{ number_format($bahan->isi_kemasan, 0, ',', '.') }}
-                                    {{ $bahan->satuan }}
-                                </td>
 
                                 <td>
-                                    Rp {{ number_format($bahan->harga_satuan, 0, ',', '.') }}
+
+                                    @if(
+                                        $bahan->isi_kemasan !== null &&
+                                        $bahan->isi_kemasan > 0
+                                    )
+
+                                        {{ number_format(
+                                            $bahan->isi_kemasan,
+                                            0,
+                                            ',',
+                                            '.'
+                                        ) }}
+                                        pcs
+
+                                    @else
+
+                                        -
+
+                                    @endif
+
                                 </td>
 
-                                <td class="number">
-                                    Rp {{ number_format($bahan->total, 0, ',', '.') }}
+
+                                <td>
+                                    Rp {{ number_format(
+                                        $bahan->harga_satuan,
+                                        0,
+                                        ',',
+                                        '.'
+                                    ) }}
                                 </td>
+
 
                             </tr>
 
                         @endforeach
 
-                        <tr class="total-row">
-
-                            <td colspan="4">
-                                Total Komponen
-                            </td>
-
-                            <td class="number">
-                                Rp {{ number_format($produk->total_bahan, 0, ',', '.') }}
-                            </td>
-
-                        </tr>
 
                     </tbody>
 
@@ -693,10 +942,11 @@
 
             </div>
 
+
         @else
 
             <div class="empty">
-                Belum ada komponen untuk produk ini.
+                Belum ada komponen produk.
             </div>
 
         @endif
@@ -704,62 +954,117 @@
     </div>
 
 
-    {{-- BIAYA TAMBAHAN --}}
+
+    {{-- =========================
+         BIAYA TAMBAHAN
+    ========================= --}}
+
     <div class="section-card">
+
 
         <div class="section-header">
 
             <h2 class="section-title">
-                💰 Biaya Tambahan
+                Biaya Tambahan
             </h2>
 
         </div>
 
+
         @if($produk->biayaTambahan->count())
+
 
             <div class="table-wrapper">
 
                 <table class="detail-table">
 
+
                     <thead>
+
                         <tr>
-                            <th>Nama Biaya</th>
-                            <th>Jumlah</th>
-                            <th>Satuan</th>
-                            <th>Harga</th>
-                            <th class="number">Total</th>
+
+                            <th>
+                                Nama Biaya
+                            </th>
+
+                            <th>
+                                Jumlah
+                            </th>
+
+                            <th>
+                                Satuan
+                            </th>
+
+                            <th>
+                                Harga
+                            </th>
+
+                            <th class="number">
+                                Total
+                            </th>
+
                         </tr>
+
                     </thead>
 
+
+
                     <tbody>
+
 
                         @foreach($produk->biayaTambahan as $biaya)
 
                             <tr>
 
+
                                 <td>
                                     {{ $biaya->nama }}
                                 </td>
 
+
                                 <td>
-                                    {{ number_format($biaya->jumlah, 0, ',', '.') }}
+
+                                    {{ number_format(
+                                        $biaya->jumlah,
+                                        0,
+                                        ',',
+                                        '.'
+                                    ) }}
+
                                 </td>
+
 
                                 <td>
                                     {{ $biaya->satuan }}
                                 </td>
 
+
                                 <td>
-                                    Rp {{ number_format($biaya->harga_satuan, 0, ',', '.') }}
+                                    Rp {{ number_format(
+                                        $biaya->harga_satuan,
+                                        0,
+                                        ',',
+                                        '.'
+                                    ) }}
                                 </td>
 
+
                                 <td class="number">
-                                    Rp {{ number_format($biaya->total, 0, ',', '.') }}
+
+                                    Rp {{ number_format(
+                                        $biaya->total,
+                                        0,
+                                        ',',
+                                        '.'
+                                    ) }}
+
                                 </td>
+
 
                             </tr>
 
                         @endforeach
+
 
                         <tr class="total-row">
 
@@ -768,16 +1073,25 @@
                             </td>
 
                             <td class="number">
-                                Rp {{ number_format($produk->total_biaya_tambahan, 0, ',', '.') }}
+
+                                Rp {{ number_format(
+                                    $produk->total_biaya_tambahan,
+                                    0,
+                                    ',',
+                                    '.'
+                                ) }}
+
                             </td>
 
                         </tr>
+
 
                     </tbody>
 
                 </table>
 
             </div>
+
 
         @else
 
@@ -790,22 +1104,33 @@
     </div>
 
 
-    {{-- KEUNTUNGAN --}}
+
+    {{-- =========================
+         KEUNTUNGAN
+    ========================= --}}
+
     <div class="profit-box">
+
 
         <div class="profit-title">
             Keuntungan per Unit
         </div>
 
+
         <div class="profit-main">
 
             Rp {{ number_format(
                 $produk->harga_jual - $produk->hpp,
-                0, ',', '.') }}
+                0,
+                ',',
+                '.'
+            ) }}
 
         </div>
 
+
         <div class="profit-details">
+
 
             <div class="profit-detail">
 
@@ -814,10 +1139,16 @@
                 </span>
 
                 <strong>
-                    Rp {{ number_format($produk->harga_jual, 0, ',', '.') }}
+                    Rp {{ number_format(
+                        $produk->harga_jual,
+                        0,
+                        ',',
+                        '.'
+                    ) }}
                 </strong>
 
             </div>
+
 
 
             <div class="profit-detail">
@@ -827,10 +1158,16 @@
                 </span>
 
                 <strong>
-                    Rp {{ number_format($produk->hpp, 0, ',', '.') }}
+                    Rp {{ number_format(
+                        $produk->hpp,
+                        0,
+                        ',',
+                        '.'
+                    ) }}
                 </strong>
 
             </div>
+
 
 
             <div class="profit-detail">
@@ -840,10 +1177,16 @@
                 </span>
 
                 <strong>
-                    {{ number_format($margin, 0, ',', '.') }}%
+                    {{ number_format(
+                        $margin,
+                        1,
+                        ',',
+                        '.'
+                    ) }}%
                 </strong>
 
             </div>
+
 
         </div>
 
@@ -852,4 +1195,3 @@
 </div>
 
 @endsection
-```

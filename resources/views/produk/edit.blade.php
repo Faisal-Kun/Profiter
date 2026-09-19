@@ -18,6 +18,7 @@
         --danger: #ef4444;
     }
 
+
     /* =========================
        HEADER
     ========================= */
@@ -33,6 +34,7 @@
         color: var(--muted);
         font-size: 14px;
     }
+
 
     /* =========================
        CARD
@@ -56,6 +58,7 @@
         margin-bottom: 22px;
     }
 
+
     /* =========================
        LABEL
     ========================= */
@@ -66,6 +69,7 @@
         font-weight: 600;
         margin-bottom: 8px;
     }
+
 
     /* =========================
        INPUT
@@ -101,6 +105,7 @@
         color: var(--text);
     }
 
+
     /* =========================
        INPUT GROUP
     ========================= */
@@ -116,6 +121,22 @@
     .input-group .form-control {
         border-radius: 0 10px 10px 0;
     }
+
+
+    /* =========================
+       HARGA
+    ========================= */
+
+    .price-input-group {
+        width: 100%;
+    }
+
+    .price-input-group .form-control {
+        min-width: 0;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
 
     /* =========================
        ITEM CARD
@@ -143,6 +164,11 @@
         margin: 0;
     }
 
+
+    /* =========================
+       BUTTON REMOVE
+    ========================= */
+
     .btn-remove {
         background: rgba(239,68,68,.08);
         border: 1px solid rgba(239,68,68,.25);
@@ -156,6 +182,7 @@
         background: rgba(239,68,68,.15);
         color: #fca5a5;
     }
+
 
     /* =========================
        ADD BUTTON
@@ -175,6 +202,7 @@
         background: var(--primary-soft);
         color: #93c5fd;
     }
+
 
     /* =========================
        BUTTON SAVE
@@ -197,6 +225,7 @@
         transform: translateY(-1px);
     }
 
+
     /* =========================
        BUTTON BACK
     ========================= */
@@ -216,6 +245,7 @@
         border-color: var(--primary);
         color: var(--primary-hover);
     }
+
 
     /* =========================
        IMAGE
@@ -238,6 +268,7 @@
         font-size: 12px;
         margin-top: 7px;
     }
+
 
     /* =========================
        MOBILE
@@ -271,7 +302,7 @@ HEADER
         </h3>
 
         <p class="edit-subtitle mb-0">
-            Ubah informasi, bahan, dan biaya tambahan produk
+            Ubah informasi, komponen, dan biaya tambahan produk
         </p>
 
     </div>
@@ -294,6 +325,7 @@ HEADER
 >
 
     @csrf
+
     @method('PUT')
 
 
@@ -348,10 +380,15 @@ HEADER
                 >
 
                 <datalist id="kategoriList">
+
                     <option value="Makanan">
                     <option value="Minuman">
                     <option value="Cemilan">
+                    <option value="Fashion">
+                    <option value="Aksesoris">
+                    <option value="Elektronik">
                     <option value="Lainnya">
+
                 </datalist>
 
             </div>
@@ -431,7 +468,7 @@ HEADER
 
 
     {{-- =========================
-    BAHAN
+    KOMPONEN PRODUK
     ========================= --}}
 
     <div class="edit-card">
@@ -441,7 +478,7 @@ HEADER
             <div class="d-flex justify-content-between align-items-center mb-3">
 
                 <h5 class="edit-section-title mb-0">
-                    Bahan Produk
+                    Komponen Produk
                 </h5>
 
                 <button
@@ -450,7 +487,7 @@ HEADER
                     onclick="tambahBahan()"
                 >
                     <i class="bi bi-plus-lg me-1"></i>
-                    Tambah Bahan
+                    Tambah Komponen
                 </button>
 
             </div>
@@ -465,7 +502,7 @@ HEADER
                         <div class="item-header">
 
                             <p class="item-title">
-                                Bahan
+                                Komponen
                             </p>
 
                             <button
@@ -488,12 +525,13 @@ HEADER
 
                         <div class="row g-3">
 
+
                             {{-- NAMA --}}
 
-                            <div class="col-md-4">
+                            <div class="col-md-3">
 
                                 <label class="form-label">
-                                    Nama Bahan
+                                    Nama Komponen
                                 </label>
 
                                 <input
@@ -501,6 +539,7 @@ HEADER
                                     name="bahan_nama[]"
                                     class="form-control"
                                     value="{{ old('bahan_nama.' . $loop->index, $bahan->nama) }}"
+                                    placeholder="Contoh: Tepung / Kayu / Kain"
                                     required
                                 >
 
@@ -541,7 +580,7 @@ HEADER
                                     name="bahan_satuan[]"
                                     class="form-control"
                                     value="{{ old('bahan_satuan.' . $loop->index, $bahan->satuan) }}"
-                                    placeholder="Ketik Satuan"
+                                    placeholder="Contoh: kg"
                                     required
                                 >
 
@@ -561,7 +600,7 @@ HEADER
                                     name="bahan_isi[]"
                                     class="form-control"
                                     value="{{ old('bahan_isi.' . $loop->index, rtrim(rtrim($bahan->isi_kemasan, '0'), '.')) }}"
-                                    min=0"
+                                    min="0"
                                     step="1"
                                     required
                                 >
@@ -571,13 +610,13 @@ HEADER
 
                             {{-- HARGA --}}
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
 
                                 <label class="form-label">
                                     Harga
                                 </label>
 
-                                <div class="input-group">
+                                <div class="input-group price-input-group">
 
                                     <span class="input-group-text">
                                         Rp
@@ -597,6 +636,7 @@ HEADER
 
                             </div>
 
+
                         </div>
 
                     </div>
@@ -606,7 +646,7 @@ HEADER
                     <div id="empty-bahan" class="text-center py-3">
 
                         <span style="color: var(--muted); font-size: 14px;">
-                            Belum ada bahan.
+                            Belum ada komponen.
                         </span>
 
                     </div>
@@ -678,6 +718,7 @@ HEADER
 
                         <div class="row g-3">
 
+
                             {{-- NAMA --}}
 
                             <div class="col-md-5">
@@ -730,7 +771,7 @@ HEADER
                                     name="biaya_satuan[]"
                                     class="form-control"
                                     value="{{ old('biaya_satuan.' . $loop->index, $biaya->satuan) }}"
-                                    placeholder="kali"
+                                    placeholder="Contoh: kali"
                                 >
 
                             </div>
@@ -744,7 +785,7 @@ HEADER
                                     Harga
                                 </label>
 
-                                <div class="input-group">
+                                <div class="input-group price-input-group">
 
                                     <span class="input-group-text">
                                         Rp
@@ -762,6 +803,7 @@ HEADER
                                 </div>
 
                             </div>
+
 
                         </div>
 
@@ -809,14 +851,16 @@ HEADER
 
     </div>
 
+
 </form>
 
 
-{{-- =========================
-JAVASCRIPT
-========================= --}}
-
 <script>
+
+
+    /* =========================
+       HAPUS ITEM
+    ========================= */
 
     function hapusItem(button)
     {
@@ -828,23 +872,30 @@ JAVASCRIPT
     }
 
 
+    /* =========================
+       TAMBAH KOMPONEN
+    ========================= */
+
     function tambahBahan()
     {
-        const container = document.getElementById('bahan-container');
+        const container =
+            document.getElementById('bahan-container');
 
-        const empty = document.getElementById('empty-bahan');
+        const empty =
+            document.getElementById('empty-bahan');
 
         if (empty) {
             empty.remove();
         }
 
         const html = `
+
             <div class="item-card bahan-item">
 
                 <div class="item-header">
 
                     <p class="item-title">
-                        Bahan
+                        Komponen
                     </p>
 
                     <button
@@ -857,29 +908,33 @@ JAVASCRIPT
 
                 </div>
 
+
                 <input
                     type="hidden"
                     name="bahan_id[]"
                     value=""
                 >
 
+
                 <div class="row g-3">
 
-                    <div class="col-md-4">
+
+                    <div class="col-md-3">
 
                         <label class="form-label">
-                            Nama Bahan
+                            Nama Komponen
                         </label>
 
                         <input
                             type="text"
                             name="bahan_nama[]"
                             class="form-control"
-                            placeholder="Contoh: Plastik"
+                            placeholder="Contoh: Tepung / Kayu / Kain"
                             required
                         >
 
                     </div>
+
 
                     <div class="col-md-2">
 
@@ -898,6 +953,7 @@ JAVASCRIPT
 
                     </div>
 
+
                     <div class="col-md-2">
 
                         <label class="form-label">
@@ -908,11 +964,12 @@ JAVASCRIPT
                             type="text"
                             name="bahan_satuan[]"
                             class="form-control"
-                            placeholder="Ketik Satuan"
+                            placeholder="Contoh: kg"
                             required
                         >
 
                     </div>
+
 
                     <div class="col-md-2">
 
@@ -931,13 +988,14 @@ JAVASCRIPT
 
                     </div>
 
-                    <div class="col-md-2">
+
+                    <div class="col-md-3">
 
                         <label class="form-label">
                             Harga
                         </label>
 
-                        <div class="input-group">
+                        <div class="input-group price-input-group">
 
                             <span class="input-group-text">
                                 Rp
@@ -956,26 +1014,38 @@ JAVASCRIPT
 
                     </div>
 
+
                 </div>
 
             </div>
+
         `;
 
-        container.insertAdjacentHTML('beforeend', html);
+        container.insertAdjacentHTML(
+            'beforeend',
+            html
+        );
     }
 
 
+    /* =========================
+       TAMBAH BIAYA
+    ========================= */
+
     function tambahBiaya()
     {
-        const container = document.getElementById('biaya-container');
+        const container =
+            document.getElementById('biaya-container');
 
-        const empty = document.getElementById('empty-biaya');
+        const empty =
+            document.getElementById('empty-biaya');
 
         if (empty) {
             empty.remove();
         }
 
         const html = `
+
             <div class="item-card biaya-item">
 
                 <div class="item-header">
@@ -994,13 +1064,16 @@ JAVASCRIPT
 
                 </div>
 
+
                 <input
                     type="hidden"
                     name="biaya_id[]"
                     value=""
                 >
 
+
                 <div class="row g-3">
+
 
                     <div class="col-md-5">
 
@@ -1016,6 +1089,7 @@ JAVASCRIPT
                         >
 
                     </div>
+
 
                     <div class="col-md-2">
 
@@ -1033,6 +1107,7 @@ JAVASCRIPT
 
                     </div>
 
+
                     <div class="col-md-2">
 
                         <label class="form-label">
@@ -1043,10 +1118,11 @@ JAVASCRIPT
                             type="text"
                             name="biaya_satuan[]"
                             class="form-control"
-                            placeholder="Ketik"
+                            placeholder="Contoh: kali"
                         >
 
                     </div>
+
 
                     <div class="col-md-3">
 
@@ -1054,7 +1130,7 @@ JAVASCRIPT
                             Harga
                         </label>
 
-                        <div class="input-group">
+                        <div class="input-group price-input-group">
 
                             <span class="input-group-text">
                                 Rp
@@ -1072,12 +1148,17 @@ JAVASCRIPT
 
                     </div>
 
+
                 </div>
 
             </div>
+
         `;
 
-        container.insertAdjacentHTML('beforeend', html);
+        container.insertAdjacentHTML(
+            'beforeend',
+            html
+        );
     }
 
 </script>

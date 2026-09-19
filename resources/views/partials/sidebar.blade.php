@@ -1,7 +1,6 @@
 <div class="sidebar">
 
     <div class="logo">
-        <span>💰</span>
         <span>Profiter</span>
     </div>
 

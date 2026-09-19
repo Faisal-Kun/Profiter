@@ -1,3 +1,4 @@
+```blade
 @extends('layouts.app')
 
 @section('content')
@@ -46,6 +47,7 @@
         color: var(--text);
         text-decoration: none;
         transition: .2s;
+        font-size: 20px;
     }
 
     .back-btn:hover {
@@ -257,10 +259,15 @@
     }
 
     .detail-table td {
-        color: var(--text);
+        color: #cbd5e1;
         padding: 14px 12px;
         border-bottom: 1px solid var(--border);
         white-space: nowrap;
+    }
+
+    .detail-table td:first-child {
+        color: var(--text);
+        font-weight: 500;
     }
 
     .detail-table tr:last-child td {
@@ -274,6 +281,11 @@
     .total-row td {
         font-weight: 700;
         background: var(--bg-soft);
+        color: var(--text);
+    }
+
+    .total-row td:last-child {
+        color: var(--primary-hover);
     }
 
     .empty {
@@ -371,436 +383,473 @@
 
 <div class="detail-wrapper">
 
+    {{-- HEADER --}}
+    <div class="detail-header">
 
-{{-- HEADER --}}
-<div class="detail-header">
+        <div class="detail-header-left">
 
-    <div class="detail-header-left">
-        <a href="{{ url('/produk') }}" class="back-btn">
-            ←
-        </a>
+            <a href="{{ url('/produk') }}" class="back-btn">
+                ←
+            </a>
 
-        <div>
-            <h1>Detail Produk</h1>
-        </div>
-    </div>
-
-    <div class="header-actions">
-
-        <a href="{{ url('/produk/edit/'.$produk->id) }}" class="btn btn-edit">
-            ✏️ Edit
-        </a>
-
-        <form
-            action="{{ url('/produk/'.$produk->id) }}"
-            method="POST"
-            class="delete-form"
-            onsubmit="return confirm('Yakin ingin menghapus produk ini?')"
-        >
-            @csrf
-            @method('DELETE')
-
-            <button type="submit" class="btn btn-delete">
-                🗑️ Hapus
-            </button>
-        </form>
-
-    </div>
-
-</div>
-
-
-{{-- INFORMASI UTAMA --}}
-<div class="main-grid">
-
-    {{-- PRODUK --}}
-    <div class="detail-card">
-
-        @if($produk->gambar)
-            <img
-                src="{{ asset('storage/'.$produk->gambar) }}"
-                alt="{{ $produk->nama }}"
-                class="product-image"
-            >
-        @else
-            <div class="no-image">
-                Tidak ada gambar
+            <div>
+                <h1>Detail Produk</h1>
             </div>
+
+        </div>
+
+        <div class="header-actions">
+
+            <a href="{{ url('/produk/edit/'.$produk->id) }}" class="btn btn-edit">
+                ✏️ Edit
+            </a>
+
+            <form
+                action="{{ url('/produk/'.$produk->id) }}"
+                method="POST"
+                class="delete-form"
+                onsubmit="return confirm('Yakin ingin menghapus produk ini?')"
+            >
+                @csrf
+                @method('DELETE')
+
+                <button type="submit" class="btn btn-delete">
+                    🗑️ Hapus
+                </button>
+            </form>
+
+        </div>
+
+    </div>
+
+
+    {{-- INFORMASI UTAMA --}}
+    <div class="main-grid">
+
+        {{-- PRODUK --}}
+        <div class="detail-card">
+
+            @if($produk->gambar)
+
+                <img
+                    src="{{ asset('storage/'.$produk->gambar) }}"
+                    alt="{{ $produk->nama }}"
+                    class="product-image"
+                >
+
+            @else
+
+                <div class="no-image">
+                    Tidak ada gambar
+                </div>
+
+            @endif
+
+            <h2 class="product-name">
+                {{ $produk->nama }}
+            </h2>
+
+            <p class="product-category">
+                {{ $produk->kategori }}
+            </p>
+
+        </div>
+
+
+        {{-- INFORMASI --}}
+        <div class="detail-card">
+
+            <h2 class="section-title">
+                Informasi Produk
+            </h2>
+
+            <div class="info-list">
+
+                <div class="info-row">
+                    <span class="info-label">Harga Jual</span>
+
+                    <span class="info-value price">
+                        Rp {{ number_format($produk->harga_jual, 0, ',', '.') }}
+                    </span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">HPP / Unit</span>
+
+                    <span class="info-value">
+                        Rp {{ number_format($produk->hpp, 0, ',', '.') }}
+                    </span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Total Komponen</span>
+
+                    <span class="info-value">
+                        Rp {{ number_format($produk->total_bahan, 0, ',', '.') }}
+                    </span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Biaya Tambahan</span>
+
+                    <span class="info-value">
+                        Rp {{ number_format($produk->total_biaya_tambahan, 0, ',', '.') }}
+                    </span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Total Modal</span>
+
+                    <span class="info-value">
+                        Rp {{ number_format($produk->total_modal, 0, ',', '.') }}
+                    </span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Margin / Unit</span>
+
+                    <span class="info-value profit">
+                        Rp {{ number_format($produk->harga_jual - $produk->hpp, 0, ',', '.') }}
+                    </span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Margin %</span>
+
+                    <span class="info-value profit">
+
+                        @php
+                            $margin = $produk->harga_jual > 0
+                                ? (($produk->harga_jual - $produk->hpp) / $produk->harga_jual) * 100
+                                : 0;
+                        @endphp
+
+                        {{ number_format($margin, 0, ',', '.') }}%
+
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- STATISTIK --}}
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Produksi
+            </div>
+
+            <div class="stat-value">
+                {{ number_format($produk->produksi_sum_jumlah_produksi ?? 0, 0, ',', '.') }}
+            </div>
+
+            <div class="stat-sub">
+                unit dibuat
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Total Terjual
+            </div>
+
+            <div class="stat-value">
+                {{ number_format($produk->penjualan_sum_jumlah_terjual ?? 0, 0, ',', '.') }}
+            </div>
+
+            <div class="stat-sub">
+                unit terjual
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Stok Tersisa
+            </div>
+
+            <div class="stat-value">
+                {{ number_format($produk->stok, 0, ',', '.') }}
+            </div>
+
+            <div class="stat-sub">
+                unit tersedia
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-label">
+                Omzet
+            </div>
+
+            <div class="stat-value">
+
+                Rp {{ number_format(
+                    ($produk->penjualan_sum_jumlah_terjual ?? 0) * $produk->harga_jual,
+                    0,
+                    ',',
+                    '.'
+                ) }}
+
+            </div>
+
+            <div class="stat-sub">
+                dari penjualan
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- KOMPONEN PRODUK --}}
+    <div class="section-card">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+                📦 Rincian Komponen Produk
+            </h2>
+
+        </div>
+
+        @if($produk->bahan->count())
+
+            <div class="table-wrapper">
+
+                <table class="detail-table">
+
+                    <thead>
+                        <tr>
+                            <th>Komponen</th>
+                            <th>Digunakan</th>
+                            <th>Isi Kemasan</th>
+                            <th>Harga</th>
+                            <th class="number">Biaya</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach($produk->bahan as $bahan)
+
+                            <tr>
+
+                                <td>
+                                    {{ $bahan->nama }}
+                                </td>
+
+                                <td>
+                                    {{ number_format($bahan->jumlah, 0, ',', '.') }}
+                                    {{ $bahan->satuan }}
+                                </td>
+
+                                <td>
+                                    {{ number_format($bahan->isi_kemasan, 0, ',', '.') }}
+                                    {{ $bahan->satuan }}
+                                </td>
+
+                                <td>
+                                    Rp {{ number_format($bahan->harga_satuan, 0, ',', '.') }}
+                                </td>
+
+                                <td class="number">
+                                    Rp {{ number_format($bahan->total, 0, ',', '.') }}
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+
+                        <tr class="total-row">
+
+                            <td colspan="4">
+                                Total Komponen
+                            </td>
+
+                            <td class="number">
+                                Rp {{ number_format($produk->total_bahan, 0, ',', '.') }}
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        @else
+
+            <div class="empty">
+                Belum ada komponen untuk produk ini.
+            </div>
+
         @endif
 
-        <h2 class="product-name">
-            {{ $produk->nama }}
-        </h2>
+    </div>
 
-        <p class="product-category">
-            {{ $produk->kategori }}
-        </p>
+
+    {{-- BIAYA TAMBAHAN --}}
+    <div class="section-card">
+
+        <div class="section-header">
+
+            <h2 class="section-title">
+                💰 Biaya Tambahan
+            </h2>
+
+        </div>
+
+        @if($produk->biayaTambahan->count())
+
+            <div class="table-wrapper">
+
+                <table class="detail-table">
+
+                    <thead>
+                        <tr>
+                            <th>Nama Biaya</th>
+                            <th>Jumlah</th>
+                            <th>Satuan</th>
+                            <th>Harga</th>
+                            <th class="number">Total</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach($produk->biayaTambahan as $biaya)
+
+                            <tr>
+
+                                <td>
+                                    {{ $biaya->nama }}
+                                </td>
+
+                                <td>
+                                    {{ number_format($biaya->jumlah, 0, ',', '.') }}
+                                </td>
+
+                                <td>
+                                    {{ $biaya->satuan }}
+                                </td>
+
+                                <td>
+                                    Rp {{ number_format($biaya->harga_satuan, 0, ',', '.') }}
+                                </td>
+
+                                <td class="number">
+                                    Rp {{ number_format($biaya->total, 0, ',', '.') }}
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+
+                        <tr class="total-row">
+
+                            <td colspan="4">
+                                Total Biaya Tambahan
+                            </td>
+
+                            <td class="number">
+                                Rp {{ number_format($produk->total_biaya_tambahan, 0, ',', '.') }}
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        @else
+
+            <div class="empty">
+                Tidak ada biaya tambahan.
+            </div>
+
+        @endif
 
     </div>
 
 
-    {{-- INFORMASI --}}
-    <div class="detail-card">
+    {{-- KEUNTUNGAN --}}
+    <div class="profit-box">
 
-        <h2 class="section-title">
-            Informasi Produk
-        </h2>
-
-        <div class="info-list">
-
-            <div class="info-row">
-                <span class="info-label">Harga Jual</span>
-
-                <span class="info-value price">
-                    Rp {{ number_format($produk->harga_jual, 0, ',', '.') }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">HPP / Unit</span>
-
-                <span class="info-value">
-                    Rp {{ number_format($produk->hpp, 2, ',', '.') }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">Total Bahan</span>
-
-                <span class="info-value">
-                    Rp {{ number_format($produk->total_bahan, 2, ',', '.') }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">Biaya Tambahan</span>
-
-                <span class="info-value">
-                    Rp {{ number_format($produk->total_biaya_tambahan, 2, ',', '.') }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">Total Modal</span>
-
-                <span class="info-value">
-                    Rp {{ number_format($produk->total_modal, 2, ',', '.') }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">Margin / Unit</span>
-
-                <span class="info-value profit">
-                    Rp {{ number_format($produk->harga_jual - $produk->hpp, 2, ',', '.') }}
-                </span>
-            </div>
-
-            <div class="info-row">
-                <span class="info-label">Margin %</span>
-
-                <span class="info-value profit">
-                    @php
-                        $margin = $produk->harga_jual > 0
-                            ? (($produk->harga_jual - $produk->hpp) / $produk->harga_jual) * 100
-                            : 0;
-                    @endphp
-
-                    {{ number_format($margin, 1, ',', '.') }}%
-                </span>
-            </div>
-
+        <div class="profit-title">
+            Keuntungan per Unit
         </div>
 
-    </div>
+        <div class="profit-main">
 
-</div>
-
-
-{{-- STATISTIK --}}
-<div class="stats-grid">
-
-    <div class="stat-card">
-        <div class="stat-label">Total Produksi</div>
-
-        <div class="stat-value">
-            {{ number_format($produk->produksi_sum_jumlah_produksi ?? 0, 0, ',', '.') }}
-        </div>
-
-        <div class="stat-sub">
-            unit dibuat
-        </div>
-    </div>
-
-
-    <div class="stat-card">
-        <div class="stat-label">Total Terjual</div>
-
-        <div class="stat-value">
-            {{ number_format($produk->penjualan_sum_jumlah_terjual ?? 0, 0, ',', '.') }}
-        </div>
-
-        <div class="stat-sub">
-            unit terjual
-        </div>
-    </div>
-
-
-    <div class="stat-card">
-        <div class="stat-label">Stok Tersisa</div>
-
-        <div class="stat-value">
-            {{ number_format($produk->stok, 0, ',', '.') }}
-        </div>
-
-        <div class="stat-sub">
-            unit tersedia
-        </div>
-    </div>
-
-
-    <div class="stat-card">
-        <div class="stat-label">Omzet</div>
-
-        <div class="stat-value">
             Rp {{ number_format(
-                ($produk->penjualan_sum_jumlah_terjual ?? 0) * $produk->harga_jual,
-                0,
-                ',',
-                '.'
-            ) }}
-        </div>
-
-        <div class="stat-sub">
-            dari penjualan
-        </div>
-    </div>
-
-</div>
-
-
-{{-- BAHAN --}}
-<div class="section-card">
-
-    <div class="section-header">
-        <h2 class="section-title">
-            🧂 Rincian Bahan
-        </h2>
-    </div>
-
-    @if($produk->bahan->count())
-
-        <div class="table-wrapper">
-
-            <table class="detail-table">
-
-                <thead>
-                    <tr>
-                        <th>Bahan</th>
-                        <th>Digunakan</th>
-                        <th>Isi Kemasan</th>
-                        <th>Harga Kemasan</th>
-                        <th class="number">Biaya</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @foreach($produk->bahan as $bahan)
-
-                        <tr>
-
-                            <td>
-                                {{ $bahan->nama }}
-                            </td>
-
-                            <td>
-                                {{ number_format($bahan->jumlah, 0, ',', '.') }}
-                                {{ $bahan->satuan }}
-                            </td>
-
-                            <td>
-                                {{ number_format($bahan->isi_kemasan, 0, ',', '.') }}
-                                {{ $bahan->satuan }}
-                            </td>
-
-                            <td>
-                                Rp {{ number_format($bahan->harga_satuan, 0, ',', '.') }}
-                            </td>
-
-                            <td class="number">
-                                Rp {{ number_format($bahan->total, 2, ',', '.') }}
-                            </td>
-
-                        </tr>
-
-                    @endforeach
-
-                    <tr class="total-row">
-
-                        <td colspan="4">
-                            Total Bahan
-                        </td>
-
-                        <td class="number">
-                            Rp {{ number_format($produk->total_bahan, 2, ',', '.') }}
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
+                $produk->harga_jual - $produk->hpp,
+                0, ',', '.') }}
 
         </div>
 
-    @else
+        <div class="profit-details">
 
-        <div class="empty">
-            Belum ada bahan untuk produk ini.
-        </div>
+            <div class="profit-detail">
 
-    @endif
+                <span>
+                    Harga Jual
+                </span>
 
-</div>
+                <strong>
+                    Rp {{ number_format($produk->harga_jual, 0, ',', '.') }}
+                </strong>
 
-
-{{-- BIAYA TAMBAHAN --}}
-<div class="section-card">
-
-    <div class="section-header">
-        <h2 class="section-title">
-            💰 Biaya Tambahan
-        </h2>
-    </div>
-
-    @if($produk->biayaTambahan->count())
-
-        <div class="table-wrapper">
-
-            <table class="detail-table">
-
-                <thead>
-                    <tr>
-                        <th>Nama Biaya</th>
-                        <th>Jumlah</th>
-                        <th>Satuan</th>
-                        <th>Harga</th>
-                        <th class="number">Total</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    @foreach($produk->biayaTambahan as $biaya)
-
-                        <tr>
-
-                            <td>
-                                {{ $biaya->nama }}
-                            </td>
-
-                            <td>
-                                {{ number_format($biaya->jumlah, 2, ',', '.') }}
-                            </td>
-
-                            <td>
-                                {{ $biaya->satuan }}
-                            </td>
-
-                            <td>
-                                Rp {{ number_format($biaya->harga_satuan, 0, ',', '.') }}
-                            </td>
-
-                            <td class="number">
-                                Rp {{ number_format($biaya->total, 2, ',', '.') }}
-                            </td>
-
-                        </tr>
-
-                    @endforeach
-
-                    <tr class="total-row">
-
-                        <td colspan="4">
-                            Total Biaya Tambahan
-                        </td>
-
-                        <td class="number">
-                            Rp {{ number_format($produk->total_biaya_tambahan, 2, ',', '.') }}
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    @else
-
-        <div class="empty">
-            Tidak ada biaya tambahan.
-        </div>
-
-    @endif
-
-</div>
+            </div>
 
 
-{{-- KEUNTUNGAN --}}
-<div class="profit-box">
+            <div class="profit-detail">
 
-    <div class="profit-title">
-        Keuntungan per Unit
-    </div>
+                <span>
+                    HPP
+                </span>
 
-    <div class="profit-main">
-        Rp {{ number_format(
-            $produk->harga_jual - $produk->hpp,
-            2,
-            ',',
-            '.'
-        ) }}
-    </div>
+                <strong>
+                    Rp {{ number_format($produk->hpp, 0, ',', '.') }}
+                </strong>
 
-    <div class="profit-details">
+            </div>
 
-        <div class="profit-detail">
 
-            <span>Harga Jual</span>
+            <div class="profit-detail">
 
-            <strong>
-                Rp {{ number_format($produk->harga_jual, 0, ',', '.') }}
-            </strong>
+                <span>
+                    Margin
+                </span>
 
-        </div>
+                <strong>
+                    {{ number_format($margin, 0, ',', '.') }}%
+                </strong>
 
-        <div class="profit-detail">
-
-            <span>HPP</span>
-
-            <strong>
-                Rp {{ number_format($produk->hpp, 2, ',', '.') }}
-            </strong>
-
-        </div>
-
-        <div class="profit-detail">
-
-            <span>Margin</span>
-
-            <strong>
-                {{ number_format($margin, 1, ',', '.') }}%
-            </strong>
+            </div>
 
         </div>
 
     </div>
-
-</div>
 
 </div>
 
 @endsection
+```

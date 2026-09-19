@@ -91,21 +91,6 @@
             margin-bottom: 18px;
         }
 
-        .logo span:first-child {
-            width: 40px;
-            height: 40px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            border-radius: 11px;
-
-            background: rgba(34, 211, 238, .12);
-
-            font-size: 20px;
-        }
-
 
         /* =====================================================
            SIDEBAR MENU

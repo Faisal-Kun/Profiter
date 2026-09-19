@@ -1,4 +1,3 @@
-blade
 @extends('layouts.app')
 
 @section('content')
@@ -121,6 +120,21 @@ blade
 
     .input-group .form-control {
         border-radius: 0 10px 10px 0;
+    }
+
+
+    /* =========================
+       HARGA
+    ========================= */
+
+    .price-input-group {
+        width: 100%;
+    }
+
+    .price-input-group .form-control {
+        min-width: 0;
+        font-size: 15px;
+        font-weight: 600;
     }
 
 
@@ -296,7 +310,7 @@ HEADER
         </h3>
 
         <p class="edit-subtitle mb-0">
-            Masukkan informasi, bahan, dan biaya tambahan produk
+            Masukkan informasi, komponen, dan biaya tambahan produk
         </p>
 
     </div>
@@ -472,7 +486,7 @@ HEADER
 
 
     {{-- =========================
-    BAHAN
+    KOMPONEN PRODUK
     ========================= --}}
 
     <div class="edit-card">
@@ -482,7 +496,7 @@ HEADER
             <div class="d-flex justify-content-between align-items-center mb-3">
 
                 <h5 class="edit-section-title mb-0">
-                    Bahan Produk
+                    Komponen Produk
                 </h5>
 
                 <button
@@ -491,7 +505,7 @@ HEADER
                     onclick="tambahBahan()"
                 >
                     <i class="bi bi-plus-lg me-1"></i>
-                    Tambah Bahan
+                    Tambah Komponen
                 </button>
 
             </div>
@@ -500,14 +514,14 @@ HEADER
             <div id="bahan-container">
 
 
-                {{-- BAHAN PERTAMA --}}
+                {{-- KOMPONEN PERTAMA --}}
 
                 <div class="item-card bahan-item">
 
                     <div class="item-header">
 
                         <p class="item-title">
-                            Bahan
+                            Komponen
                         </p>
 
                         <button
@@ -526,10 +540,10 @@ HEADER
 
                         {{-- NAMA --}}
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
 
                             <label class="form-label">
-                                Nama Bahan
+                                Nama Komponen
                             </label>
 
                             <input
@@ -537,7 +551,7 @@ HEADER
                                 name="bahan_nama[]"
                                 class="form-control"
                                 value="{{ old('bahan_nama.0') }}"
-                                placeholder="Contoh: Tepung"
+                                placeholder="Contoh: Tepung / Kayu / Kain"
                                 required
                             >
 
@@ -579,7 +593,7 @@ HEADER
                                 name="bahan_satuan[]"
                                 class="form-control"
                                 value="{{ old('bahan_satuan.0') }}"
-                                placeholder="Ketik Satuan"
+                                placeholder="Contoh: kg"
                                 required
                             >
 
@@ -610,13 +624,13 @@ HEADER
 
                         {{-- HARGA --}}
 
-                        <div class="col-md-2">
+                        <div class="col-md-3">
 
                             <label class="form-label">
                                 Harga
                             </label>
 
-                            <div class="input-group">
+                            <div class="input-group price-input-group">
 
                                 <span class="input-group-text">
                                     Rp
@@ -755,7 +769,7 @@ HEADER
                                 name="biaya_satuan[]"
                                 class="form-control"
                                 value="{{ old('biaya_satuan.0') }}"
-                                placeholder="Ketik Satuan"
+                                placeholder="Contoh: kali"
                             >
 
                         </div>
@@ -769,7 +783,7 @@ HEADER
                                 Harga
                             </label>
 
-                            <div class="input-group">
+                            <div class="input-group price-input-group">
 
                                 <span class="input-group-text">
                                     Rp
@@ -846,7 +860,7 @@ HEADER
 
 
     /* =========================
-       TAMBAH BAHAN
+       TAMBAH KOMPONEN
     ========================= */
 
     function tambahBahan()
@@ -861,7 +875,7 @@ HEADER
                 <div class="item-header">
 
                     <p class="item-title">
-                        Bahan
+                        Komponen
                     </p>
 
                     <button
@@ -878,17 +892,17 @@ HEADER
                 <div class="row g-3">
 
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
 
                         <label class="form-label">
-                            Nama Bahan
+                            Nama Komponen
                         </label>
 
                         <input
                             type="text"
                             name="bahan_nama[]"
                             class="form-control"
-                            placeholder="Contoh: Tepung"
+                            placeholder="Contoh: Tepung / Kayu / Kain"
                             required
                         >
 
@@ -924,7 +938,7 @@ HEADER
                             type="text"
                             name="bahan_satuan[]"
                             class="form-control"
-                            placeholder="Ketik Satuan"
+                            placeholder="Contoh: kg"
                             required
                         >
 
@@ -950,13 +964,13 @@ HEADER
                     </div>
 
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
 
                         <label class="form-label">
                             Harga
                         </label>
 
-                        <div class="input-group">
+                        <div class="input-group price-input-group">
 
                             <span class="input-group-text">
                                 Rp
@@ -1067,7 +1081,7 @@ HEADER
                             type="text"
                             name="biaya_satuan[]"
                             class="form-control"
-                            placeholder="Ketik Satuan"
+                            placeholder="Contoh: kali"
                         >
 
                     </div>
@@ -1079,7 +1093,7 @@ HEADER
                             Harga
                         </label>
 
-                        <div class="input-group">
+                        <div class="input-group price-input-group">
 
                             <span class="input-group-text">
                                 Rp
